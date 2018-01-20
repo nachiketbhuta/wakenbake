@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="nshmadhani.com.wakenbake.main_screens.SignupActivity">
+
+    <!-- Login progress -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/red">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="54dp"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp">
+
+            <!-- Logo Image-->
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/app_logo"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <!-- Name Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/EditTextHint"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp">
+
+                <EditText
+                    android:id="@+id/mSignupNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:drawableLeft="@drawable/login_user_asset"
+                    android:hint="Name"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Email Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/EditTextHint"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp">
+
+                <EditText
+                    android:id="@+id/mSignupEmailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:drawableLeft="@drawable/login_user_asset"
+                    android:hint="Email"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Password Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:drawableLeft="@drawable/login_password_asset"
+                android:theme="@style/EditTextHint">
+                <EditText
+                    android:id="@+id/mSignupPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:drawableLeft="@drawable/login_password_asset"
+                    android:hint="Password"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Signup Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/mSignupSignupButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="20dp"
+                android:padding="12dp"
+                android:background="@drawable/shape"
+                android:elevation="10dp"
+                android:text="Signup"/>
+
+            <!-- Log In Link -->
+            <TextView android:id="@+id/mSignupLoginLinkTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Already an account? Log In"
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:gravity="center"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

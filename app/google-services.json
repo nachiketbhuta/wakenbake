@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1515831664",
+    "firebase_url": "https://practice-ea93b.firebaseio.com",
+    "project_id": "practice-ea93b",
+    "storage_bucket": "practice-ea93b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1515831664:android:c2ce56a92c02e37c",
+        "android_client_info": {
+          "package_name": "nshmadhani.com.wakenbake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1515831664-o7qg6v7c4qqi3e7odpo2719cbq8aqcnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nshmadhani.com.wakenbake",
+            "certificate_hash": "740e12d67dd4d02b6382d1bc91ce730223b3de6a"
+          }
+        },
+        {
+          "client_id": "1515831664-jinadhh9tm1f0quqn7a45mprs80l6ti0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiREqfd8QWqyeTii3djqE0IhVmKCfoHjs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1515831664-jinadhh9tm1f0quqn7a45mprs80l6ti0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
