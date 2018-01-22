@@ -30,7 +30,7 @@ dependencies {
 
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.nispok:snackbar:2.11.+'
-    // compile 'com.github.GoodieBag:Pinview:v1.3'
+    compile 'com.github.GoodieBag:Pinview:v1.3'
 }
 
 
