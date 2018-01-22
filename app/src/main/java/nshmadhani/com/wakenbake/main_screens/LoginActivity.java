@@ -1,6 +1,9 @@
 package nshmadhani.com.wakenbake.main_screens;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.java_classes.ConnectivityReceiver;
 
@@ -25,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = LoginActivity.class.getSimpleName();
     public EditText mLoginEmailEditText;
     public EditText mLoginPasswordEditText;
-    public Button mLoginButton;
+    public FancyButton mLoginButton;
     public TextView mSignupLinkTextView;
     public FirebaseAuth mAuth;
 
@@ -37,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         initialLayout(); // Setting the layout of the login screen
 
         //Checking if the user is connected to internet.
-        if (ConnectivityReceiver.isConnected()) {
+        if (isNetworkConnected()) {
             mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
             //Clicking on Login Button
@@ -46,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String email = mLoginEmailEditText.getText().toString(); // Getting the value of the email
                     String password = mLoginPasswordEditText.getText().toString(); // Getting the value of the password
+
+                    mLoginEmailEditText.setEnabled(false);
+                    mLoginPasswordEditText.setEnabled(true);
 
                     //Checking if both the fields are empty
                     if (!email.equals("") && !password.equals("")) {
@@ -78,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
         else {
+            mLoginEmailEditText.setEnabled(true);
+            mLoginPasswordEditText.setEnabled(true);
             com.nispok.snackbar.Snackbar.with(getApplicationContext()).text("Please check your internet connection").show(LoginActivity.this);
         }
     }
@@ -119,5 +128,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

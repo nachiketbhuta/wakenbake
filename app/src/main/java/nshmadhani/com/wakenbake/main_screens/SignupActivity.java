@@ -1,5 +1,9 @@
 package nshmadhani.com.wakenbake.main_screens;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nispok.snackbar.Snackbar;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.java_classes.ConnectivityReceiver;
 
@@ -26,7 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     public EditText mSignupNameEditText;
     public EditText mSignupEmailEditText;
     public EditText mSignupPasswordEditText;
-    public Button mSignupSignupButton;
+    public FancyButton mSignupSignupButton;
     public TextView mSignupLoginLinkTextView;
     public FirebaseAuth mAuth;
 
@@ -38,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
         initialLayout(); // Setting the layout of the signup screen
 
         //Checking if the user is connected to internet.
-        if (ConnectivityReceiver.isConnected()) {
+        if (isNetworkConnected()) {
             mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
             //Clicking on Signup Button
@@ -64,6 +69,17 @@ public class SignupActivity extends AppCompatActivity {
                     else {
                         Toast.makeText(SignupActivity.this, "Enter both email and password", Toast.LENGTH_LONG).show();
                     }
+                }
+            });
+
+            //Clicking on the Signup Link
+            mSignupLoginLinkTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Redirecting to the Signup Activity
+                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
         }
@@ -100,5 +116,10 @@ public class SignupActivity extends AppCompatActivity {
         mSignupPasswordEditText = findViewById(R.id.mSignupPasswordEditText);
         mSignupSignupButton = findViewById(R.id.mSignupSignupButton);
         mSignupLoginLinkTextView = findViewById(R.id.mSignupLoginLinkTextView);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }
