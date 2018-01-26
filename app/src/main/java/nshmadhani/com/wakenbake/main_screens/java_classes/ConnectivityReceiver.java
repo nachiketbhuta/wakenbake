@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.java_classes;
+package nshmadhani.com.wakenbake.main_screens.java_classes;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

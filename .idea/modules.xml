@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:\Project\WakeNBake\Documents.iml" filepath="E:\Project\WakeNBake\Documents.iml" />
       <module fileurl="file://$PROJECT_DIR$/WakeNBake.iml" filepath="$PROJECT_DIR$/WakeNBake.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\Project\WakeNBake\app\app.iml" filepath="E:\Project\WakeNBake\app\app.iml" />
     </modules>
   </component>
 </project>

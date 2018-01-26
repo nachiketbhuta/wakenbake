@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1515831664-sd1vu95be6tbopitg5fgu3h83qq15ivn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nshmadhani.com.wakenbake",
+            "certificate_hash": "79ffdbb6750a95e93e7ba98937e77abdbb4b1754"
+          }
+        },
+        {
           "client_id": "1515831664-o7qg6v7c4qqi3e7odpo2719cbq8aqcnq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

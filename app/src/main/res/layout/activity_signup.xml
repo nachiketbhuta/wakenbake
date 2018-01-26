@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="nshmadhani.com.wakenbake.main_screens.SignupActivity">
+    tools:context="nshmadhani.com.wakenbake.main_screens.activities.SignupActivity">
 
     <!-- Login progress -->
     <ScrollView
