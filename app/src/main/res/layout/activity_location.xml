@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="nshmadhani.com.wakenbake.main_screens.activities.LocationActivity">
+    android:orientation="vertical" >
+
 
     <com.skyfishjy.library.RippleBackground
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,6 +26,7 @@
             android:src="@drawable/location_pin_icon"/>
 
         <TextView
+            android:id = "@+id/gettingLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Getting Your Location...."
