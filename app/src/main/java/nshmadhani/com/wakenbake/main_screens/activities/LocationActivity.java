@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skyfishjy.library.RippleBackground;
 
@@ -63,9 +64,7 @@ public class LocationActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
-                Log.i("Location", location.toString());
-
+                Toast.makeText(LocationActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -88,6 +87,9 @@ public class LocationActivity extends AppCompatActivity {
 
             //Ask for permission
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        }else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         }
     }
