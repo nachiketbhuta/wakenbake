@@ -1,6 +1,7 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -145,7 +146,10 @@ public class OtpActivity extends AppCompatActivity {
                             Log.i(TAG, "signInWithCredential:success");
 
                             // ...
-                            Toast.makeText(OtpActivity.this,"Redirecting to Main Activity",Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(OtpActivity.this,"Redirecting to Main Activity",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(OtpActivity.this, LocationActivity.class);
+                            startActivity(intent);
+                            finish();
 
                         } else {
                             // Sign in failed, display a message and update the UI

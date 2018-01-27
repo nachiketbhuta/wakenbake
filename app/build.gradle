@@ -29,7 +29,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.nispok:snackbar:2.11.+' // Snackbar
+    compile 'com.nispok:snackbar:2.11.+' //    Snackbar
     compile 'com.github.GoodieBag:Pinview:v1.3' // OTP Pin View
     compile 'com.github.medyo:fancybuttons:1.8.4' // Buttons
     compile 'com.skyfishjy.ripplebackground:library:1.0.1' //Background Ripple Effect for Location
