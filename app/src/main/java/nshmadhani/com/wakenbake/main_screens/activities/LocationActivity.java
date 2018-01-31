@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -49,12 +50,12 @@ public class LocationActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-
+        if (grantResults.length > 0 && grantResults[0]
+                    == PackageManager.PERMISSION_GRANTED) { //If permission is granted
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) // If ACCESS_FINE_LOCATION is granted
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
+                //Update the location
         }
     }
 
@@ -64,7 +65,14 @@ public class LocationActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Toast.makeText(LocationActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("Location", location.toString());
+
+                Intent intent = new Intent(LocationActivity.this, HomeScreenActivity.class);
+                intent.putExtra("latitude", location.getLatitude());
+                intent.putExtra("longitude", location.getLongitude());
+
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -84,13 +92,11 @@ public class LocationActivity extends AppCompatActivity {
         };
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             //Ask for permission
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         }else {
+            //We have the permissions of location
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
         }
     }
 }
