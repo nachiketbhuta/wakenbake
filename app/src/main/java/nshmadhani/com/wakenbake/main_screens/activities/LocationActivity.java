@@ -5,6 +5,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -12,17 +14,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.skyfishjy.library.RippleBackground;
 
-import nshmadhani.com.wakenbake.Manifest;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
+import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements ConnectivityReceiver{
 
     public LocationManager locationManager;
     public LocationListener locationListener;
@@ -41,12 +43,14 @@ public class LocationActivity extends AppCompatActivity {
         locationImageView = findViewById(R.id.locationIcon);
         gettingLocationTextView = findViewById(R.id.gettingLocation);
 
-        //Start Ripple Effect
-        rippleBackground.startRippleAnimation();
-
-        gettingLocation();
+        if (isNetworkAvailable()) { //Start Ripple Effect
+            rippleBackground.startRippleAnimation();
+            gettingLocation();
+        } else {
+            NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+            connectionDialog.show(getFragmentManager(), "no_internet_dialog");
+        }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -109,5 +113,17 @@ public class LocationActivity extends AppCompatActivity {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean networkAvailable = true;
+
+        if (networkInfo != null && networkInfo.isConnected())
+            networkAvailable = true;
+
+        return networkAvailable;
     }
 }

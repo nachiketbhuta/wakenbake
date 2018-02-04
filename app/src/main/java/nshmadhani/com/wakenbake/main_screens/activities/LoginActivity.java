@@ -1,6 +1,5 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,6 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
 import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver {
@@ -91,7 +92,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             } else {
                 mLoginEmailEditText.setEnabled(true);
                 mLoginPasswordEditText.setEnabled(true);
-                com.nispok.snackbar.Snackbar.with(getApplicationContext()).text("Please check your internet connection").show(LoginActivity.this);
+
+                NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+                connectionDialog.show(getFragmentManager(), "no_internet_dialog");
             }
         }
         catch (Exception e){

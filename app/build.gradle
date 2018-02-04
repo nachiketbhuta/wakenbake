@@ -22,7 +22,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.firebase:firebase-auth:11.8.0'
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
@@ -37,5 +38,6 @@ dependencies {
     compile 'com.github.medyo:fancybuttons:1.8.4'// Buttons
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'//Background Ripple Effect for Location
     compile 'com.google.android.gms:play-services:11.8.0' //Google Play Services
+    compile 'com.squareup.okhttp3:okhttp:3.9.1' //HTTP Client
 }
 apply plugin: 'com.google.gms.google-services'

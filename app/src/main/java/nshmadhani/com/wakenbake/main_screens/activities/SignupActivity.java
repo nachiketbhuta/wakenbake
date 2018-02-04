@@ -1,6 +1,5 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,11 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.nispok.snackbar.Snackbar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.fragments.AlertDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
 import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 
@@ -91,7 +90,8 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 mSignupEmailEditText.setEnabled(true);
                 mSignupPasswordEditText.setEnabled(true);
 
-                
+                NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+                connectionDialog.show(getFragmentManager(), "no_internet_dialog");
             }
         }
         catch (Exception e) {
@@ -130,7 +130,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 });
     }
 
-    public void initialLayout () throws Exception {
+    public void initialLayout () {
         mSignupNameEditText = findViewById(R.id.mSignupNameEditText);
         mSignupEmailEditText = findViewById(R.id.mSignupEmailEditText);
         mSignupPasswordEditText = findViewById(R.id.mSignupPasswordEditText);

@@ -17,8 +17,6 @@ public class PlacesFragment extends Fragment {
 
     public PlacesFragment () {} // Empty Constructor
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

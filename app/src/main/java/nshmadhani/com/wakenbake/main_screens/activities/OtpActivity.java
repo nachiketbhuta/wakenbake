@@ -21,10 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.nispok.snackbar.Snackbar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
 import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -123,7 +124,8 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
            };
        }
        else {
-           Snackbar.with(getApplicationContext()).text("Please check your internet connection").show(OtpActivity.this);
+           NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+           connectionDialog.show(getFragmentManager(), "no_internet_dialog");
        }
     }
 
