@@ -101,11 +101,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    private void gettingListFromPlacesApi() {
-
-
-
-    }
+    private void gettingListFromPlacesApi() {}
 
     private void alertUserAboutError () {
         ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment();

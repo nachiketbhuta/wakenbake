@@ -140,7 +140,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
 
                             // ...
                            // Toast.makeText(OtpActivity.this,"Redirecting to Main Activity",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(OtpActivity.this, LocationActivity.class);
+                            Intent intent = new Intent(OtpActivity.this, HomeScreenActivity.class);
                             startActivity(intent);
                             finish();
 

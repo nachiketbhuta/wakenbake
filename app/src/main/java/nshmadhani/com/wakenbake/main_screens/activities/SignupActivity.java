@@ -105,7 +105,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser == null) {
-            Intent intent = new Intent(SignupActivity.this, OtpActivity.class);
+            Intent intent = new Intent(SignupActivity.this, HomeScreenActivity.class);
             startActivity(intent);
             finish();
         }
