@@ -3,6 +3,7 @@ package nshmadhani.com.wakenbake.main_screens.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,8 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
     public EditText mLoginEmailEditText;
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             initialLayout(); // Setting the layout of the login screen
 
             //Checking if the user is connected to internet.
-            if (isNetworkConnected()) {
+            if (isNetworkAvailable()) {
                 mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
                 //Clicking on Login Button
@@ -135,8 +137,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean isNetworkConnected() throws Exception {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+    @Override
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean networkAvailable = true;
+
+        if (networkInfo != null && networkInfo.isConnected())
+            networkAvailable = true;
+
+        return networkAvailable;
     }
 }

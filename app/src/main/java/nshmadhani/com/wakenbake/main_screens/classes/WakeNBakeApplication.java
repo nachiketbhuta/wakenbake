@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.main_screens.java_classes;
+package nshmadhani.com.wakenbake.main_screens.classes;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
+
+import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 
 public class WakeNBakeApplication extends Application{

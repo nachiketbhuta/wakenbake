@@ -22,4 +22,10 @@
         app:headerLayout="@layout/nav_header_home_screen"
         app:menu="@menu/activity_home_screen_drawer" />
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="nshmadhani.com.wakenbake.main_screens.fragments.PlacesFragment"
+        android:id="@+id/placesFragment" />
+
 </android.support.v4.widget.DrawerLayout>

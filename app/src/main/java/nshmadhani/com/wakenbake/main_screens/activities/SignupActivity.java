@@ -3,6 +3,7 @@ package nshmadhani.com.wakenbake.main_screens.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,9 +22,11 @@ import com.nispok.snackbar.Snackbar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.fragments.AlertDialogFragment;
+import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements ConnectivityReceiver {
 
     public static final String TAG = SignupActivity.class.getSimpleName();
     public static final int RC_SIGN_IN = 2;
@@ -44,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
 
             initialLayout(); // Setting the layout of the signup screen
 
-            if (isNetworkConnected()) {
+            if (isNetworkAvailable()) {
                 mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
                 //Clicking on Signup Button
@@ -88,7 +91,7 @@ public class SignupActivity extends AppCompatActivity {
                 mSignupEmailEditText.setEnabled(true);
                 mSignupPasswordEditText.setEnabled(true);
 
-                Snackbar.with(getApplicationContext()).text("Please check your internet connection").show(SignupActivity.this);
+                
             }
         }
         catch (Exception e) {
@@ -135,8 +138,15 @@ public class SignupActivity extends AppCompatActivity {
         mSignupLoginLinkTextView = findViewById(R.id.mSignupLoginLinkTextView);
     }
 
-    private boolean isNetworkConnected() throws Exception {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+    @Override
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean networkAvailable = true;
+
+        if (networkInfo != null && networkInfo.isConnected())
+            networkAvailable = true;
+
+        return networkAvailable;
     }
 }

@@ -1,8 +1,8 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,17 +19,17 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nispok.snackbar.Snackbar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class OtpActivity extends AppCompatActivity {
+public class OtpActivity extends AppCompatActivity implements ConnectivityReceiver {
 
     private static final String TAG = OtpActivity.class.getSimpleName();
     private Pinview pinView;
@@ -50,7 +49,7 @@ public class OtpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
-       if (isNetworkConnected()) {
+       if (isNetworkAvailable()) {
            //Phone Number
            phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
            phoneNumberEditText = findViewById(R.id.phoneNumberEditText);
@@ -120,7 +119,6 @@ public class OtpActivity extends AppCompatActivity {
                    mVerificationId = verificationId;
                    mResendToken = token;
 
-                   // ...
                }
            };
        }
@@ -128,13 +126,6 @@ public class OtpActivity extends AppCompatActivity {
            Snackbar.with(getApplicationContext()).text("Please check your internet connection").show(OtpActivity.this);
        }
     }
-
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-    }
-
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential){
         mAuth.signInWithCredential(credential)
@@ -161,5 +152,17 @@ public class OtpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean networkAvailable = true;
+
+        if (networkInfo != null && networkInfo.isConnected())
+            networkAvailable = true;
+
+        return networkAvailable;
     }
 }
