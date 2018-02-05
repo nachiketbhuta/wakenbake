@@ -1,106 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="nshmadhani.com.wakenbake.com.nachiket04.wakenbake.main_screens.LoginActivity" >
+    tools:context="nshmadhani.com.wakenbake.main_screens.activities.LoginActivity" >
 
-    <!-- Login progress -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/app_registration_background">
+    <android.support.v7.widget.CardView
+        android:layout_width="310dp"
+        android:layout_height="430dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/loginCardView"
+        android:elevation="10dp"
+        android:backgroundTint="#FFFFFF">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:layout_alignParentBottom="true" >
-
-    <ImageView
-        android:layout_gravity="center"
-        android:src="@drawable/app_logo"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="25dp"/>
-
-    <!-- Email Label -->
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/EditTextHint"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-
-        <EditText
-            android:id="@+id/mLoginEmailEditText"
-
+        <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:drawableLeft="@drawable/login_user_asset"
-            android:hint="Email"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+            <!--Login Title Text View -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
+                android:text="@string/login"
+                android:textColor="#2a1c0e"
+                android:textSize="20sp"
+                android:layout_marginTop="18dp"
+                android:textStyle="bold" />
 
-    <!-- Password Label -->
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
+            <!--Username Edit Text -->
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="#c5c5c5"
+                android:layout_width="match_parent"
+                android:layout_marginTop="60dp"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:textSize="20sp"
+                    android:hint="@string/Username"
+                    android:textColor="#472f17"
+                    android:id="@+id/usernameLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="12"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_bg_edit"
+                    android:textCursorDrawable="@drawable/bg_input_cursor"
+                    android:paddingBottom="2dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Password Edit Text -->
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="#c5c5c5"
+                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:textSize="20sp"
+                    android:ems="12"
+                    android:hint="@string/Password"
+                    android:textColor="#472f17"
+                    android:id="@+id/loginPassword"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:background="@drawable/selector_bg_edit"
+                    android:textCursorDrawable="@drawable/bg_input_cursor"
+                    android:paddingBottom="2dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Login Button-->
+            <Button
+                android:id="@+id/loginButton"
+                android:background="@drawable/bt_shape"
+                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="Login"
+                android:elevation="6dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:textColor="#472f17" />
+
+            <!--Forgot Password Text View -->
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#9a9a9a"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_your_password" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--Floating Button -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/loginFloatingButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:drawableLeft="@drawable/login_password_asset"
-        android:theme="@style/EditTextHint">
-        <EditText
-            android:id="@+id/mLoginPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:drawableLeft="@drawable/login_password_asset"
-            android:hint="Password"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"/>
+        app:fabSize="normal"
+        android:src="@drawable/plus"
+        android:transitionName="loginFab"
+        android:layout_alignTop="@id/cv"
+        android:layout_marginTop="25dp"
+        android:layout_alignEnd="@id/cv"
+        android:layout_marginEnd="-20dp"
+        android:backgroundTint="#000000"/>
 
-    </android.support.design.widget.TextInputLayout>
-
-    <!--Button -->
-    <mehdi.sakout.fancybuttons.FancyButton
-        android:id="@+id/mLoginButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:padding="12dp"
-        fancy:fb_defaultColor="@color/red"
-        fancy:fb_text="LOGIN"
-        fancy:fb_radius="10dp"
-        fancy:fb_textGravity="center"
-        fancy:fb_useSystemFont="true"
-        />
-
-    <!-- Sign Up Link -->
-    <TextView android:id="@+id/mLoginSignupLinkTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="No account yet? Create one"
-        android:clickable="true"
-        android:textColor="@color/white"
-        android:textColorLink="@color/white"
-        android:gravity="center"
-        android:textSize="16sp"/>
-
-    </LinearLayout>
-    </ScrollView>
 </RelativeLayout>
 

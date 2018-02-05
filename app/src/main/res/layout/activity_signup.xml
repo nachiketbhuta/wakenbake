@@ -1,125 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context="nshmadhani.com.wakenbake.main_screens.activities.SignupActivity">
 
-    <!-- Login progress -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/app_registration_background">
+    <FrameLayout
+        android:layout_centerInParent="true"
+        android:paddingTop="30dp"
+        android:layout_width="320dp"
+        android:layout_height="500dp">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <android.support.v7.widget.CardView
+            android:id="@+id/signupCardView"
+            android:elevation="10dp"
+            app:cardBackgroundColor="#02317c"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_marginTop="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="@string/register"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Username Edit Text -->
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="#f0f7f4"
+                    android:theme="@style/TextLabel"
+                    android:layout_marginTop="25dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" >
+                    <EditText
+                        android:textSize="15sp"
+                        android:hint="@string/Username"
+                        android:textColor="#f0f7f4"
+                        android:id="@+id/signupUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:paddingBottom="4dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Email Edit Text-->
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="#f0f7f4"
+                    android:theme="@style/TextLabel"
+                    android:layout_marginTop="25dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+                    <EditText
+                        android:textSize="15sp"
+                        android:hint="Email"
+                        android:textColor="#f0f7f4"
+                        android:id="@+id/signupEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:paddingBottom="4dp"  />
+                </android.support.design.widget.TextInputLayout>
+
+                <!--Password Edit Text-->
+                <android.support.design.widget.TextInputLayout
+                    android:textColorHint="#f0f7f4"
+                    android:theme="@style/TextLabel"
+                    android:layout_marginTop="25dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+                    <EditText
+                        android:textSize="15sp"
+                        android:hint="@string/Password"
+                        android:textColor="#f0f7f4"
+                        android:id="@+id/signupPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <!--Sign Up Button -->
+                <Button
+                    android:layout_marginTop="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/signupButton"
+                    android:backgroundTint="#FFFFFF"
+                    android:background="@drawable/bt_shape_2"
+                    android:stateListAnimator="@drawable/state_list_animator_z"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Signup"
+                    android:elevation="8dp"
+                    android:textColor="#2fa881">
+                </Button>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- Floating Action Button-->
+        <android.support.design.widget.FloatingActionButton
+            android:elevation="3dp"
+            android:id="@+id/signupFloatingButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="54dp"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp">
-
-            <!-- Logo Image-->
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/app_logo"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="25dp"/>
-
-            <!-- Name Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/EditTextHint"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp">
-
-                <EditText
-                    android:id="@+id/mSignupNameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:drawableLeft="@drawable/login_user_asset"
-                    android:hint="Name"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!--Email Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/EditTextHint"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp">
-
-                <EditText
-                    android:id="@+id/mSignupEmailEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:drawableLeft="@drawable/login_user_asset"
-                    android:hint="Email"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Password Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:drawableLeft="@drawable/login_password_asset"
-                android:theme="@style/EditTextHint">
-                <EditText
-                    android:id="@+id/mSignupPasswordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:drawableLeft="@drawable/login_password_asset"
-                    android:hint="Password"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!--Signup Button -->
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/mSignupSignupButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
-                android:padding="12dp"
-                fancy:fb_defaultColor="@color/red"
-                fancy:fb_text="SIGN UP"
-                fancy:fb_radius="10dp"
-                fancy:fb_textGravity="center"
-                fancy:fb_useSystemFont="true"
-                />
-
-            <!-- Log In Link -->
-            <TextView android:id="@+id/mSignupLoginLinkTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="Already an account? Log In"
-                android:clickable="true"
-                android:textColor="@color/white"
-                android:textColorLink="@color/white"
-                android:gravity="center"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-    </ScrollView>
+            app:fabSize="normal"
+            android:src="@drawable/plus_x"
+            android:backgroundTint="#2196f3"
+            android:transitionName="loginFab"
+            android:layout_gravity="center_horizontal|top" />
+    </FrameLayout>
 
 </RelativeLayout>
