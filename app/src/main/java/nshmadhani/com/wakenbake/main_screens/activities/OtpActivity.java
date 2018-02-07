@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
 import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
@@ -34,11 +34,10 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
 
     private static final String TAG = OtpActivity.class.getSimpleName();
     private Pinview pinView;
-    private FancyButton confirmButton;
     private FirebaseAuth mAuth;
-    private TextView phoneNumberTextView;
     private EditText phoneNumberEditText;
     private TextView otpTextView;
+    private Button confirmButton;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     public String phoneNumber;
@@ -52,19 +51,18 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
 
        if (isNetworkAvailable()) {
            //Phone Number
-           phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
-           phoneNumberEditText = findViewById(R.id.phoneNumberEditText);
+           phoneNumberEditText = findViewById(R.id.otpPhoneNumber);
 
            //OTP
            otpTextView = findViewById(R.id.otpTextView);
 
            mAuth = FirebaseAuth.getInstance();
 
-           pinView = findViewById(R.id.pinview);
+           pinView = findViewById(R.id.otpPinView);
            pinView.setInputType(Pinview.InputType.NUMBER);
 
            //Initializing the Confirm Button
-           confirmButton = findViewById(R.id.confirmOtpButton);
+           confirmButton = findViewById(R.id.confirmButton);
 
            confirmButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -108,7 +106,6 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                                       PhoneAuthProvider.ForceResendingToken token) {
                    Log.i(TAG, "onCodeSent:" + verificationId);
 
-                   phoneNumberTextView.setVisibility(View.INVISIBLE);
                    phoneNumberEditText.setVisibility(View.INVISIBLE);
 
                    otpTextView.setVisibility(View.VISIBLE);
@@ -140,7 +137,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
 
                             // ...
                            // Toast.makeText(OtpActivity.this,"Redirecting to Main Activity",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(OtpActivity.this, HomeScreenActivity.class);
+                            Intent intent = new Intent(OtpActivity.this, LocationActivity.class);
                             startActivity(intent);
                             finish();
 

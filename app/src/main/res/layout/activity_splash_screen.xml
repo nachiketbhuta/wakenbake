@@ -16,25 +16,4 @@
         android:layout_marginTop="170dp"
         android:src="@drawable/app_logo" />
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/indicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="80dp"
-        android:fitsSystemWindows="true"
-        app:indicatorName="SquareSpinIndicator"
-        app:maxHeight="50dp"
-        app:maxWidth="50dp" />
-
-    <TextView
-        android:id="@+id/loadingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Loading..."
-        android:textColor="#FFFFFF"
-        android:textSize="24sp" />
-
 </LinearLayout>

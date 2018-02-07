@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import mehdi.sakout.fancybuttons.FancyButton;
+;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
 import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
@@ -32,8 +33,9 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     public EditText mSignupNameEditText;
     public EditText mSignupEmailEditText;
     public EditText mSignupPasswordEditText;
-    public FancyButton mSignupSignupButton;
-    public TextView mSignupLoginLinkTextView;
+    public Button mSignupSignupButton;
+    public FloatingActionButton floatingActionButton;
+   // public TextView mSignupLoginLinkTextView;
     public FirebaseAuth mAuth;
 
     @Override
@@ -77,15 +79,15 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 });
 
                 //Clicking on the Signup Link
-                mSignupLoginLinkTextView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // Redirecting to the Signup Activity
-                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+//                mSignupLoginLinkTextView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        // Redirecting to the Signup Activity
+//                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+//                });
             } else {
                 mSignupEmailEditText.setEnabled(true);
                 mSignupPasswordEditText.setEnabled(true);
@@ -105,7 +107,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser == null) {
-            Intent intent = new Intent(SignupActivity.this, HomeScreenActivity.class);
+            Intent intent = new Intent(SignupActivity.this, LocationActivity.class);
             startActivity(intent);
             finish();
         }
@@ -131,11 +133,11 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     }
 
     public void initialLayout () {
-        mSignupNameEditText = findViewById(R.id.mSignupNameEditText);
-        mSignupEmailEditText = findViewById(R.id.mSignupEmailEditText);
-        mSignupPasswordEditText = findViewById(R.id.mSignupPasswordEditText);
-        mSignupSignupButton = findViewById(R.id.mSignupSignupButton);
-        mSignupLoginLinkTextView = findViewById(R.id.mSignupLoginLinkTextView);
+        mSignupNameEditText = findViewById(R.id.signupUsername);
+        mSignupEmailEditText = findViewById(R.id.signupEmail);
+        mSignupPasswordEditText = findViewById(R.id.signupPassword);
+        mSignupSignupButton = findViewById(R.id.signupButton);
+       // mSignupLoginLinkTextView = findViewById(R.id.mSignupLoginLinkTextView);
     }
 
     @Override

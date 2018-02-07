@@ -72,7 +72,7 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
             public void onLocationChanged(Location location) {
                 Log.i("Location", location.toString());
 
-                Intent intent = new Intent(LocationActivity.this, HomeScreenActivity.class);
+                Intent intent = new Intent(LocationActivity.this, SignupActivity.class);
                 intent.putExtra("latitude", location.getLatitude());
                 intent.putExtra("longitude", location.getLongitude());
 

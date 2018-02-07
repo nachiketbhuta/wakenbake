@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import mehdi.sakout.fancybuttons.FancyButton;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
 import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     public static final String TAG = LoginActivity.class.getSimpleName();
     public EditText mLoginEmailEditText;
     public EditText mLoginPasswordEditText;
-    public FancyButton mLoginButton;
+    public Button mLoginButton;
     public TextView mSignupLinkTextView;
     public FirebaseAuth mAuth;
 
@@ -102,10 +102,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }
     }
     public void initialLayout () throws Exception {
-        mLoginEmailEditText = findViewById(R.id.mLoginEmailEditText);
-        mLoginPasswordEditText = findViewById(R.id.mLoginPasswordEditText);
-        mLoginButton = findViewById(R.id.mLoginButton);
-        mSignupLinkTextView = findViewById(R.id.mLoginSignupLinkTextView);
+        mLoginEmailEditText = findViewById(R.id.loginUsername);
+        mLoginPasswordEditText = findViewById(R.id.loginPassword);
+        mLoginButton = findViewById(R.id.loginButton);
+        mSignupLinkTextView = findViewById(R.id.loginSignup);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser == null) {
-            Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
             startActivity(intent);
             finish();
         }
