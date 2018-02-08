@@ -1,16 +1,30 @@
 package nshmadhani.com.wakenbake.main_screens.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Nachiket on 03-Feb-18.
  */
 
 public class Places {
 
-    public String name;
-    public String phoneNumber;
-    public double ratings;
-    public String openTime;
-    public String closeTime;
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("number")
+    private String phoneNumber;
+
+    @SerializedName("ratings")
+    private double ratings;
+
+    @SerializedName("open")
+    private int openTime;
+
+    @SerializedName("close")
+    private int closeTime;
+
+    @SerializedName("fooditems")
+    private String foodItems;
 
     public String getName() {
         return name;
@@ -36,19 +50,19 @@ public class Places {
         this.ratings = ratings;
     }
 
-    public String getOpenTime() {
+    public int getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(String openTime) {
+    public void setOpenTime(int openTime) {
         this.openTime = openTime;
     }
 
-    public String getCloseTime() {
+    public int getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    public void setCloseTime(int closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -59,7 +73,4 @@ public class Places {
     public void setFoodItems(String foodItems) {
         this.foodItems = foodItems;
     }
-
-    public String foodItems;
-
 }

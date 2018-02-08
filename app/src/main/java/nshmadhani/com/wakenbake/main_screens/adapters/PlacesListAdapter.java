@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.classes.Places;
 
 /**
  * Created by Nachiket on 03-Feb-18.
@@ -43,8 +44,12 @@ public class PlacesListAdapter extends RecyclerView.Adapter {
         }
 
         public void bindView (int position) {
+
+            Places places = new Places();
             //Name of the Places
+            mTextView.setText(places.getName());
             //Images of the places
+            //mImageView.set
         }
 
         @Override
