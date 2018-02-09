@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.main_screens.classes;
+package nshmadhani.com.wakenbake.main_screens.models;
 
 import com.google.gson.annotations.SerializedName;
 

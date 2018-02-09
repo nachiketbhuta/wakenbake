@@ -104,13 +104,6 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser == null) {
-            Intent intent = new Intent(SignupActivity.this, LocationActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
 
     private void createAccount(String email, String password) throws Exception{
@@ -120,7 +113,8 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.i(TAG, "createUserWithEmail:success");
+
+                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.

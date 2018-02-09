@@ -7,31 +7,44 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.classes.Places;
+import nshmadhani.com.wakenbake.main_screens.models.Places;
 
 /**
  * Created by Nachiket on 03-Feb-18.
  */
 
-public class PlacesListAdapter extends RecyclerView.Adapter {
+public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ListViewHolder> {
+
+
+
+    private List<Places> mData;
+
+    public PlacesListAdapter(List<Places> data) {
+        mData = data;
+    }
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_places, parent, false);
+    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater li = LayoutInflater.from(parent.getContext());
+        View view = li.inflate(R.layout.places_item_list,parent,false);
         return new ListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ListViewHolder holder, int position) {
+        holder.bindView(mData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData.size();
     }
 
-    private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTextView;
         private ImageView mImageView;
@@ -43,9 +56,9 @@ public class PlacesListAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(this);
         }
 
-        public void bindView (int position) {
+        public void bindView (Places places) {
 
-            Places places = new Places();
+
             //Name of the Places
             mTextView.setText(places.getName());
             //Images of the places
