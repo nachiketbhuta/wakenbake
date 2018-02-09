@@ -1,6 +1,7 @@
 package nshmadhani.com.wakenbake.main_screens.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.models.Places;
+
+import static nshmadhani.com.wakenbake.main_screens.activities.LocationActivity.TAG;
 
 /**
  * Created by Nachiket on 03-Feb-18.
@@ -51,7 +54,8 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
 
         public ListViewHolder(View itemView) {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.placeText);
+            Log.d(TAG, "ListViewHolder: "+itemView);
+            mTextView = itemView.findViewById(R.id.placeName);
             mImageView = itemView.findViewById(R.id.placeImage);
             itemView.setOnClickListener(this);
         }

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: "+location);
 
-        GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyAkXTlzpX9fXXmEkU5vPz9Z9r31Kjx0Dw8").build();
+        GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
         nearbySearchRequest
@@ -65,15 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                     @Override
                     public void onResult(PlacesSearchResponse result) {
-                        Log.d(TAG, "onResult: "+result.results[0]);
                         for (PlacesSearchResult place : result.results) {
                             Places places =  new Places();
                             places.setName(place.name);
-
-                            mPlacesList.add(places);
                             Log.d(TAG, "onResult: "+places.getName());
-
+                            mPlacesList.add(places);
                         }
+                        Log.d(TAG, "onResult: "+mPlacesList.size());
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onFailure(Throwable e) {
                         Log.e(TAG, "onFailure: ", e);
