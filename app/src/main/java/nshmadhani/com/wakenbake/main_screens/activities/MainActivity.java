@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
         nearbySearchRequest
-                .location(new LatLng("19.106902, 72.834974"))
+                .location(new LatLng(location.getLatitude(), location.getLongitude()))
                 .radius(1000)
                 .type(PlaceType.FOOD)
                 .openNow(true)
@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
                             mPlacesList.add(places);
                             Log.d(TAG, "onResult: "+places.getName());
-
 
                         }
                         MainActivity.this.runOnUiThread(new Runnable() {
