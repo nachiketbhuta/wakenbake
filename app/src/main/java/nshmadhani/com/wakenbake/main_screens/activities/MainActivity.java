@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                     @Override
                     public void onResult(PlacesSearchResponse result) {
+
                         for (PlacesSearchResult place : result.results) {
                             Places places =  new Places();
                             places.setName(place.name);

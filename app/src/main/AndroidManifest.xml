@@ -19,13 +19,15 @@
         <activity android:name=".main_screens.activities.SplashScreenActivity"></activity>
         <activity android:name=".main_screens.activities.SignupActivity" />
         <activity android:name=".main_screens.activities.LoginActivity" />
-        <activity android:name=".main_screens.activities.OtpActivity" />
-        <activity android:name=".main_screens.activities.LocationActivity">
+        <activity android:name=".main_screens.activities.OtpActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".main_screens.activities.LocationActivity">
+
         </activity>
 
         <!-- Google Maps -->
