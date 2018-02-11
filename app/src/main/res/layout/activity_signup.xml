@@ -10,7 +10,6 @@
 
     <FrameLayout
         android:layout_centerInParent="true"
-        android:paddingTop="30dp"
         android:layout_width="320dp"
         android:layout_height="500dp">
 
@@ -18,7 +17,7 @@
             android:id="@+id/signupCardView"
             android:elevation="10dp"
             app:cardBackgroundColor="#02317c"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="500dp"
@@ -126,17 +125,6 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <!-- Floating Action Button-->
-        <android.support.design.widget.FloatingActionButton
-            android:elevation="3dp"
-            android:id="@+id/signupFloatingButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:src="@drawable/plus_x"
-            android:backgroundTint="#2196f3"
-            android:transitionName="loginFab"
-            android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
 
 </RelativeLayout>
