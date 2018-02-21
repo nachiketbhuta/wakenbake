@@ -15,22 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "1515831664-dtpil3krgukhbqntt8c7tqt09jl5en6j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nshmadhani.com.wakenbake",
-            "certificate_hash": "2d3ddab3c8cbb7f2337a7d8d7a44dc8c8d90bed6"
-          }
-        },
-        {
-          "client_id": "1515831664-tvo527m83lbndnmpjmr8kbbbo5gtt6jm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nshmadhani.com.wakenbake",
-            "certificate_hash": "ad15d8c7ee672a4126481b359f987ded0125c8f1"
-          }
-        },
-        {
           "client_id": "1515831664-sd1vu95be6tbopitg5fgu3h83qq15ivn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

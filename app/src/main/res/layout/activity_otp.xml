@@ -9,10 +9,9 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="330dp"
-        android:layout_height="400dp"
+        android:layout_height="330dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp"
-        app:cardBackgroundColor="#02317c"
         app:cardUseCompatPadding="true"
         android:layout_centerInParent="true"
         android:id="@+id/otpCardView"
@@ -36,8 +35,7 @@
                     android:textSize="21sp"
                     android:hint="Enter Phone Number"
                     android:textColor="#000000"
-                    android:theme="@style/TextLabel"
-                    android:id="@+id/otpPhoneNumber"
+                    android:theme="@style/TextLabel"                    android:id="@+id/otpPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -48,7 +46,7 @@
 
             <!--OTP Title Layout -->
             <RelativeLayout
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
 
@@ -59,8 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:text="OTP"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:textColor="#FFCC00"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -102,14 +100,12 @@
                     android:layout_width="wrap_content">
                     <Button
                         android:id="@+id/confirmButton"
-                        android:layout_marginTop="20dp"
                         android:background="@drawable/bt_shape"
-                        android:backgroundTint="#FFFFFF"
                         android:stateListAnimator="@drawable/state_list_animator_z"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:text="Confirm"
-                        android:textColor="#2fa881">
+                        android:textColor="#d3d3d3">
                     </Button>
                 </LinearLayout>
             </LinearLayout>

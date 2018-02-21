@@ -13,7 +13,7 @@ import nshmadhani.com.wakenbake.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    long Delay = 3000; // duration of the Splash Screen
+    long Delay = 8000; // duration of the Splash Screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 // Start HomeScreenActivity.class
                 Intent intent = new Intent(SplashScreenActivity.this,
-                        LoginActivity.class);
+                        SignupActivity.class);
                 startActivity(intent);
             }
         };

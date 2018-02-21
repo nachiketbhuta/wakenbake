@@ -1,16 +1,11 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +32,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     public Button mLoginButton;
     public TextView mSignupLinkTextView;
     public FirebaseAuth mAuth;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +53,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         String email = mLoginEmailEditText.getText().toString(); // Getting the value of the email
                         String password = mLoginPasswordEditText.getText().toString(); // Getting the value of the password
 
-                        mLoginEmailEditText.setEnabled(true);
+                        mLoginEmailEditText.setEnabled(false);
                         mLoginPasswordEditText.setEnabled(true);
-
 
                         //Checking if both the fields are empty
                         if (!email.equals("") && !password.equals("")) {
                             try {
                                 signIn(email, password);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    Explode explode = null;
-                                    explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                }
-
-                                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                Intent i2 = new Intent(LoginActivity.this,OtpActivity.class);
-                                startActivity(i2, oc2.toBundle());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -107,51 +89,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         finish();
                     }
                 });
-
-
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-                            getWindow().setExitTransition(null);
-                            getWindow().setEnterTransition(null);
-                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, fab, fab.getTransitionName());
-                            startActivity(new Intent(LoginActivity.this, SignupActivity.class), options.toBundle());
-
-                            /*
-
-                            Explode explode = new Explode();
-                            explode.setDuration(500);
-
-                            getWindow().setExitTransition(explode);
-                            getWindow().setEnterTransition(explode);
-
-                            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-
-                            Intent i2 = new Intent(LoginActivity.this, SignupActivity.class);
-                            startActivity(i2, activityOptionsCompat.toBundle());
-*/
-
-                            /*
-                             Explode explode = new Explode();
-                explode.setDuration(500);
-
-                getWindow().setExitTransition(explode);
-                getWindow().setEnterTransition(explode);
-                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this);
-                Intent i2 = new Intent(MainActivity.this,LoginSuccessActivity.class);
-                startActivity(i2, oc2.toBundle());
-                            */
-                        }else{
-                            //startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-
-                        }
-
-
-                            }
-                });
             } else {
                 mLoginEmailEditText.setEnabled(true);
                 mLoginPasswordEditText.setEnabled(true);
@@ -169,12 +106,19 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         mLoginPasswordEditText = findViewById(R.id.loginPassword);
         mLoginButton = findViewById(R.id.loginButton);
         mSignupLinkTextView = findViewById(R.id.loginSignup);
-        fab = findViewById(R.id.fab);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void signIn (String email, String password) throws Exception {
@@ -185,9 +129,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
-                            Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
-                            startActivity(intent);
-                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
