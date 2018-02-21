@@ -20,7 +20,13 @@ import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.adapters.PlacesListAdapter;
+import nshmadhani.com.wakenbake.main_screens.interfaces.RetrofitApiInterface;
 import nshmadhani.com.wakenbake.main_screens.models.Places;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,6 +91,42 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure: ", e);
                     }
                 });
-    }
 
+
+        //Getting places from firebase
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(RetrofitApiInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
+
+        Call<List<Places>> call = apiInterface.getPlacesFromFirebase();
+
+        call.enqueue(new Callback<List<Places>>() {
+            @Override
+            public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
+                List<Places> placesList = response.body();
+
+                for(Places places : placesList) {
+                    Places placesFromFirebase =  new Places();
+                    placesFromFirebase.setName(places.name);
+                    Log.d(TAG, "onResult: "+places.getName());
+                    mPlacesList.add(places);
+                }
+                Log.d(TAG, "onResult: "+mPlacesList.size());
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<List<Places>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
+}
