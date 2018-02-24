@@ -1,8 +1,8 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,15 +30,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-
     public static final String TAG = MainActivity.class.getSimpleName();
-
-
     private List<Places> mPlacesList;
     private RecyclerView mPlacesRecyclerView;
-
     private PlacesListAdapter mListAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
         mPlacesList = new ArrayList<>();
         mPlacesRecyclerView  = findViewById(R.id.recyclerView);
-
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         mListAdapter = new PlacesListAdapter(mPlacesList);
-
-
         mPlacesRecyclerView.setAdapter(mListAdapter);
 
         Location location  = (Location) getIntent().getExtras().get("location");
-
-
         Log.d(TAG, "onCreate: "+location);
+
+//        Intent intent = getIntent();
+//        double latitude = intent.getDoubleExtra("latitude", 19.00);
+//        double longitude = intent.getDoubleExtra("longitude", 73.00);
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
@@ -74,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                         for (PlacesSearchResult place : result.results) {
                             Places places =  new Places();
+
                             places.setName(place.name);
                             Log.d(TAG, "onResult: "+places.getName());
                             mPlacesList.add(places);

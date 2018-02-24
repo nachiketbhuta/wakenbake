@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:layout_height="wrap_content">
 
+    <!-- Image of the places -->
     <ImageView
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -13,6 +14,7 @@
         android:layout_weight="1"
         android:id="@+id/placeImage" />
 
+    <!-- Name of the place-->
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"

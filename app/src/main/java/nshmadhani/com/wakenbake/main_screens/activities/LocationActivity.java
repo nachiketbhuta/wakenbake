@@ -9,30 +9,21 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.maps.GeoApiContext;
-import com.google.maps.NearbySearchRequest;
-import com.google.maps.PendingResult;
-import com.google.maps.model.LatLng;
-import com.google.maps.model.PlaceType;
-import com.google.maps.model.PlacesSearchResponse;
-import com.google.maps.model.PlacesSearchResult;
 import com.skyfishjy.library.RippleBackground;
 
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.fragments.ErrorDialogFragment;
 import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
 import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
@@ -138,24 +129,28 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         } else {
-
             mFusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             //Got last known location. in Some rare situations this can be null.
                             if (location != null) {
-                                Log.i(TAG, "onSuccess: " + location.toString());
+                                Log.d(TAG, "onSuccess: " + location.toString());
 
                                 Intent intent =  new Intent(LocationActivity.this,MainActivity.class);
-                                intent.putExtra("location",location);
+//                                intent.putExtra("latitude",location.getLatitude());
+//                                intent.putExtra("longitude",location.getLongitude());
+                                intent.putExtra("location", location);
                                 startActivity(intent);
                                 finish();
+                            } else {
+                                Log.d("OnFailure ", "onSuccess: In Else Block");
                             }
                         }
                     });
         }
     }
+
 
     @Override
     public boolean isNetworkAvailable() {
