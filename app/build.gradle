@@ -51,5 +51,6 @@ dependencies {
     compile 'com.android.support:support-core-utils:26.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.2.1'
     implementation 'com.firebaseui:firebase-ui-database:3.2.1'
+    implementation 'com.github.mancj:MaterialSearchBar:0.7.6'
 }
 apply plugin: 'com.google.gms.google-services'
