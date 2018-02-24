@@ -6,22 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@drawable/ui5"
     tools:context="nshmadhani.com.wakenbake.main_screens.activities.SignupActivity">
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:text="Wake N Bake"
+        android:paddingStart="26.5dp"
+        android:textColor="#fff"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
 
     <FrameLayout
         android:layout_centerInParent="true"
         android:paddingTop="30dp"
         android:layout_width="320dp"
-        android:layout_height="500dp">
+        android:layout_height="455dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/signupCardView"
             android:elevation="10dp"
-            app:cardBackgroundColor="#02317c"
-            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="#000000"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="470dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
@@ -57,6 +69,7 @@
                         android:id="@+id/signupUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
                         android:inputType="textPersonName"
                         android:background="@drawable/selector_bg_edit_2"
                         android:textCursorDrawable="@drawable/bg_input_cursor_2"
@@ -79,6 +92,7 @@
                         android:id="@+id/signupEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
                         android:inputType="textEmailAddress"
                         android:background="@drawable/selector_bg_edit_2"
                         android:textCursorDrawable="@drawable/bg_input_cursor_2"
@@ -102,11 +116,11 @@
                         android:id="@+id/signupPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
                         android:inputType="textPassword"
                         android:background="@drawable/selector_bg_edit_2"
                         android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp" />
+                        android:paddingBottom="4dp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <!--Sign Up Button -->
@@ -128,14 +142,16 @@
 
         <!-- Floating Action Button-->
         <android.support.design.widget.FloatingActionButton
-            android:elevation="3dp"
+            android:elevation="5dp"
+            android:paddingTop="20dp"
             android:id="@+id/signupFloatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="normal"
             android:src="@drawable/plus_x"
-            android:backgroundTint="#2196f3"
+            android:backgroundTint="#000000"
             android:transitionName="loginFab"
+            app:borderWidth="0dp"
             android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
 

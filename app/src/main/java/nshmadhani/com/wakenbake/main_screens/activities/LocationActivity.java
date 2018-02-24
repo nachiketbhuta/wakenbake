@@ -64,7 +64,8 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (isNetworkAvailable()) { //Start Ripple Effect
             rippleBackground.startRippleAnimation();
-            makeUseOfNewLocation();
+            //makeUseOfNewLocation();
+            gettingLocation();
         } else {
             NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
             connectionDialog.show(getFragmentManager(), "no_internet_dialog");
@@ -72,62 +73,66 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
 
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//
-//        if (grantResults.length > 0 && grantResults[0]
-//                == PackageManager.PERMISSION_GRANTED) { //If permission is granted
-//            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                    == PackageManager.PERMISSION_GRANTED) // If ACCESS_FINE_LOCATION is granted
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener); //Update the location
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-//    private void gettingLocation() {
-//
-//        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-//        locationListener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                makeUseOfNewLocation();
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String s, int i, Bundle bundle) {
-//                Log.d(TAG, "onStatusChanged: ");
-//            }
-//
-//            @Override
-//            public void onProviderEnabled(String s) {
-//                Log.d(TAG, "onProviderEnabled: ");
-//            }
-//
-//            @Override
-//            public void onProviderDisabled(String s) {
-//                Log.d(TAG, "onProviderDisabled: ");
-//            }
-//        };
-//
-//
-//        //Checking for permission for phone less than MarshMallow
-//        if (Build.VERSION.SDK_INT < 23) {
-//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-//            }
-//        }
-//
-//        //Phone is above Marshmallow
-//        else {
-//            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                //Ask for permission
-//                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//            } else {
-//                //We have the permissions of location
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-//            }
-//        }
-//    }
+        if (grantResults.length > 0 && grantResults[0]
+                == PackageManager.PERMISSION_GRANTED) { //If permission is granted
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) // If ACCESS_FINE_LOCATION is granted
+               //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener); //Update the location
+                //gettingLocation();
+                makeUseOfNewLocation();
+        }
+    }
+
+    private void gettingLocation() {
+
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                makeUseOfNewLocation();
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+                Log.d(TAG, "onStatusChanged: ");
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+                Log.d(TAG, "onProviderEnabled: ");
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Log.d(TAG, "onProviderDisabled: ");
+            }
+        };
+
+
+        //Checking for permission for phone less than MarshMallow
+        if (Build.VERSION.SDK_INT < 23) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                makeUseOfNewLocation();
+            }
+        }
+
+        //Phone is above Marshmallow
+        else {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //Ask for permission
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            } else {
+                //We have the permissions of location
+                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                makeUseOfNewLocation();
+            }
+        }
+    }
 
     private void makeUseOfNewLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

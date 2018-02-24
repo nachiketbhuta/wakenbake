@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (currentUser == null) {
+        if (currentUser != null) {
             Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
             startActivity(intent);
             finish();
@@ -129,6 +129,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.

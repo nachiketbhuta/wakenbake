@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mPlacesList = new ArrayList<>();
-        mPlacesRecyclerView  = findViewById(R.id.rv);
+        mPlacesRecyclerView  = findViewById(R.id.recyclerView);
 
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -103,16 +103,18 @@ public class MainActivity extends AppCompatActivity {
 
         Call<List<Places>> call = apiInterface.getPlacesFromFirebase();
 
+        Log.d(TAG, "onCreate: Connection successful");
         call.enqueue(new Callback<List<Places>>() {
+
             @Override
             public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
                 List<Places> placesList = response.body();
 
-                for(Places places : placesList) {
+                for(Places p : placesList) {
                     Places placesFromFirebase =  new Places();
-                    placesFromFirebase.setName(places.name);
-                    Log.d(TAG, "onResult: "+places.getName());
-                    mPlacesList.add(places);
+                    placesFromFirebase.setName(p.name);
+                    Log.d(TAG, "onResult: "+p.getName());
+                    mPlacesList.add(placesFromFirebase);
                 }
                 Log.d(TAG, "onResult: "+mPlacesList.size());
                 MainActivity.this.runOnUiThread(new Runnable() {

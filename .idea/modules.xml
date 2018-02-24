@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WakeNBake.iml" filepath="$PROJECT_DIR$/WakeNBake.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerviewonclickmodule/recyclerviewonclickmodule.iml" filepath="$PROJECT_DIR$/recyclerviewonclickmodule/recyclerviewonclickmodule.iml" />
     </modules>
   </component>
 </project>

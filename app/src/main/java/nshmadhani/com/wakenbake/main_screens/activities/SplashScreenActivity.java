@@ -8,12 +8,13 @@ import android.view.Window;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.supercharge.shimmerlayout.ShimmerLayout;
 import nshmadhani.com.wakenbake.R;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    long Delay = 8000; // duration of the Splash Screen
+    long Delay = 3000; // duration of the Splash Screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         displaySplash(); // Displays the Splash Screen
 
+        //Shimmer effect (Facebook)
+        ShimmerLayout shimmerText = (ShimmerLayout) findViewById(R.id.shimmer_text);
+        shimmerText.startShimmerAnimation();
+
     }
+
     private void displaySplash () {
         // Create a Timer
         Timer RunSplash = new Timer();
@@ -37,8 +43,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 // Start HomeScreenActivity.class
                 Intent intent = new Intent(SplashScreenActivity.this,
-                        SignupActivity.class);
+                        LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         };
         // Start the timer
