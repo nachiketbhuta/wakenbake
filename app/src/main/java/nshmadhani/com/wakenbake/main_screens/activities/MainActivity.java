@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
                 List<Places> placesList = response.body();
 
-                for(Places p : placesList != null ? placesList : null) {
+                for(Places p : placesList) {
                     Places placesFromFirebase =  new Places();
                     placesFromFirebase.setName(p.name);
                     Log.d(TAG, "onResult: "+p.getName());

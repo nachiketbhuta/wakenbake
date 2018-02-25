@@ -57,8 +57,8 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (isNetworkAvailable()) { //Start Ripple Effect
             rippleBackground.startRippleAnimation();
-            //makeUseOfNewLocation();
-            gettingLocation();
+            makeUseOfNewLocation();
+            Log.d(TAG, "onCreate:  in if ");
         } else {
             NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
             connectionDialog.show(getFragmentManager(), "no_internet_dialog");
@@ -72,44 +72,23 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
         if (grantResults.length > 0 && grantResults[0]
                 == PackageManager.PERMISSION_GRANTED) { //If permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) // If ACCESS_FINE_LOCATION is granted
-               //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener); //Update the location
-                //gettingLocation();
+                    == PackageManager.PERMISSION_GRANTED) {// If ACCESS_FINE_LOCATION is granted
                 makeUseOfNewLocation();
+                Log.d(TAG, "onRequestPermissionsResult: in inner if ");
+            }
+            else {
+                Log.d(TAG, "onRequestPermissionsResult: in inner else");
+            }
+            Log.d(TAG, "onRequestPermissionsResult: in outer if");
+        } else {
+            Log.d(TAG, "onRequestPermissionsResult: in outer else");
         }
-    }
-
-    private void gettingLocation() {
-
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                makeUseOfNewLocation();
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-                Log.d(TAG, "onStatusChanged: ");
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-                Log.d(TAG, "onProviderEnabled: ");
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-                Log.d(TAG, "onProviderDisabled: ");
-            }
-        };
-
 
         //Checking for permission for phone less than MarshMallow
         if (Build.VERSION.SDK_INT < 23) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 makeUseOfNewLocation();
+                Log.d(TAG, "gettingLocation: below");
             }
         }
 
@@ -118,29 +97,29 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 //Ask for permission
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                Log.d(TAG, "gettingLocation: above marshmallow");
             } else {
                 //We have the permissions of location
                 //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 makeUseOfNewLocation();
+                Log.d(TAG, "gettingLocation: above else");
             }
         }
     }
 
     private void makeUseOfNewLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        } else {
+
+        try {
             mFusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             //Got last known location. in Some rare situations this can be null.
+                            Log.d(TAG, "onSuccessBeforeIf: " + location.toString());
                             if (location != null) {
                                 Log.d(TAG, "onSuccess: " + location.toString());
 
                                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
-//                                intent.putExtra("latitude",location.getLatitude());
-//                                intent.putExtra("longitude",location.getLongitude());
                                 intent.putExtra("location", location);
                                 startActivity(intent);
                                 finish();
@@ -148,8 +127,10 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
                         }
                     });
         }
+        catch (SecurityException se){
+            se.printStackTrace();
+        }
     }
-
 
     @Override
     public boolean isNetworkAvailable() {

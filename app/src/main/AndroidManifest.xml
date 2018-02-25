@@ -31,22 +31,7 @@
         <!-- Google Maps -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            p_key" />
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".main_screens.activities.MainActivity" />
         <activity android:name=".main_screens.activities.ForgotPasswordActivity" />

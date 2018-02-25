@@ -12,18 +12,19 @@ public class Places {
     public String name;
 
     @SerializedName("number")
-    private String phoneNumber;
+    public String phoneNumber;
 
     @SerializedName("ratings")
-    private double ratings;
+    public double ratings;
 
     @SerializedName("open")
-    private int openTime;
+    public int openTime;
 
     @SerializedName("close")
-    private int closeTime;
+    public int closeTime;
+
     @SerializedName("fooditems")
-    private String foodItems;
+    public String foodItems;
 
     private String address;
 
