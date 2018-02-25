@@ -43,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 // Start HomeScreenActivity.class
                 Intent intent = new Intent(SplashScreenActivity.this,
-                        LoginActivity.class);
+                        SignupActivity.class);
                 startActivity(intent);
                 finish();
             }

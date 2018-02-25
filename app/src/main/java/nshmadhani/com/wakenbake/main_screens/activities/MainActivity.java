@@ -47,17 +47,13 @@ public class MainActivity extends AppCompatActivity {
         mPlacesRecyclerView.setAdapter(mListAdapter);
 
         Location location = (Location) getIntent().getExtras().get("location");
-        Log.d(TAG, "onCreate: "+location);
+        Log.d(TAG, "onCreate: " + location);
 
-//        Intent intent = getIntent();
-//        double latitude = intent.getDoubleExtra("latitude", 19.00);
-//        double longitude = intent.getDoubleExtra("longitude", 73.00);
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
-        if (location != null) {
-            nearbySearchRequest
+        nearbySearchRequest
                     .location(new LatLng(location.getLatitude(), location.getLongitude()))
                     .radius(1000)
                     .type(PlaceType.FOOD)
@@ -86,11 +82,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(TAG, "onFailure: ", e);
                         }
                     });
-        }
-        else {
-            Log.d(TAG, "onCreate: " + "Location is null");
-        }
-
 
         //Getting places from firebase
         Retrofit retrofit = new Retrofit.Builder()
