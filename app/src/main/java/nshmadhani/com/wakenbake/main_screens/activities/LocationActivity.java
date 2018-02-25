@@ -63,7 +63,6 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
             NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
             connectionDialog.show(getFragmentManager(), "no_internet_dialog");
         }
-
     }
 
     @Override

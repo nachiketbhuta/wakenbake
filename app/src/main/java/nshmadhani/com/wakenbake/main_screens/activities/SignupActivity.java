@@ -94,6 +94,8 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
 
                 NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
                 connectionDialog.show(getFragmentManager(), "no_internet_dialog");
+
+                System.exit(1);
             }
         }
         catch (Exception e) {
