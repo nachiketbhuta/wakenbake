@@ -15,7 +15,7 @@ public interface RetrofitApiInterface {
 
     String BASE_URL = "http://wakenbake.epizy.com/wakenbake/";
 
-    @GET("search.php/")
+    @GET("search.php")
     Call<List<Places>> getPlacesFromFirebase();
 
 }

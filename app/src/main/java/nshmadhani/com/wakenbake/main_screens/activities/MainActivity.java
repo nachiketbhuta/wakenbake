@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.JsonReader;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PendingResult;
@@ -83,10 +86,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-        //Getting places from firebase
+        //Getting places from Firebase
+        Gson gson = new GsonBuilder().setLenient().create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApiInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     Places placesFromFirebase =  new Places();
                     placesFromFirebase.setName(p.name);
                     Log.d(TAG, "onResult: "+p.getName());
-                    mPlacesList.add(placesFromFirebase);
+                    mPlacesList.add(p);
                 }
                 Log.d(TAG, "onResult: "+mPlacesList.size());
                 MainActivity.this.runOnUiThread(new Runnable() {
