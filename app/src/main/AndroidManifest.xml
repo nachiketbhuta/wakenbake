@@ -26,15 +26,15 @@
         <activity android:name=".main_screens.activities.SignupActivity" />
         <activity android:name=".main_screens.activities.LoginActivity" />
         <activity android:name=".main_screens.activities.OtpActivity" />
-        <activity android:name=".main_screens.activities.LocationActivity"></activity>
+        <activity android:name=".main_screens.activities.LocationActivity" />
 
         <!-- Google Maps -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".main_screens.activities.MainActivity"></activity>
-        <activity android:name=".main_screens.activities.ForgotPasswordActivity"></activity>
+        <activity android:name=".main_screens.activities.MainActivity" />
+        <activity android:name=".main_screens.activities.ForgotPasswordActivity" />
     </application>
 
 </manifest>

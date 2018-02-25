@@ -22,6 +22,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.skyfishjy.library.RippleBackground;
+import com.google.maps.GeoApiContext;
+import com.google.maps.NearbySearchRequest;
+import com.google.maps.PendingResult;
+import com.google.maps.model.LatLng;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
@@ -36,10 +40,8 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
     public ImageView locationImageView;
     public TextView gettingLocationTextView;
 
-
     public static final String TAG = LocationActivity.class.getSimpleName();
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,14 +139,12 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
                             if (location != null) {
                                 Log.d(TAG, "onSuccess: " + location.toString());
 
-                                Intent intent =  new Intent(LocationActivity.this,MainActivity.class);
+                                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
 //                                intent.putExtra("latitude",location.getLatitude());
 //                                intent.putExtra("longitude",location.getLongitude());
                                 intent.putExtra("location", location);
                                 startActivity(intent);
                                 finish();
-                            } else {
-                                Log.d("OnFailure ", "onSuccess: In Else Block");
                             }
                         }
                     });
