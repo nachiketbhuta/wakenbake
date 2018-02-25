@@ -35,7 +35,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     public EditText mSignupPasswordEditText;
     public Button mSignupSignupButton;
     public FloatingActionButton floatingActionButton;
-   // public TextView mSignupLoginLinkTextView;
+    public TextView mSignupLoginLinkTextView;
     public FirebaseAuth mAuth;
 
     @Override
@@ -79,15 +79,15 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 });
 
                 //Clicking on the Signup Link
-//                mSignupLoginLinkTextView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        // Redirecting to the Signup Activity
-//                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
+                mSignupLoginLinkTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Redirecting to the Signup Activity
+                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             } else {
                 mSignupEmailEditText.setEnabled(true);
                 mSignupPasswordEditText.setEnabled(true);
@@ -113,7 +113,8 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
+                            Intent intent = new Intent(SignupActivity.this, OtpActivity.class);
+                            startActivity(intent);
                             finish();
 
                         } else {
@@ -131,14 +132,17 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
         mSignupEmailEditText = findViewById(R.id.signupEmail);
         mSignupPasswordEditText = findViewById(R.id.signupPassword);
         mSignupSignupButton = findViewById(R.id.signupButton);
-       // mSignupLoginLinkTextView = findViewById(R.id.mSignupLoginLinkTextView);
+        mSignupLoginLinkTextView = findViewById(R.id.signupLink);
     }
 
     @Override
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean networkAvailable = true;
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        boolean networkAvailable = false;
 
         if (networkInfo != null && networkInfo.isConnected())
             networkAvailable = true;

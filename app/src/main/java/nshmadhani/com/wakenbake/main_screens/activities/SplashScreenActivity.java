@@ -27,7 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         displaySplash(); // Displays the Splash Screen
 
         //Shimmer effect (Facebook)
-        ShimmerLayout shimmerText = (ShimmerLayout) findViewById(R.id.shimmer_text);
+        ShimmerLayout shimmerText = findViewById(R.id.shimmer_text);
         shimmerText.startShimmerAnimation();
 
     }

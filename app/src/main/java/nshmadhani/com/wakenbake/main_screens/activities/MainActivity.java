@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mListAdapter = new PlacesListAdapter(mPlacesList);
         mPlacesRecyclerView.setAdapter(mListAdapter);
 
-        Location location  = (Location) getIntent().getExtras().get("location");
+        Location location = (Location) getIntent().getExtras().get("location");
         Log.d(TAG, "onCreate: "+location);
 
 //        Intent intent = getIntent();
@@ -56,35 +56,40 @@ public class MainActivity extends AppCompatActivity {
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
-        nearbySearchRequest
-                .location(new LatLng(location.getLatitude(), location.getLongitude()))
-                .radius(1000)
-                .type(PlaceType.FOOD)
-                .openNow(true)
-                .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
-                    @Override
-                    public void onResult(PlacesSearchResponse result) {
+        if (location != null) {
+            nearbySearchRequest
+                    .location(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .radius(1000)
+                    .type(PlaceType.FOOD)
+                    .openNow(true)
+                    .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
+                        @Override
+                        public void onResult(PlacesSearchResponse result) {
 
-                        for (PlacesSearchResult place : result.results) {
-                            Places places =  new Places();
+                            for (PlacesSearchResult place : result.results) {
+                                Places places =  new Places();
 
-                            places.setName(place.name);
-                            Log.d(TAG, "onResult: "+places.getName());
-                            mPlacesList.add(places);
-                        }
-                        Log.d(TAG, "onResult: "+mPlacesList.size());
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mListAdapter.notifyDataSetChanged();
+                                places.setName(place.name);
+                                Log.d(TAG, "onResult: "+places.getName());
+                                mPlacesList.add(places);
                             }
-                        });
-                    }
-                    @Override
-                    public void onFailure(Throwable e) {
-                        Log.e(TAG, "onFailure: ", e);
-                    }
-                });
+                            Log.d(TAG, "onResult: "+mPlacesList.size());
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mListAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                        @Override
+                        public void onFailure(Throwable e) {
+                            Log.e(TAG, "onFailure: ", e);
+                        }
+                    });
+        }
+        else {
+            Log.d(TAG, "onCreate: " + "Location is null");
+        }
 
 
         //Getting places from firebase
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
                 List<Places> placesList = response.body();
 
-                for(Places p : placesList) {
+                for(Places p : placesList != null ? placesList : null) {
                     Places placesFromFirebase =  new Places();
                     placesFromFirebase.setName(p.name);
                     Log.d(TAG, "onResult: "+p.getName());

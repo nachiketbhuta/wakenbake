@@ -146,8 +146,11 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
     @Override
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean networkAvailable = true;
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        boolean networkAvailable = false;
 
         if (networkInfo != null && networkInfo.isConnected())
             networkAvailable = true;

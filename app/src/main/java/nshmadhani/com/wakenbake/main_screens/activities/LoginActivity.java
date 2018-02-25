@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     public EditText mLoginEmailEditText;
     public EditText mLoginPasswordEditText;
     public Button mLoginButton;
-    public TextView mSignupLinkTextView;
+    public TextView mForgotPassword;
     public FirebaseAuth mAuth;
 
     @Override
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 });
 
                 //Clicking on the Signup Link
-                mSignupLinkTextView.setOnClickListener(new View.OnClickListener() {
+                mForgotPassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         // Redirecting to the Signup Activity
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         mLoginEmailEditText = findViewById(R.id.loginUsername);
         mLoginPasswordEditText = findViewById(R.id.loginPassword);
         mLoginButton = findViewById(R.id.loginButton);
-        mSignupLinkTextView = findViewById(R.id.loginSignup);
+        mForgotPassword = findViewById(R.id.forgotPassword);
     }
 
     @Override
@@ -145,8 +145,11 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     @Override
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean networkAvailable = true;
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        boolean networkAvailable = false;
 
         if (networkInfo != null && networkInfo.isConnected())
             networkAvailable = true;
