@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     @Override
                     public void onClick(View view) {
                         // Redirecting to the Signup Activity
-                        Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                         startActivity(intent);
                         finish();
                     }
