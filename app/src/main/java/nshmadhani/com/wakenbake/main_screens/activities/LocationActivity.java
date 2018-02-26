@@ -71,65 +71,46 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
 
         if (grantResults.length > 0 && grantResults[0]
                 == PackageManager.PERMISSION_GRANTED) { //If permission is granted
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {// If ACCESS_FINE_LOCATION is granted
-                makeUseOfNewLocation();
-                Log.d(TAG, "onRequestPermissionsResult: in inner if ");
-            }
-            else {
-                Log.d(TAG, "onRequestPermissionsResult: in inner else");
-            }
-            Log.d(TAG, "onRequestPermissionsResult: in outer if");
+            makeUseOfNewLocation();
         } else {
-            Log.d(TAG, "onRequestPermissionsResult: in outer else");
-        }
-
-        //Checking for permission for phone less than MarshMallow
-        if (Build.VERSION.SDK_INT < 23) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                makeUseOfNewLocation();
-                Log.d(TAG, "gettingLocation: below");
-            }
-        }
-
-        //Phone is above Marshmallow
-        else {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                //Ask for permission
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                Log.d(TAG, "gettingLocation: above marshmallow");
-            } else {
-                //We have the permissions of location
-                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                makeUseOfNewLocation();
-                Log.d(TAG, "gettingLocation: above else");
-            }
+            Log.d(TAG, "onRequestPermissionsResult: ");
         }
     }
 
     private void makeUseOfNewLocation() {
 
-        try {
-            mFusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            //Got last known location. in Some rare situations this can be null.
-                            Log.d(TAG, "onSuccessBeforeIf: " + location.toString());
-                            if (location != null) {
-                                Log.d(TAG, "onSuccess: " + location.toString());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {// If ACCESS_FINE_LOCATION is granted
+                //makeUseOfNewLocation();
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);         
+                Log.d(TAG, "onRequestPermissionsResult: in inner if ");
+            } else {
+                Log.d(TAG, "onRequestPermissionsResult: in inner else");
+            }
+            return;
+        }
+        mFusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        //Got last known location. in Some rare situations this can be null.
+                        Log.d(TAG, "onSuccessBeforeIf: " + location.toString());
+                        if (location != null) {
 
-                                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
-                                intent.putExtra("location", location);
-                                startActivity(intent);
-                                finish();
-                            }
+                            Log.d(TAG, "onSuccess: " + location.toString());
+
+                            Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+                            intent.putExtra("latitude", location.getLatitude());
+                            intent.putExtra("longitude", location.getLongitude());
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Log.d(TAG, "onSuccess: " + "in else");
                         }
-                    });
-        }
-        catch (SecurityException se){
-            se.printStackTrace();
-        }
+                    }
+                });
+            
     }
 
     @Override

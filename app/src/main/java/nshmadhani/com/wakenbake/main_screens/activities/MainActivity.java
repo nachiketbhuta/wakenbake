@@ -1,7 +1,9 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,15 +51,17 @@ public class MainActivity extends AppCompatActivity {
         mListAdapter = new PlacesListAdapter(mPlacesList);
         mPlacesRecyclerView.setAdapter(mListAdapter);
 
-        Location location = (Location) getIntent().getExtras().get("location");
-        Log.d(TAG, "onCreate: " + location);
+        Intent intent = getIntent();
+        double latitude = intent.getDoubleExtra("latitude", 0.0);
+        double longitude = intent.getDoubleExtra("longitude", 0.0);
 
+        Log.d(TAG, "onCreate: ");
 
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
         nearbySearchRequest
-                    .location(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .location(new LatLng(latitude, longitude))
                     .radius(1000)
                     .type(PlaceType.FOOD)
                     .openNow(true)
@@ -102,14 +106,16 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Places>>() {
 
             @Override
-            public void onResponse(Call<List<Places>> call, Response<List<Places>> response) {
+            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
                 List<Places> placesList = response.body();
 
-                for(Places p : placesList) {
-                    Places placesFromFirebase =  new Places();
-                    placesFromFirebase.setName(p.name);
-                    Log.d(TAG, "onResult: "+p.getName());
-                    mPlacesList.add(p);
+                if (placesList != null) {
+                    for(Places p : placesList) {
+                        Places placesFromFirebase =  new Places();
+                        placesFromFirebase.setName(p.name);
+                        Log.d(TAG, "onResult: "+p.getName());
+                        mPlacesList.add(p);
+                    }
                 }
                 Log.d(TAG, "onResult: "+mPlacesList.size());
                 MainActivity.this.runOnUiThread(new Runnable() {
