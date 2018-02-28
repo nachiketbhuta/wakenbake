@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="nshmadhani.com.wakenbake.main_screens.activities.MainActivity">
 
+    //Search bar
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        style="@style/MaterialSearchBarLight"
+        app:mt_speechMode="true"
+        app:mt_hint="Search"
+        app:mt_placeholder="WakeNBake"
+        app:mt_maxSuggestionsCount="10"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBar" />
+
+    //Recycler view
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -13,15 +27,17 @@
         android:layout_marginTop="50dp">
     </android.support.v7.widget.RecyclerView>
 
-    <!--
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        app:style="@style/MaterialSearchBarLight"
-        app:mt_speechMode="true"
-        app:mt_hint="Custom hint"
-        app:mt_maxSuggestionsCount="10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchBar" />
+    <android.support.v4.widget.DrawerLayout xmlns:android="HTTP://SCHEMAS.ANDROID.COM/APK/RES/ANDROID" xmlns:app="HTTP://SCHEMAS.ANDROID.COM/APK/RES-AUTO" android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/drawer_layout" android:fitsSystemWindows="true">
 
-    -->
-</RelativeLayout>
+        <!--Main content-->
+        <LinearLayout android:orientation="vertical" android:id="@+id/main_content" android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <include layout="@layout/app_bar"/>
+        </LinearLayout>
+
+        <!--Navigation Drawer-->
+        <android.support.design.widget.NavigationView android:id="@+id/main_drawer" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="start" app:headerLayout="@layout/drawer_header" app:menu="@menu/menu_drawer"/>
+    </android.support.v4.widget.DrawerLayout>
+
+
+</LinearLayout>
