@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.main_screens.adapters;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.Model;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,7 +40,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(parent.getContext());
-        View view = li.inflate(R.layout.places_item_list,parent,false);
+        View view = li.inflate(R.layout.list_places,parent,false);
         return new ListViewHolder(view);
     }
 
@@ -52,6 +60,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
         private TextView mTextView;
         private ImageView mImageView;
 
+
         public ListViewHolder(View itemView) {
             super(itemView);
             Log.d(TAG, "ListViewHolder: "+itemView);
@@ -60,13 +69,16 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
             itemView.setOnClickListener(this);
         }
 
-        public void bindView (Places places) {
 
+        public void imagesFromFirebase(ImageView imageView) {
+            mImageView = imageView;
+        }
 
+        public void bindView (Places places){
             //Name of the Places
             mTextView.setText(places.getName());
             //Images of the places
-            //mImageView.set
+            mImageView.setImageURI(Uri.parse(places.getImageUrl()));
         }
 
         @Override

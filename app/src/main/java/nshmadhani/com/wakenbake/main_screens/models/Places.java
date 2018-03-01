@@ -1,5 +1,7 @@
 package nshmadhani.com.wakenbake.main_screens.models;
 
+import android.widget.ImageView;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -26,14 +28,18 @@ public class Places {
     @SerializedName("fooditems")
     public String foodItems;
 
-    private String address;
+    //Additional required for Google Places
+    public String photoReference;
+    public String placeId;
+    public String placeAddress;
+    public String imageUrl;
 
-    public String getAddress() {
-        return address;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -83,4 +89,30 @@ public class Places {
     public void setFoodItems(String foodItems) {
         this.foodItems = foodItems;
     }
+
+    public String getPhotoReference() {
+        return photoReference;
+    }
+
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
+    public String getPlaceAddress() {
+        return placeAddress;
+    }
+
+    public void setPlaceAddress(String placeAddress) {
+        this.placeAddress = placeAddress;
+    }
+
+
 }
