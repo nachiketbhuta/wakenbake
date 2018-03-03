@@ -78,7 +78,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
             //Name of the Places
             mTextView.setText(places.getName());
             //Images of the places
-            mImageView.setImageURI(Uri.parse(places.getImageUrl()));
+//            mImageView.setImageURI(Uri.parse(places.getImageUrl()));
         }
 
         @Override

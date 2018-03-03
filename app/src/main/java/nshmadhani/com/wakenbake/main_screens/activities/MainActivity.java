@@ -78,19 +78,19 @@ public class MainActivity extends AppCompatActivity {
                                 Places places = new Places();
 
                                 places.setName(place.name);
-
-                                int i = 0; //Count variable
-
-                                String photoReference = place.photos[i].photoReference;
-                                double maxHeight = place.photos[i].height;
-
-                                String imageUrl = "https://maps.googleapis.com/maps/api/place/photo?key=" +
-                                            apiKey + "&photorefernce=" + photoReference + "&maxheight=" + maxHeight;
-
-                                places.setImageUrl(imageUrl);
+//
+//                                int i = 0; //Count variable
+//
+//                                String photoReference = place.photos[i].photoReference;
+//                                double maxHeight = place.photos[i].height;
+//
+//                                String imageUrl = "https://maps.googleapis.com/maps/api/place/photo?key=" +
+//                                            apiKey + "&photorefernce=" + photoReference + "&maxheight=" + maxHeight;
+//
+//                                places.setImageUrl(imageUrl);
                                 Log.d(TAG, "onResult: "+places.getName());
                                 mPlacesList.add(places);
-                                i++;
+                          //      i++;
                             }
                             Log.d(TAG, "onResult: "+mPlacesList.size());
                             MainActivity.this.runOnUiThread(new Runnable() {
@@ -119,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
         Call<List<Places>> call = apiInterface.getPlacesFromFirebase();
 
         Log.d(TAG, "onCreate: Connection successful");
-
-        // Get reference to the file
-        final FirebaseStorage storage = FirebaseStorage.getInstance("gs://practice-ea93b.appspot.com/joints pictures");
-        final StorageReference storageRef = storage.getReference();
 
         call.enqueue(new Callback<List<Places>>() {
 
