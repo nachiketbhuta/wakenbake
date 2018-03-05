@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         String email = mLoginEmailEditText.getText().toString(); // Getting the value of the email
                         String password = mLoginPasswordEditText.getText().toString(); // Getting the value of the password
 
-                        mLoginEmailEditText.setEnabled(false);
+                        mLoginEmailEditText.setEnabled(true);
                         mLoginPasswordEditText.setEnabled(true);
 
                         //Checking if both the fields are empty
