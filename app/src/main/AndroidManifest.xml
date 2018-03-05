@@ -27,14 +27,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".main_screens.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".main_screens.activities.ForgotPasswordActivity" />
+        <activity
+            android:name=".main_screens.activities.NavigationActivity"
+            android:label="@string/title_activity_navigation" />
     </application>
 
 </manifest>

@@ -29,8 +29,6 @@ import static nshmadhani.com.wakenbake.main_screens.activities.LocationActivity.
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ListViewHolder> {
 
-
-
     private List<Places> mData;
 
     public PlacesListAdapter(List<Places> data) {
@@ -70,15 +68,15 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Li
         }
 
 
-        public void imagesFromFirebase(ImageView imageView) {
-            mImageView = imageView;
-        }
+////        public void imagesFromFirebase(ImageView imageView) {
+//            mImageView = imageView;
+//        }
 
         public void bindView (Places places){
             //Name of the Places
             mTextView.setText(places.getName());
             //Images of the places
-            mImageView.setImageURI(Uri.parse(places.getImageUrl()));
+           // mImageView.setImageURI(Uri.parse(places.getImageUrl()));
         }
 
         @Override

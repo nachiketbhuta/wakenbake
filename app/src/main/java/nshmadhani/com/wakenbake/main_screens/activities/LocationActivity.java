@@ -33,9 +33,6 @@ import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
 
 public class LocationActivity extends AppCompatActivity implements ConnectivityReceiver {
 
-    public LocationManager locationManager;
-    public LocationListener locationListener;
-
     public RippleBackground rippleBackground;
     public ImageView locationImageView;
     public TextView gettingLocationTextView;
@@ -97,10 +94,9 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
                         //Got last known location. in Some rare situations this can be null.
                         Log.d(TAG, "onSuccessBeforeIf: " + location.toString());
                         if (location != null) {
-
                             Log.d(TAG, "onSuccess: " + location.toString());
 
-                            Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LocationActivity.this, NavigationActivity.class);
                             intent.putExtra("latitude", location.getLatitude());
                             intent.putExtra("longitude", location.getLongitude());
                             startActivity(intent);

@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                             startActivity(intent);
                             finish();
 
