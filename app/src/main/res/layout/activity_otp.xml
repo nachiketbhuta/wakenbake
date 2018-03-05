@@ -38,7 +38,6 @@
             <!-- Phone Number Edit Text -->
             <android.support.design.widget.TextInputLayout
                 android:textColorHint="#f0f7f4"
-                android:theme="@style/TextLabel"
                 android:layout_marginTop="20dp"
                 android:paddingStart="50dp"
                 android:paddingEnd="30dp"
@@ -48,7 +47,6 @@
                     android:textSize="20sp"
                     android:hint="Mobile Number"
                     android:textColor="#FFFFFF"
-                    android:theme="@style/TextLabel"
                     android:id="@+id/otpPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

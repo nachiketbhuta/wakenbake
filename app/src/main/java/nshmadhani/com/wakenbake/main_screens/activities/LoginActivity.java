@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -121,11 +122,16 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     }
 
     public void signIn (String email, String password) throws Exception {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Verifying your credentials..");
+        progressDialog.show();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
@@ -133,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                             finish();
 
                         } else {
+                            progressDialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.i(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Please enter correct username and password",

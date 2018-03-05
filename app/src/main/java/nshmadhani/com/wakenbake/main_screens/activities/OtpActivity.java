@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +41,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
     private TextView otpTextView;
     private Button confirmButton;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-
+    public ProgressDialog progressDialog;
     public String phoneNumber;
     public PhoneAuthProvider.ForceResendingToken mResendToken;
     public String mVerificationId;
@@ -67,6 +69,8 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
            confirmButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
+                   progressDialog.setMessage("Sending OTP.....");
+                   progressDialog.show();
                    phoneNumber = phoneNumberEditText.getText().toString();
                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
                            phoneNumber,             // Phone number to verify
@@ -82,12 +86,17 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                @Override
                public void onVerificationCompleted(PhoneAuthCredential credential) {
 
+                   progressDialog.dismiss();
+                   progressDialog.setMessage("OTP Verified...");
+                   progressDialog.show();
                    Log.d(TAG, "onVerificationCompleted:" + credential);
                    signInWithPhoneAuthCredential(credential);
                }
 
                @Override
                public void onVerificationFailed(FirebaseException e) {
+                   progressDialog.dismiss();
+                   Toast.makeText(OtpActivity.this, "Error in Verification", Toast.LENGTH_SHORT).show();
                    Log.d(TAG, "onVerificationFailed", e);
 
                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
@@ -103,6 +112,9 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                public void onCodeSent(String verificationId,
                                       PhoneAuthProvider.ForceResendingToken token) {
                    Log.d(TAG, "onCodeSent:" + verificationId);
+                   progressDialog.dismiss();
+                   progressDialog.setMessage("OTP Sent...");
+                   progressDialog.show();
                    phoneNumberEditText.setVisibility(View.INVISIBLE);
                    otpTextView.setVisibility(View.VISIBLE);
                    pinView.setVisibility(View.VISIBLE);
@@ -120,11 +132,14 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential){
+        progressDialog.dismiss();
+        progressDialog.setMessage("Signing you in...");
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             Intent intent = new Intent(OtpActivity.this, LocationActivity.class);
@@ -132,7 +147,9 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                             finish();
 
                         } else {
+                            progressDialog.dismiss();
                             // Sign in failed, display a message and update the UI
+                            Toast.makeText(OtpActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid

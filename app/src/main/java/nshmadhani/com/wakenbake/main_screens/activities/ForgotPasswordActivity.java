@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     public EditText newPassword;
     public EditText confirmPassword;
     public Button updatePassword;
-    public FirebaseAuth Auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,5 +59,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
