@@ -1,8 +1,12 @@
 package nshmadhani.com.wakenbake.main_screens.models;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
+
+import nshmadhani.com.wakenbake.main_screens.activities.NavigationActivity;
 
 /**
  * Created by Nachiket on 03-Feb-18.
@@ -33,6 +37,7 @@ public class Places {
     public String placeId;
     public String placeAddress;
     public String imageUrl;
+
 
     public String getImageUrl() {
         return imageUrl;

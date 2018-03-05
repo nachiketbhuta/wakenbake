@@ -1,6 +1,7 @@
 package nshmadhani.com.wakenbake.main_screens.adapters;
 
-import android.net.Uri;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.Model;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -27,60 +23,48 @@ import static nshmadhani.com.wakenbake.main_screens.activities.LocationActivity.
  * Created by Nachiket on 03-Feb-18.
  */
 
-public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ListViewHolder> {
+public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ViewHolder> {
 
-    private List<Places> mData;
+    private List<Places> placesList;
+    private Context context;
 
-    public PlacesListAdapter(List<Places> data) {
-        mData = data;
+    public PlacesListAdapter(List<Places> placesList, Context context) {
+        this.placesList = placesList;
+        this.context = context;
     }
 
     @Override
-    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(parent.getContext());
         View view = li.inflate(R.layout.list_places,parent,false);
-        return new ListViewHolder(view);
+        return new ViewHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(ListViewHolder holder, int position) {
-        holder.bindView(mData.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Places places = placesList.get(position);
+        holder.mName.setText(places.getName());
+        Picasso.with(context)
+                .load(places.getImageUrl())
+                .into(holder.mImage);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return placesList.size();
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView mName;
+        private ImageView mImage;
 
-        private TextView mTextView;
-        private ImageView mImageView;
-
-
-        public ListViewHolder(View itemView) {
+        public ViewHolder (View itemView) {
             super(itemView);
             Log.d(TAG, "ListViewHolder: "+itemView);
-            mTextView = itemView.findViewById(R.id.placeName);
-            mImageView = itemView.findViewById(R.id.placeImage);
-            itemView.setOnClickListener(this);
-        }
-
-
-////        public void imagesFromFirebase(ImageView imageView) {
-//            mImageView = imageView;
-//        }
-
-        public void bindView (Places places){
-            //Name of the Places
-            mTextView.setText(places.getName());
-            //Images of the places
-           // mImageView.setImageURI(Uri.parse(places.getImageUrl()));
-        }
-
-        @Override
-        public void onClick(View view) {
+            mName = itemView.findViewById(R.id.placeName);
+            mImage = itemView.findViewById(R.id.placeImage);
 
         }
     }

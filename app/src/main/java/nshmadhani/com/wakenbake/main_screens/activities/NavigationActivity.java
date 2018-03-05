@@ -24,9 +24,11 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PendingResult;
 import com.google.maps.model.LatLng;
+import com.google.maps.model.Photo;
 import com.google.maps.model.PlaceType;
 import com.google.maps.model.PlacesSearchResponse;
 import com.google.maps.model.PlacesSearchResult;
+import com.google.maps.model.RankBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ public class NavigationActivity extends AppCompatActivity
         mPlacesList = new ArrayList<>();
         mPlacesRecyclerView  = findViewById(R.id.recyclerView);
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mListAdapter = new PlacesListAdapter(mPlacesList);
+        mListAdapter = new PlacesListAdapter(mPlacesList, this);
         mPlacesRecyclerView.setAdapter(mListAdapter);
 
         Intent intent = getIntent();
@@ -86,29 +88,28 @@ public class NavigationActivity extends AppCompatActivity
         nearbySearchRequest
                 .location(new LatLng(latitude, longitude))
                 .radius(1000)
-                .type(PlaceType.FOOD)
+                .type(PlaceType.RESTAURANT , PlaceType.CAFE ,PlaceType.FOOD ,PlaceType.BAKERY)
                 .openNow(true)
+                .rankby(RankBy.PROMINENCE)
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                     @Override
                     public void onResult(PlacesSearchResponse result) {
 
                         for (PlacesSearchResult place : result.results) {
+                            //int count = 0;
                             Places places = new Places();
 
                             places.setName(place.name);
-//
-//                            int i = 0; //Count variable
-//
-//                            String photoReference = place.photos[i].photoReference;
-//                            double maxHeight = place.photos[i].height;
-//
-//                            String imageUrl = "https://maps.googleapis.com/maps/api/place/photo?key=" +
-//                                    apiKey + "&photorefernce=" + photoReference + "&maxheight=" + maxHeight;
-//
-//                            places.setImageUrl(imageUrl);
-                            Log.d(TAG, "onResult: "+places.getName());
+//                            for (Photo photo: place.photos) {
+//                                String URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+//                                        + photo.photoReference +
+//                                        "&key=" + apiKey;
+//                                places.setImageUrl(URL);
+//                            }
+                        Log.d(TAG, "onResult: "+places.getName());
                             mPlacesList.add(places);
                             //i++;
+                            //count++;
                         }
                         Log.d(TAG, "onResult: "+mPlacesList.size());
                         NavigationActivity.this.runOnUiThread(new Runnable() {
@@ -127,61 +128,61 @@ public class NavigationActivity extends AppCompatActivity
         //Getting places from Firebase
         //Gson gson = new GsonBuilder().setLenient().create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RetrofitApiInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-
-        Call<List<Places>> call = apiInterface.getPlacesFromFirebase();
-
-        Log.d(TAG, "onCreate: Connection successful");
-
-        // Get reference to the file
-        final FirebaseStorage storage = FirebaseStorage.getInstance("gs://practice-ea93b.appspot.com/joints pictures");
-        final StorageReference storageRef = storage.getReference();
-
-        call.enqueue(new Callback<List<Places>>() {
-
-            @Override
-            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
-                List<Places> placesList = response.body();
-
-                if (placesList != null) {
-                    for(Places p : placesList) {
-                        final Places placesFromFirebase =  new Places();
-//                        placesFromFirebase.setName(p.name);
-//                        StorageMetadata metadata = new StorageMetadata();
-//                        StorageReference spaceRef = storageRef.child("images/" + p.name + "." +  metadata.getContentType());
-////                        spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-////                            @Override
-////                            public void onSuccess(Uri uri) {
-////
-////                            }
-////                        });
-//                        Glide.with(this)
-//                                .using(new FirebaseImageLoader())
-//                                .load(storageRef)
-//                                .into(new PlacesListAdapter.ListViewHolder.this);
-                        Log.d(TAG, "onResult: "+p.getName());
-                        mPlacesList.add(p);
-                    }
-                }
-                Log.d(TAG, "onResult: "+mPlacesList.size());
-                NavigationActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mListAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(RetrofitApiInterface.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
+//
+//        Call<List<Places>> call = apiInterface.getPlacesFromFirebase();
+//
+//        Log.d(TAG, "onCreate: Connection successful");
+//
+//        // Get reference to the file
+//        final FirebaseStorage storage = FirebaseStorage.getInstance("gs://practice-ea93b.appspot.com/joints pictures");
+//        final StorageReference storageRef = storage.getReference();
+//
+//        call.enqueue(new Callback<List<Places>>() {
+//
+//            @Override
+//            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
+//                List<Places> placesList = response.body();
+//
+//                if (placesList != null) {
+//                    for(Places p : placesList) {
+//                        final Places placesFromFirebase =  new Places();
+////                        placesFromFirebase.setName(p.name);
+////                        StorageMetadata metadata = new StorageMetadata();
+////                        StorageReference spaceRef = storageRef.child("images/" + p.name + "." +  metadata.getContentType());
+//////                        spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//////                            @Override
+//////                            public void onSuccess(Uri uri) {
+//////
+//////                            }
+//////                        });
+////                        Glide.with(this)
+////                                .using(new FirebaseImageLoader())
+////                                .load(storageRef)
+////                                .into(new PlacesListAdapter.ListViewHolder.this);
+//                        Log.d(TAG, "onResult: "+p.getName());
+//                        mPlacesList.add(p);
+//                    }
+//                }
+//                Log.d(TAG, "onResult: "+mPlacesList.size());
+//                NavigationActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mListAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
+//                Log.d(TAG, "onFailure: " + t.getMessage());
+//            }
+//        });
     }
 
     @Override
