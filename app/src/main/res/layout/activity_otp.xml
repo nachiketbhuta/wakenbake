@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:background="@drawable/selector_bg_edit_2"
-                    android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                    android:textCursorDrawable="@drawable/yellow_gradient_background"
                     android:padding="2dp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -114,7 +114,7 @@
                     android:layout_gravity="center_horizontal">
                     <Button
                         android:id="@+id/confirmButton"
-                        android:background="@drawable/bt_shape"
+                        android:background="@drawable/button_shape_black_layout"
                         android:stateListAnimator="@drawable/state_list_animator_z"
                         android:layout_width="150dp"
                         android:layout_height="50dp"

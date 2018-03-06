@@ -54,7 +54,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
        if (isNetworkAvailable()) {
            //Phone Number
            phoneNumberEditText = findViewById(R.id.otpPhoneNumber);
-
+           progressDialog = new ProgressDialog(this);
            //OTP
            otpTextView = findViewById(R.id.otpTextView);
 
@@ -69,11 +69,12 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
            confirmButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
+                   progressDialog.dismiss();
                    progressDialog.setMessage("Sending OTP.....");
                    progressDialog.show();
                    phoneNumber = phoneNumberEditText.getText().toString();
                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                           phoneNumber,             // Phone number to verify
+                           "+91" + phoneNumber,             // Phone number to verify
                            60,                     // Timeout duration
                            SECONDS,                 // Unit of timeout
                            OtpActivity.this, // Activity (for callback binding)

@@ -7,11 +7,12 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="nshmadhani.com.wakenbake.main_screens.activities.NavigationActivity"
-    tools:showIn="@layout/app_bar_navigation">
+    tools:showIn="@layout/app_bar">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>

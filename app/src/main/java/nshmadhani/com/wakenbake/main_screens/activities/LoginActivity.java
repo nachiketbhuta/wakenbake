@@ -134,7 +134,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
-                            Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, LocationActivity
+                                    .class);
                             startActivity(intent);
                             finish();
 

@@ -56,8 +56,8 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 mSignupSignupButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mSignupEmailEditText.setEnabled(false);
-                        mSignupPasswordEditText.setEnabled(false);
+                        mSignupEmailEditText.setEnabled(true);
+                        mSignupPasswordEditText.setEnabled(true);
                         //Getting values of the email and password fields
                         String email = mSignupEmailEditText.getText().toString();
                         String password = mSignupPasswordEditText.getText().toString();

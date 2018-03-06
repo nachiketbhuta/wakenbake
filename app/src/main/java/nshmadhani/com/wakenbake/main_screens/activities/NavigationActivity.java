@@ -1,16 +1,17 @@
 package nshmadhani.com.wakenbake.main_screens.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,15 +19,31 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.CursorAdapter;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PendingResult;
 import com.google.maps.model.LatLng;
-import com.google.maps.model.Photo;
 import com.google.maps.model.PlaceType;
 import com.google.maps.model.PlacesSearchResponse;
 import com.google.maps.model.PlacesSearchResult;
@@ -36,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.main_screens.adapters.PlaceAutocompleteAdapter;
 import nshmadhani.com.wakenbake.main_screens.adapters.PlacesListAdapter;
 import nshmadhani.com.wakenbake.main_screens.interfaces.RetrofitApiInterface;
 import nshmadhani.com.wakenbake.main_screens.models.Places;
@@ -46,17 +64,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String TAG = NavigationActivity.class.getSimpleName();
     private List<Places> mPlacesList;
     private RecyclerView mPlacesRecyclerView;
     private PlacesListAdapter mListAdapter;
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
+            new com.google.android.gms.maps.model.LatLng(-40, -168),
+            new com.google.android.gms.maps.model.LatLng(71, 136));
+    protected GeoDataClient mGeoDataClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation);
+        setContentView(R.layout.navigation_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,6 +99,9 @@ public class NavigationActivity extends AppCompatActivity
 
         final String apiKey = getString(R.string.google_api_key);
 
+        // Construct a GeoDataClient.
+        mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
+
         mPlacesList = new ArrayList<>();
         mPlacesRecyclerView  = findViewById(R.id.recyclerView);
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -92,13 +117,13 @@ public class NavigationActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: ");
 
         gettingPlacesFromGoogle(latitude, longitude);
-        gettingPlacesFromFirebaseDatabase();
+        //gettingPlacesFromFirebaseDatabase();
 
     }
 
     private void gettingPlacesFromFirebaseDatabase() {
         //Getting places from Firebase
-        //Gson gson = new GsonBuilder().setLenient().create();
+        Gson gson = new GsonBuilder().create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApiInterface.BASE_URL)
@@ -188,11 +213,26 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = searchView.getQuery().toString();
+                Task<AutocompletePredictionBufferResponse> results =
+                        mGeoDataClient.getAutocompletePredictions(query, LAT_LNG_BOUNDS,
+                                null);
+                if (results.isSuccessful()) {
+                    for (AutocompletePrediction prediction : results.getResult()) {
+                        Log.d(TAG, "onClick: " + prediction.getPlaceId());
+                    }
+                }
+            }
+        });
         return true;
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -217,5 +257,10 @@ public class NavigationActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

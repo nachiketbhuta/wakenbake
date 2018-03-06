@@ -68,7 +68,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/selector_bg_edit"
-                    android:textCursorDrawable="@drawable/bg_input_cursor"
+                    android:textCursorDrawable="@drawable/blue_gradient_background"
                     android:paddingBottom="2dp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -90,15 +90,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:background="@drawable/selector_bg_edit"
-                    android:textCursorDrawable="@drawable/bg_input_cursor"
+                    android:textCursorDrawable="@drawable/blue_gradient_background"
                     android:paddingBottom="2dp" />
             </android.support.design.widget.TextInputLayout>
 
             <!-- Login Button-->
             <Button
                 android:id="@+id/loginButton"
-                android:background="@drawable/bt_shape"
-                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:background="@drawable/button_shape_black_layout"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="Login"
@@ -117,23 +116,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_your_password"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:focusable="true" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
-    <!--Floating Button -->
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/loginFloatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:src="@drawable/plus"
-        android:transitionName="loginFab"
-        android:layout_alignTop="@id/loginCardView"
-        android:layout_marginTop="25dp"
-        android:layout_alignEnd="@id/loginCardView"
-        android:layout_marginEnd="-20dp"
-        android:backgroundTint="#000000"/>
 
 </RelativeLayout>
 

@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -43,11 +45,18 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Places places = placesList.get(position);
+        final Places places = placesList.get(position);
         holder.mName.setText(places.getName());
         Picasso.with(context)
                 .load(places.getImageUrl())
                 .into(holder.mImage);
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You Clicked " + places.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -55,17 +64,18 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
         return placesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mName;
         private ImageView mImage;
+        private LinearLayout linearLayout;
 
-        public ViewHolder (View itemView) {
+        private ViewHolder (View itemView) {
             super(itemView);
             Log.d(TAG, "ListViewHolder: "+itemView);
             mName = itemView.findViewById(R.id.placeName);
             mImage = itemView.findViewById(R.id.placeImage);
-
+            linearLayout = itemView.findViewById(R.id.placeLinearLayout);
         }
     }
 }
