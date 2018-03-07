@@ -1,9 +1,6 @@
-package nshmadhani.com.wakenbake.main_screens.activities;
+package nshmadhani.com.wakenbake.activities;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -22,20 +19,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
-import android.widget.CursorAdapter;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
 import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
@@ -44,19 +33,24 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.NearbySearchRequest;
 import com.google.maps.PendingResult;
 import com.google.maps.model.LatLng;
+import com.google.maps.model.Photo;
 import com.google.maps.model.PlaceType;
 import com.google.maps.model.PlacesSearchResponse;
 import com.google.maps.model.PlacesSearchResult;
 import com.google.maps.model.RankBy;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.adapters.PlaceAutocompleteAdapter;
-import nshmadhani.com.wakenbake.main_screens.adapters.PlacesListAdapter;
-import nshmadhani.com.wakenbake.main_screens.interfaces.RetrofitApiInterface;
-import nshmadhani.com.wakenbake.main_screens.models.Places;
+import nshmadhani.com.wakenbake.adapters.PlacesListAdapter;
+import nshmadhani.com.wakenbake.interfaces.RetrofitApiInterface;
+import nshmadhani.com.wakenbake.models.Places;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,6 +68,7 @@ public class NavigationActivity extends AppCompatActivity
             new com.google.android.gms.maps.model.LatLng(-40, -168),
             new com.google.android.gms.maps.model.LatLng(71, 136));
     protected GeoDataClient mGeoDataClient;
+    public String apiKey = "AIzaSyBiREqfd8QWqyeTii3djqE0IhVmKCfoHjs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +91,6 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        final String apiKey = getString(R.string.google_api_key);
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -166,7 +159,7 @@ public class NavigationActivity extends AppCompatActivity
         });
     }
 
-    private void gettingPlacesFromGoogle(double latitude, double longitude) {
+    private void gettingPlacesFromGoogle(final double latitude, final double longitude) {
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
 
@@ -182,7 +175,17 @@ public class NavigationActivity extends AppCompatActivity
                         for (PlacesSearchResult place : result.results) {
                             Places places = new Places();
                             places.setName(place.name);
-                            Log.d(TAG, "onResult: "+places.getName());
+                            places.setLatitude(place.geometry.location.lat);
+                            places.setLongitude(place.geometry.location.lng);
+                            //places.setPlaceId(place.placeId);
+                            //places.setRatings(place.rating);
+                            places.setPhotoReference(place.photos[0].photoReference);
+                            String URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                                    + places.getPhotoReference() + "&key=" + apiKey;
+                            places.setImageUrl(URL);
+
+//                            Log.d(TAG, "onResult: "+places.getName());
+//                            Log.d(TAG, "onResult: Reference " + places.getPhotoReference());
                             mPlacesList.add(places);
                         }
                         Log.d(TAG, "onResult: "+mPlacesList.size());

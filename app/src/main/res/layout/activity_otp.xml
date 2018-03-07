@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/ui5"
-    tools:context="nshmadhani.com.wakenbake.main_screens.activities.OtpActivity">
+    tools:context=".activities.OtpActivity">
 
     <TextView
         android:layout_marginTop="40dp"

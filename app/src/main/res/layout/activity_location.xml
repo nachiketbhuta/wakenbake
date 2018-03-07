@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@drawable/ui5"
-    tools:context="nshmadhani.com.wakenbake.main_screens.activities.LocationActivity">
+    tools:context=".activities.LocationActivity">
 
 
     <com.skyfishjy.library.RippleBackground

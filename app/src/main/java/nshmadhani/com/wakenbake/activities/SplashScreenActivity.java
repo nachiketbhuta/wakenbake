@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.main_screens.activities;
+package nshmadhani.com.wakenbake.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

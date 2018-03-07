@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.main_screens.activities;
+package nshmadhani.com.wakenbake.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,8 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
-import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
+import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
+import nshmadhani.com.wakenbake.interfaces.ConnectivityReceiver;
 
 public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver {
 

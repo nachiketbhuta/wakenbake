@@ -1,6 +1,7 @@
-package nshmadhani.com.wakenbake.main_screens.adapters;
+package nshmadhani.com.wakenbake.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,16 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.models.Places;
+import nshmadhani.com.wakenbake.activities.PlaceActivity;
+import nshmadhani.com.wakenbake.models.Places;
 
-import static nshmadhani.com.wakenbake.main_screens.activities.LocationActivity.TAG;
+import static nshmadhani.com.wakenbake.activities.LocationActivity.TAG;
 
 /**
  * Created by Nachiket on 03-Feb-18.
@@ -45,8 +46,11 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         final Places places = placesList.get(position);
+
         holder.mName.setText(places.getName());
+
         Picasso.with(context)
                 .load(places.getImageUrl())
                 .into(holder.mImage);
@@ -54,7 +58,12 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "You Clicked " + places.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, PlaceActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("placeLatitude", places.getLatitude());
+                intent.putExtra("placeLongitude", places.getLongitude());
+                intent.putExtra("placeName", places.getName());
+                context.startActivity(intent);
             }
         });
     }

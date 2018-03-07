@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@drawable/ui5"
-    tools:context="nshmadhani.com.wakenbake.main_screens.activities.SignupActivity">
+    tools:context=".activities.SignupActivity">
 
     <TextView
         android:layout_marginTop="40dp"

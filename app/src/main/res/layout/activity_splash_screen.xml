@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/ui5"
-    tools:context="nshmadhani.com.wakenbake.main_screens.activities.SplashScreenActivity">
+    tools:context=".activities.SplashScreenActivity">
 
     <io.supercharge.shimmerlayout.ShimmerLayout
         android:id="@+id/shimmer_text"

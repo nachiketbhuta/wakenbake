@@ -1,18 +1,14 @@
-package nshmadhani.com.wakenbake.main_screens.activities;
+package nshmadhani.com.wakenbake.activities;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -22,14 +18,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.skyfishjy.library.RippleBackground;
-import com.google.maps.GeoApiContext;
-import com.google.maps.NearbySearchRequest;
-import com.google.maps.PendingResult;
-import com.google.maps.model.LatLng;
 
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.main_screens.fragments.NoInternetConnectionDialog;
-import nshmadhani.com.wakenbake.main_screens.interfaces.ConnectivityReceiver;
+import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
+import nshmadhani.com.wakenbake.interfaces.ConnectivityReceiver;
 
 public class LocationActivity extends AppCompatActivity implements ConnectivityReceiver {
 

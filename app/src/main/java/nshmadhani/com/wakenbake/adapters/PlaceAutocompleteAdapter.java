@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.main_screens.adapters;
+package nshmadhani.com.wakenbake.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;

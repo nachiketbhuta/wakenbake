@@ -1,12 +1,6 @@
-package nshmadhani.com.wakenbake.main_screens.models;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.widget.ImageView;
+package nshmadhani.com.wakenbake.models;
 
 import com.google.gson.annotations.SerializedName;
-
-import nshmadhani.com.wakenbake.main_screens.activities.NavigationActivity;
 
 /**
  * Created by Nachiket on 03-Feb-18.
@@ -37,10 +31,27 @@ public class Places {
     public String placeId;
     public String placeAddress;
     public String imageUrl;
+    public double latitude;
+    public double longitude;
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setImageUrl(String imageUrl) {
