@@ -19,6 +19,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     public static final String TAG = ForgotPasswordActivity.class.getSimpleName();
 
+    public EditText email;
     public EditText newPassword;
     public EditText confirmPassword;
     public Button updatePassword;
@@ -28,12 +29,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        newPassword = findViewById(R.id.newPassword);
-        confirmPassword = findViewById(R.id.confirmPassword);
-        updatePassword = findViewById(R.id.updateButton);
+        email = findViewById(R.id.forgotPasswordEmail);
+        newPassword = findViewById(R.id.forgotPasswordNew);
+        confirmPassword = findViewById(R.id.forgotPasswordConfirm);
+        updatePassword = findViewById(R.id.updatePasswordButton);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
+
 
         updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override

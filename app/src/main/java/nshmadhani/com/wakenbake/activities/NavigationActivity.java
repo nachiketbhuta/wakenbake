@@ -172,24 +172,25 @@ public class NavigationActivity extends AppCompatActivity
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                     @Override
                     public void onResult(PlacesSearchResponse result) {
-                        Log.d(TAG, "onResult: "+result.results.length);
-
-                        for (int i=0;i<result.results.length;i++) {
-                            PlacesSearchResult place=result.results[i];
+                        for (PlacesSearchResult place : result.results) {
                             Places places = new Places();
                             places.setName(place.name);
                             places.setLatitude(place.geometry.location.lat);
                             places.setLongitude(place.geometry.location.lng);
                             //places.setPlaceId(place.placeId);
                             //places.setRatings(place.rating);
-                            //Log.e("check", String.valueOf(place.photos[0]));
-                            places.setPhotoReference(place.photos[0].photoReference);
-                            String URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
-                                    + places.getPhotoReference() + "&key=" + apiKey;
-                            places.setImageUrl(URL);
 
+                            String URL = "http://via.placeholder.com/350x150";
+
+                            try {
+                                URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                                        + place.photos[0].photoReference + "&key=" + apiKey;
+                            } catch (Exception e) {
+                                Log.e(TAG, "onResult: ", e);
+                            }
+                            places.setImageUrl(URL);
 //                            Log.d(TAG, "onResult: "+places.getName());
-                            Log.d(TAG, "onResult: Reference " + places.getName());
+//                            Log.d(TAG, "onResult: Reference " + places.getPhotoReference());
                             mPlacesList.add(places);
                         }
                         Log.d(TAG, "onResult: "+mPlacesList.size());

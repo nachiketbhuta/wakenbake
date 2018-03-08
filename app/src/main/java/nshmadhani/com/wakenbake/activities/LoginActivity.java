@@ -115,7 +115,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
+            Intent intent
+                    = new Intent(LoginActivity.this, LocationActivity.class);
             startActivity(intent);
             finish();
         }
