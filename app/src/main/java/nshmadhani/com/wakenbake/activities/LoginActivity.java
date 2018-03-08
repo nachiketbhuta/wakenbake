@@ -38,13 +38,14 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
+
         try {
 
             initialLayout(); // Setting the layout of the login screen
 
             //Checking if the user is connected to internet.
             if (isNetworkAvailable()) {
-                mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
                 //Clicking on Login Button
                 mLoginButton.setOnClickListener(new View.OnClickListener() {

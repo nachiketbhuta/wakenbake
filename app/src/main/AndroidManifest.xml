@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -44,7 +45,7 @@
         <activity
             android:name=".activities.PlaceActivity"
             android:label="@string/title_activity_place"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

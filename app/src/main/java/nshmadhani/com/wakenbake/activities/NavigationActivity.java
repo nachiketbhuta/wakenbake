@@ -179,8 +179,10 @@ public class NavigationActivity extends AppCompatActivity
                             places.setName(place.name);
                             places.setLatitude(place.geometry.location.lat);
                             places.setLongitude(place.geometry.location.lng);
-                            //places.setPlaceId(place.placeId);
+                            places.setPlaceId(place.placeId);
                             //places.setRatings(place.rating);
+
+                            Log.d(TAG, "onResult: " + place.placeId);
 
                             String URL = "";
 
