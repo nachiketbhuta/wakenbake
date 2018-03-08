@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.JsonReader;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -110,17 +111,18 @@ public class NavigationActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: ");
 
         gettingPlacesFromGoogle(latitude, longitude);
-        //gettingPlacesFromFirebaseDatabase();
+        gettingPlacesFromFirebaseDatabase();
 
     }
 
     private void gettingPlacesFromFirebaseDatabase() {
         //Getting places from Firebase
-        Gson gson = new GsonBuilder().create();
+        Gson gson;
+        gson = new GsonBuilder().setLenient().create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApiInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
@@ -180,13 +182,13 @@ public class NavigationActivity extends AppCompatActivity
                             //places.setPlaceId(place.placeId);
                             //places.setRatings(place.rating);
 
-                            String URL = "http://via.placeholder.com/350x150";
+                            String URL = "";
 
                             try {
                                 URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                         + place.photos[0].photoReference + "&key=" + apiKey;
                             } catch (Exception e) {
-                                Log.e(TAG, "onResult: ", e);
+                                URL = "http://via.placeholder.com/350x150";
                             }
                             places.setImageUrl(URL);
 //                            Log.d(TAG, "onResult: "+places.getName());
