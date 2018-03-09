@@ -255,22 +255,7 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.search, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String query = searchView.getQuery().toString();
-                Task<AutocompletePredictionBufferResponse> results =
-                        mGeoDataClient.getAutocompletePredictions(query, LAT_LNG_BOUNDS,
-                                null);
-                if (results.isSuccessful()) {
-                    for (AutocompletePrediction prediction : results.getResult()) {
-                        Log.d(TAG, "onClick: " + prediction.getPlaceId());
-                    }
-                }
-            }
-        });
+
         return true;
     }
 
@@ -279,23 +264,31 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Intent intent;
 
         if (id == R.id.nav_home) {
+            item.setChecked(false);
+            intent = new Intent(getApplicationContext(), NavigationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
 
         } else if (id == R.id.nav_bookmarks) {
-
+            item.setChecked(false);
         } else if (id == R.id.nav_settings) {
-
+            item.setChecked(false);
         } else if (id == R.id.nav_logout) {
+            item.setChecked(false);
+
             auth.signOut();
-            Intent intent = new Intent(NavigationActivity.this, LoginActivity.class);
+            intent = new Intent(NavigationActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
 
         } else if (id == R.id.nav_share) {
+            item.setChecked(false);
 
         } else if (id == R.id.nav_send) {
-
+            item.setChecked(false);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
