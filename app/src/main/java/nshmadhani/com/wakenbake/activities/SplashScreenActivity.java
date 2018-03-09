@@ -14,7 +14,7 @@ import nshmadhani.com.wakenbake.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    long Delay = 1000; // duration of the Splash Screen
+    long Delay = 2000; // duration of the Splash Screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
