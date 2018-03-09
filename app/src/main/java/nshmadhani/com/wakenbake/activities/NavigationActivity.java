@@ -110,7 +110,9 @@ public class NavigationActivity extends AppCompatActivity
         navHeaderEmail = findViewById(R.id.navHeaderEmailTextView);
         navHeaderImage = findViewById(R.id.navHeaderImageView);
 
-        navHeaderEmail.setText(getIntent().getStringExtra("email"));
+        Intent intent = getIntent();
+
+        navHeaderEmail.setText(intent.);
         navHeaderName.setText(user.getDisplayName());
         try {
             Picasso.with(this)
