@@ -112,7 +112,7 @@ public class NavigationActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        navHeaderEmail.setText(intent.);
+        navHeaderEmail.setText(intent.getStringExtra("email"));
         navHeaderName.setText(user.getDisplayName());
         try {
             Picasso.with(this)
@@ -134,7 +134,6 @@ public class NavigationActivity extends AppCompatActivity
         mPlacesRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
 
-        Intent intent = getIntent();
         double latitude = intent.getDoubleExtra("latitude", 0.0);
         double longitude = intent.getDoubleExtra("longitude", 0.0);
 
