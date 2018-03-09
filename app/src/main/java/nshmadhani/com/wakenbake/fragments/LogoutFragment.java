@@ -22,7 +22,7 @@ public class LogoutFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseAuth auth = FirebaseAuth.getInstance();
-                        FirebaseUser user = auth.getCurrentUser();
+//                        FirebaseUser user = auth.getCurrentUser();
 
 
                     }
