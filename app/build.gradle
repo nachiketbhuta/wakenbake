@@ -58,5 +58,6 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.android.support:support-v4:26.1.0'
+    compile 'com.github.ome450901:SimpleRatingBar:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'

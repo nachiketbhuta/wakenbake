@@ -12,25 +12,70 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Place Name"
+            android:layout_gravity="center_horizontal"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_margin="5dp"
-            android:id="@+id/placeNameTextView"/>
+            android:id="@+id/placeNameTextView">
+        </TextView>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/simpleRatingBar"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/flbutton"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_height="wrap_content"
+            app:srb_numStars="5"
+            app:srb_minimumStars="0"
+            app:srb_rating="2"
+            app:srb_starWidth="30dp"
+            app:srb_starHeight="30dp"
+            app:srb_starPadding="10dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true">
+        </com.willy.ratingbar.ScaleRatingBar>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_action_bookmark" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_dialog_phone" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_action_maps" />
+
+
+</LinearLayout>
 
     </LinearLayout>
+
+
 
     <!--
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,4 +86,6 @@
         android:layout_height="match_parent"
         tools:context=".activities.PlaceActivity" />
     -->
+
+
 </android.support.v4.widget.NestedScrollView>

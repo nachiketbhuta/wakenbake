@@ -125,7 +125,8 @@ public class NavigationActivity extends AppCompatActivity
         searchBar.setHint("Search...");
         //searchBar.setSpeechMode(true);
         //enable searchbar callbacks
-        searchBar.setRoundedSearchBarEnabled(true);
+        searchBar.setRoundedSearchBarEnabled(false);
+        searchBar.setPlaceHolder("Search");
         searchBar.setOnSearchActionListener(this);
         //restore last queries from disk
 //        if (lastSearches != null) {
