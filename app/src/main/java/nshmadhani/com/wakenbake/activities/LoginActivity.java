@@ -116,14 +116,14 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent
-                    = new Intent(LoginActivity.this, LocationActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
+            intent.putExtra("email", currentUser.getEmail());
             startActivity(intent);
             finish();
         }
     }
 
-    public void signIn (String email, String password) throws Exception {
+    public void signIn (final String email, String password) throws Exception {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Verifying your credentials..");
         progressDialog.show();
@@ -136,8 +136,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
                             Log.i(TAG, "Successfully logged in!");
-                            Intent intent = new Intent(LoginActivity.this, LocationActivity
-                                    .class);
+                            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
+                            intent.putExtra("email", email);
                             startActivity(intent);
                             finish();
 

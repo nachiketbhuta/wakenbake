@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 ;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
@@ -33,7 +35,6 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     public EditText mSignupEmailEditText;
     public EditText mSignupPasswordEditText;
     public Button mSignupSignupButton;
-    public FloatingActionButton floatingActionButton;
     public TextView mSignupLoginLinkTextView;
     public FirebaseAuth mAuth;
 
@@ -59,11 +60,12 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                         //Getting values of the email and password fields
                         String email = mSignupEmailEditText.getText().toString();
                         String password = mSignupPasswordEditText.getText().toString();
+                        String username = mSignupNameEditText.getText().toString();
 
                         //Checking the fields
                         if (!email.equals("") && !password.equals("")) {
                             try {
-                                createAccount(email, password); // Creating an account on the Firebase
+                                createAccount(username, email, password); // Creating an account on the Firebase
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -94,7 +96,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
                 connectionDialog.show(getFragmentManager(), "no_internet_dialog");
 
-                System.exit(1);
+                //System.exit(1);
             }
         }
         catch (Exception e) {
@@ -107,7 +109,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
         super.onStart();
     }
 
-    private void createAccount(String email, String password) throws Exception{
+    private void createAccount(final String username, String email, String password) throws Exception{
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Creating Account..\nThis might take a while...");
         progressDialog.show();
@@ -116,6 +118,14 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        if (user != null) {
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(username).build();
+                            user.updateProfile(profileUpdates);
+                        }
+
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information

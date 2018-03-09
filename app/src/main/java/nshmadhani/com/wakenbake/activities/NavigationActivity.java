@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +30,8 @@ import com.google.android.gms.location.places.AutocompletePredictionBufferRespon
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
@@ -39,6 +43,7 @@ import com.google.maps.model.PlaceType;
 import com.google.maps.model.PlacesSearchResponse;
 import com.google.maps.model.PlacesSearchResult;
 import com.google.maps.model.RankBy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +75,11 @@ public class NavigationActivity extends AppCompatActivity
             new com.google.android.gms.maps.model.LatLng(71, 136));
     protected GeoDataClient mGeoDataClient;
     public String apiKey = "AIzaSyBiREqfd8QWqyeTii3djqE0IhVmKCfoHjs";
+    public FirebaseAuth auth;
+    public FirebaseUser user;
+    public TextView navHeaderName;
+    public TextView navHeaderEmail;
+    public ImageView navHeaderImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +102,24 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        navHeaderName = findViewById(R.id.navHeaderNameTextView);
+        navHeaderEmail = findViewById(R.id.navHeaderEmailTextView);
+        navHeaderImage = findViewById(R.id.navHeaderImageView);
+
+        navHeaderEmail.setText(getIntent().getStringExtra("email"));
+        navHeaderName.setText(user.getDisplayName());
+        try {
+            Picasso.with(this)
+                    .load(user.getPhotoUrl())
+                    .into(navHeaderImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -252,13 +280,17 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_bookmarks) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
+
+        } else if (id == R.id.nav_logout) {
+            auth.signOut();
+            Intent intent = new Intent(NavigationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_share) {
 

@@ -11,22 +11,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LogoutFragment extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Context context = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle("Logout")
-                .setMessage("Are you sure want to logout ?")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-//                        FirebaseUser user = auth.getCurrentUser();
-
-
-                    }
-                });
+                .setMessage("Are you sure want to logout ?");
 
         AlertDialog dialog = builder.create();
         return dialog;
