@@ -74,7 +74,12 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
         return placesList.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public void updateList(List<Places> list){
+        placesList = list;
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mName;
         private ImageView mImage;

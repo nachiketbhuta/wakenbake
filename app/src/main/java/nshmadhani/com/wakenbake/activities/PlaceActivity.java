@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -34,6 +35,7 @@ public class PlaceActivity extends AppCompatActivity {
     //public SliderLayout sliderShow;
     private GeoDataClient mGeoDataClient;
     public ViewFlipper imageFlipper;
+    public TextView placeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,10 @@ public class PlaceActivity extends AppCompatActivity {
         mGeoDataClient = Places.getGeoDataClient(this, null);
         String placeId = getIntent().getStringExtra("placeId");
         imageFlipper = findViewById(R.id.image_flipper);
+
+        placeName = findViewById(R.id.placeNameTextView);
+
+        placeName.setText(getIntent().getStringExtra("placeName"));
 
         getPhotosOfPlaces(placeId);
         // Get the SupportMapFragment and request notification

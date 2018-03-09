@@ -1,13 +1,17 @@
 package nshmadhani.com.wakenbake.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.JsonReader;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -16,12 +20,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,6 +49,7 @@ import com.google.maps.model.PlaceType;
 import com.google.maps.model.PlacesSearchResponse;
 import com.google.maps.model.PlacesSearchResult;
 import com.google.maps.model.RankBy;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -64,7 +71,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener ,
+        MaterialSearchBar.OnSearchActionListener, PopupMenu.OnMenuItemClickListener {
 
     public static final String TAG = NavigationActivity.class.getSimpleName();
     private List<Places> mPlacesList;
@@ -80,6 +88,9 @@ public class NavigationActivity extends AppCompatActivity
     public TextView navHeaderName;
     public TextView navHeaderEmail;
     public ImageView navHeaderImage;
+    private List<String> lastSearches;
+    private MaterialSearchBar searchBar;
+    public DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,18 +121,33 @@ public class NavigationActivity extends AppCompatActivity
         navHeaderEmail = findViewById(R.id.navHeaderEmailTextView);
         navHeaderImage = findViewById(R.id.navHeaderImageView);
 
+        searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
+        searchBar.setHint("Search...");
+        //searchBar.setSpeechMode(true);
+        //enable searchbar callbacks
+        searchBar.setRoundedSearchBarEnabled(true);
+        searchBar.setOnSearchActionListener(this);
+        //restore last queries from disk
+//        if (lastSearches != null) {
+//            lastSearches = loadSearchSuggestionFromDisk();
+//        }
+        //searchBar.setLastSuggestions(lastSearches);
+        //Inflate menu and setup OnMenuItemClickListener
+        //searchBar.inflateMenu(R.menu.search);
+        //searchBar.getMenu().setOnMenuItemClickListener(this);
+
         Intent intent = getIntent();
 
-        navHeaderEmail.setText(intent.getStringExtra("email"));
-        navHeaderName.setText(user.getDisplayName());
-        try {
-            Picasso.with(this)
-                    .load(user.getPhotoUrl())
-                    .into(navHeaderImage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        navHeaderEmail.setText(user.getEmail());
+//        navHeaderName.setText(user.getDisplayName());
+//        try {
+//            Picasso.with(this)
+//                    .load(user.getPhotoUrl())
+//                    .into(navHeaderImage);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -141,31 +167,26 @@ public class NavigationActivity extends AppCompatActivity
 
         gettingPlacesFromGoogle(latitude, longitude);
         gettingPlacesFromFirebaseDatabase();
-
     }
+
+//    private List<String> loadSearchSuggestionFromDisk() {
+//    }
 
     private void gettingPlacesFromFirebaseDatabase() {
         //Getting places from Firebase
         Gson gson;
         gson = new GsonBuilder().setLenient().create();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApiInterface.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-
-        Call<List<Places>> call = apiInterface.getPlacesFromFirebase("search");
-
+        Call<List<Places>> call = apiInterface.getPlacesFromFirebase("dam");
         Log.d(TAG, "onCreate: Connection successful");
-
         call.enqueue(new Callback<List<Places>>() {
-
             @Override
             public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
                 List<Places> placesList = response.body();
-
                 if (placesList != null) {
                     for(Places p : placesList) {
                         final Places places =  new Places();
@@ -182,7 +203,6 @@ public class NavigationActivity extends AppCompatActivity
                     }
                 });
             }
-
             @Override
             public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
@@ -196,10 +216,9 @@ public class NavigationActivity extends AppCompatActivity
 
         nearbySearchRequest
                 .location(new LatLng(latitude, longitude))
-                .radius(1000)
                 .type(PlaceType.RESTAURANT , PlaceType.CAFE ,PlaceType.FOOD ,PlaceType.BAKERY)
-                .openNow(true)
-                .rankby(RankBy.PROMINENCE)
+                //.openNow(true)
+                .rankby(RankBy.DISTANCE)
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                     @Override
                     public void onResult(PlacesSearchResponse result) {
@@ -210,9 +229,7 @@ public class NavigationActivity extends AppCompatActivity
                             places.setLongitude(place.geometry.location.lng);
                             places.setPlaceId(place.placeId);
                             //places.setRatings(place.rating);
-
                             Log.d(TAG, "onResult: " + place.placeId);
-
                             String URL = "";
 
                             try {
@@ -252,14 +269,6 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.search, menu);
-
-        return true;
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -292,13 +301,74 @@ public class NavigationActivity extends AppCompatActivity
             item.setChecked(false);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //save last queries to disk
+        //saveSearchSuggestionToDisk(searchBar.getLastSuggestions());
+    }
+
+
+
+    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+
+    @Override
+    public void onSearchStateChanged(boolean enabled) {
+        String s = enabled ? "enabled" : "disabled";
+        Toast.makeText(NavigationActivity.this, "Search " + s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSearchConfirmed(CharSequence text) {
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+    }
+
+    @Override
+    public void onButtonClicked(int buttonCode) {
+        switch (buttonCode){
+            case MaterialSearchBar.BUTTON_NAVIGATION:
+                drawer.openDrawer(Gravity.LEFT);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
+    }
+
+    void filter(String text){
+        List<Places> temp = new ArrayList<>();
+        for(Places p: mPlacesList) {
+            if (p.getName().contains(text.toLowerCase())) {
+                temp.add(p);
+            }
+        }
+        mListAdapter.updateList(temp);
     }
 }
