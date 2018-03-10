@@ -31,7 +31,7 @@ import com.willy.ratingbar.ScaleRatingBar;
 
 import nshmadhani.com.wakenbake.R;
 
-public class PlaceActivity extends AppCompatActivity {
+public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     //public SliderLayout sliderShow;
     private GeoDataClient mGeoDataClient;
@@ -57,9 +57,9 @@ public class PlaceActivity extends AppCompatActivity {
         getPhotosOfPlaces(placeId);
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+     mapFragment.getMapAsync(this);
     }
 
     private void getPhotosOfPlaces(String placeId) {
@@ -94,26 +94,26 @@ public class PlaceActivity extends AppCompatActivity {
             }
         });
     }
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED
-//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        googleMap.setMyLocationEnabled(true);
-//
-//        LatLng latLng = new LatLng(getIntent().getExtras().getDouble("placeLatitude"),
-//                getIntent().getExtras().getDouble("placeLongitude"));
-//
-//        //Adding place name to the place marker
-//        googleMap.addMarker(new MarkerOptions().position(latLng)
-//                    .title(getIntent().getExtras().getString("placeName"))).showInfoWindow();
-//
-//        //Adding zoom to the maps
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
-//    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+
+        LatLng latLng = new LatLng(getIntent().getExtras().getDouble("placeLatitude"),
+                getIntent().getExtras().getDouble("placeLongitude"));
+
+        //Adding place name to the place marker
+        googleMap.addMarker(new MarkerOptions().position(latLng)
+                    .title(getIntent().getExtras().getString("placeName"))).showInfoWindow();
+
+        //Adding zoom to the maps
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+    }
 }
