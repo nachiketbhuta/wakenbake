@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import nshmadhani.com.wakenbake.R;
 
@@ -36,6 +37,7 @@ public class PlaceActivity extends AppCompatActivity {
     private GeoDataClient mGeoDataClient;
     public ViewFlipper imageFlipper;
     public TextView placeName;
+    public ScaleRatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,9 @@ public class PlaceActivity extends AppCompatActivity {
         mGeoDataClient = Places.getGeoDataClient(this, null);
         String placeId = getIntent().getStringExtra("placeId");
         imageFlipper = findViewById(R.id.image_flipper);
-
+        ratingBar = findViewById(R.id.simpleRatingBar);
+        ratingBar.setRating((float) getIntent().getDoubleExtra("placeRatings", 0));
+        //ratingBar.setRating(1.3f);
         placeName = findViewById(R.id.placeNameTextView);
 
         placeName.setText(getIntent().getStringExtra("placeName"));

@@ -59,6 +59,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.adapters.PlacesListAdapter;
@@ -175,28 +176,30 @@ public class NavigationActivity extends AppCompatActivity
 
     private void gettingPlacesFromFirebaseDatabase() {
         //Getting places from Firebase
-        Gson gson;
+        final Gson gson;
         gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApiInterface.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-        Call<List<Places>> call = apiInterface.getPlacesFromFirebase("dam");
+        Call<String> call = apiInterface.getPlacesFromFirebase("dam");
         Log.d(TAG, "onCreate: Connection successful");
-        call.enqueue(new Callback<List<Places>>() {
+        call.enqueue(new Callback<String>() {
+
             @Override
-            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
-                List<Places> placesList = response.body();
-                if (placesList != null) {
-                    for(Places p : placesList) {
-                        final Places places =  new Places();
-                        places.setName(p.name);
-                        Log.d(TAG, "onResult: "+p.getName());
-                        mPlacesList.add(p);
-                    }
-                }
-                Log.d(TAG, "onResult: "+mPlacesList.size());
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+//                List<Places> placesList = response.body();
+//                if (placesList != null) {
+//                    for(Places p : placesList) {
+//                        final Places places =  new Places();
+//                        places.setName(p.name);
+//                        Log.d(TAG, "onResult: "+p.getName());
+//                        mPlacesList.add(p);
+//                    }
+//                }
+//                Log.d(TAG, "onResult: "+mPlacesList.size());
+                Log.d(TAG, "onResponse: "+response.body());
                 NavigationActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -204,9 +207,10 @@ public class NavigationActivity extends AppCompatActivity
                     }
                 });
             }
+
             @Override
-            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                Log.e(TAG, "onFailure: ",t);
             }
         });
     }
@@ -229,7 +233,7 @@ public class NavigationActivity extends AppCompatActivity
                             places.setLatitude(place.geometry.location.lat);
                             places.setLongitude(place.geometry.location.lng);
                             places.setPlaceId(place.placeId);
-                            //places.setRatings(place.rating);
+                            places.setRatings(place.rating);
                             Log.d(TAG, "onResult: " + place.placeId);
                             String URL = "";
 
@@ -240,7 +244,7 @@ public class NavigationActivity extends AppCompatActivity
                                 URL = "http://via.placeholder.com/350x150";
                             }
                             places.setImageUrl(URL);
-//                            Log.d(TAG, "onResult: "+places.getName());
+                            Log.d(TAG, "onResult: "+places.getName() + places.getRatings());
 //                            Log.d(TAG, "onResult: Reference " + places.getPhotoReference());
                             mPlacesList.add(places);
                         }
@@ -315,13 +319,10 @@ public class NavigationActivity extends AppCompatActivity
         //saveSearchSuggestionToDisk(searchBar.getLastSuggestions());
     }
 
-
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
 
     @Override
     public void onSearchStateChanged(boolean enabled) {
@@ -363,13 +364,13 @@ public class NavigationActivity extends AppCompatActivity
         return false;
     }
 
-    void filter(String text){
+    void filter(String text) {
         List<Places> temp = new ArrayList<>();
-        for(Places p: mPlacesList) {
-            if (p.getName().contains(text.toLowerCase())) {
-                temp.add(p);
+        for (Places p : mPlacesList) {
+                if (p.getName().toLowerCase().contains(text.toLowerCase())) {
+                    temp.add(p);
             }
+            mListAdapter.updateList(temp);
         }
-        mListAdapter.updateList(temp);
     }
 }

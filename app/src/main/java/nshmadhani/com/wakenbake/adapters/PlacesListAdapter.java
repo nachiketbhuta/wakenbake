@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
                 intent.putExtra("placeLongitude", places.getLongitude());
                 intent.putExtra("placeName", places.getName());
                 intent.putExtra("placeId", places.getPlaceId());
+                intent.putExtra("placeRatings", places.getRatings());
                 context.startActivity(intent);
             }
         });
