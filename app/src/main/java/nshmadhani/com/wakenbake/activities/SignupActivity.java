@@ -60,12 +60,12 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                         //Getting values of the email and password fields
                         String email = mSignupEmailEditText.getText().toString();
                         String password = mSignupPasswordEditText.getText().toString();
-                        String username = mSignupNameEditText.getText().toString();
+                        //String username = mSignupNameEditText.getText().toString();
 
                         //Checking the fields
                         if (!email.equals("") && !password.equals("")) {
                             try {
-                                createAccount(username, email, password); // Creating an account on the Firebase
+                                createAccount(email, password); // Creating an account on the Firebase
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -109,7 +109,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
         super.onStart();
     }
 
-    private void createAccount(final String username, String email, String password) throws Exception{
+    private void createAccount( String email, String password) throws Exception{
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Creating Account..\nThis might take a while...");
         progressDialog.show();
@@ -118,13 +118,6 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        if (user != null) {
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(username).build();
-                            user.updateProfile(profileUpdates);
-                        }
 
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
@@ -165,5 +158,15 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
             networkAvailable = true;
 
         return networkAvailable;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

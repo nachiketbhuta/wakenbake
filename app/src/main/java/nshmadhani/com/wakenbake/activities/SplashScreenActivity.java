@@ -50,4 +50,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         // Start the timer
         RunSplash.schedule(ShowSplash, Delay);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

@@ -1,19 +1,27 @@
 package nshmadhani.com.wakenbake.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
 import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
@@ -33,11 +41,20 @@ import nshmadhani.com.wakenbake.R;
 
 public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = PlaceActivity.class.getSimpleName();
     //public SliderLayout sliderShow;
     private GeoDataClient mGeoDataClient;
     public ViewFlipper imageFlipper;
     public TextView placeName;
     public ScaleRatingBar ratingBar;
+    public String phoneNumber;
+    public TextView address;
+    public int priceLevel;
+    public TextView website;
+    public FloatingActionButton call;
+    public FloatingActionButton bookmark;
+    public FloatingActionButton location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +68,70 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         ratingBar.setRating((float) getIntent().getDoubleExtra("placeRatings", 0));
         //ratingBar.setRating(1.3f);
         placeName = findViewById(R.id.placeNameTextView);
+        address = findViewById(R.id.address);
+        website = findViewById(R.id.website);
 
+        ratingBar.setClickable(false);
         placeName.setText(getIntent().getStringExtra("placeName"));
 
+        getDetailsOfPlaces(placeId);
         getPhotosOfPlaces(placeId);
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-     mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);
+
+        call = findViewById(R.id.callButton);
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callPlace(phoneNumber);
+            }
+        });
+
+        location = findViewById(R.id.mapsButton);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(PlaceActivity.this, "Slide to Bottom for location", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void callPlace(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel: " + phoneNumber));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            startActivity(intent);
+        }
+    }
+
+    private void getDetailsOfPlaces(String placeId) {
+        mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlaceBufferResponse> task) {
+                if (task.isSuccessful()) {
+                    PlaceBufferResponse places = task.getResult();
+                    Place myPlace = places.get(0);
+                    address.setText("Address: " + myPlace.getAddress());
+                    if (myPlace.getWebsiteUri() == null)
+                        website.setText("Website: No Website Yet");
+                    else
+                        website.setText("Website: " + myPlace.getWebsiteUri());
+                    phoneNumber = String.valueOf(myPlace.getPhoneNumber());
+                    places.release();
+                } else {
+                    Log.e(TAG, "Place not found.");
+                }
+
+            }
+        });
+
     }
 
     private void getPhotosOfPlaces(String placeId) {
@@ -115,5 +187,15 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
         //Adding zoom to the maps
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

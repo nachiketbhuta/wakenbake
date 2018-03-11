@@ -67,4 +67,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

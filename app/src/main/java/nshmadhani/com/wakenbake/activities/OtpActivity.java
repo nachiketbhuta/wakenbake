@@ -87,8 +87,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                public void onVerificationCompleted(PhoneAuthCredential credential) {
 
                    progressDialog.dismiss();
-                   progressDialog.setMessage("OTP Verified...");
-                   progressDialog.show();
+                   Toast.makeText(OtpActivity.this, "OTP Verified.", Toast.LENGTH_SHORT).show();
                    Log.d(TAG, "onVerificationCompleted:" + credential);
                    signInWithPhoneAuthCredential(credential);
                }
@@ -113,8 +112,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
                                       PhoneAuthProvider.ForceResendingToken token) {
                    Log.d(TAG, "onCodeSent:" + verificationId);
                    progressDialog.dismiss();
-                   progressDialog.setMessage("OTP Sent...");
-                   progressDialog.show();
+                   Toast.makeText(OtpActivity.this, "OTP Sent", Toast.LENGTH_SHORT).show();
                    phoneNumberEditText.setVisibility(View.INVISIBLE);
                    otpTextView.setVisibility(View.VISIBLE);
                    pinView.setVisibility(View.VISIBLE);
@@ -173,5 +171,15 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
             networkAvailable = true;
 
         return networkAvailable;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

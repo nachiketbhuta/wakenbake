@@ -115,4 +115,14 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
 
         return networkAvailable;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

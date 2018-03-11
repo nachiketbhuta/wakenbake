@@ -159,8 +159,8 @@ public class NavigationActivity extends AppCompatActivity
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter = new PlacesListAdapter(mPlacesList, this);
         mPlacesRecyclerView.setAdapter(mListAdapter);
-        mPlacesRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
+//        mPlacesRecyclerView.addItemDecoration(new DividerItemDecoration(this,
+//                DividerItemDecoration.VERTICAL));
 
         double latitude = intent.getDoubleExtra("latitude", 0.0);
         double longitude = intent.getDoubleExtra("longitude", 0.0);
@@ -272,6 +272,16 @@ public class NavigationActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

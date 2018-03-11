@@ -166,4 +166,14 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
         return networkAvailable;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
