@@ -66,6 +66,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
                 intent.putExtra("placeName", places.getName());
                 intent.putExtra("placeId", places.getPlaceId());
                 intent.putExtra("placeRatings", places.getRatings());
+                intent.putExtra("placeNumber", places.getPhoneNumber());
                 context.startActivity(intent);
             }
         });

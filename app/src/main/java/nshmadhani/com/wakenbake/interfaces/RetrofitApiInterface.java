@@ -3,10 +3,8 @@ package nshmadhani.com.wakenbake.interfaces;
 import java.util.List;
 
 import nshmadhani.com.wakenbake.models.Places;
-import nshmadhani.com.wakenbake.models.PlacesHolder;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -15,9 +13,9 @@ import retrofit2.http.Query;
 
 public interface RetrofitApiInterface {
 
-    String BASE_URL = "http://wakenbake.epizy.com/wakenbake/";
+    String BASE_URL = "http://192.168.0.102:8085/Project/";
 
     @GET("search.php")
-    Call<String> getPlacesFromFirebase(@Query("search") String name);
+    Call<List<Places>> getPlacesFromFirebase(@Query("search") String name);
 
 }

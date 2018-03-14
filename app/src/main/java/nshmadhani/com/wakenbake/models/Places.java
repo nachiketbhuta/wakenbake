@@ -12,7 +12,7 @@ public class Places {
     public String name;
 
     @SerializedName("number")
-    public String phoneNumber;
+    public String number;
 
     @SerializedName("ratings")
     public double ratings;
@@ -67,11 +67,11 @@ public class Places {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return number;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.number = phoneNumber;
     }
 
     public double getRatings() {

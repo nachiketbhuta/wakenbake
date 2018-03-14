@@ -65,6 +65,7 @@ import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.adapters.PlacesListAdapter;
 import nshmadhani.com.wakenbake.interfaces.RetrofitApiInterface;
 import nshmadhani.com.wakenbake.models.Places;
+import nshmadhani.com.wakenbake.models.PlacesHolder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -182,23 +183,38 @@ public class NavigationActivity extends AppCompatActivity
                 .baseUrl(RetrofitApiInterface.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-        Call<String> call = apiInterface.getPlacesFromFirebase("dam");
-        Log.d(TAG, "onCreate: Connection successful");
-        call.enqueue(new Callback<String>() {
 
+        RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
+        Call<List<Places>> call = apiInterface.getPlacesFromFirebase("");
+        Log.d(TAG, "onCreate: Connection successful");
+        call.enqueue(new Callback<List<Places>>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-//                List<Places> placesList = response.body();
-//                if (placesList != null) {
-//                    for(Places p : placesList) {
-//                        final Places places =  new Places();
-//                        places.setName(p.name);
-//                        Log.d(TAG, "onResult: "+p.getName());
-//                        mPlacesList.add(p);
-//                    }
-//                }
-//                Log.d(TAG, "onResult: "+mPlacesList.size());
+            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
+                List<Places> placesList = response.body();
+                if (placesList != null) {
+                    for(Places p : placesList) {
+                        //int id = 1;
+                        final Places places =  new Places();
+                        places.setName(p.name);
+                        places.setPhoneNumber(p.number);
+                        places.setLatitude(p.latitude);
+                        places.setLongitude(p.longitude);
+                        places.setRatings(p.ratings);
+                        //places.setPlaceId(p.placeId);
+                        String URL = "http://via.placeholder.com/350x150";
+                        places.setImageUrl(URL);
+
+//                        if (p.getPlaceId() == null) {
+//                            p.setPlaceId(String.valueOf(id));
+//                        }
+//                        id += 1;
+
+                        Log.d(TAG, "onResponse: " + p.getPlaceId());
+                        Log.d(TAG, "onResult: "+p.getName());
+                        mPlacesList.add(p);
+                    }
+                }
+                Log.d(TAG, "onResult: "+mPlacesList.size());
                 Log.d(TAG, "onResponse: "+response.body());
                 NavigationActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -209,7 +225,7 @@ public class NavigationActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: ",t);
             }
         });
