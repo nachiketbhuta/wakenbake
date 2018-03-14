@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@drawable/ui5"
+    android:background="#FFFFFF"
     tools:context=".activities.LoginActivity" >
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_marginStart="50dp"
         android:text="Wake N Bake"
         android:paddingStart="30dp"
-        android:textColor="#fff"
+        android:textColor="#000000"
         android:textSize="35sp"
         android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
         android:layout_centerInParent="true"
         android:id="@+id/loginCardView"
         android:elevation="10dp"
-        android:backgroundTint="#000000">
+        android:backgroundTint="#ff2400">
 
         <LinearLayout
             android:padding="10dp"
@@ -52,7 +52,7 @@
 
             <!--Username Edit Text -->
             <android.support.design.widget.TextInputLayout
-                android:textColorHint="#c5c5c5"
+                android:textColorHint="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_marginTop="60dp"
                 android:layout_height="wrap_content">
@@ -111,7 +111,7 @@
                 android:id="@+id/forgotPassword"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#9a9a9a"
+                android:textColor="@color/colorAccent"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

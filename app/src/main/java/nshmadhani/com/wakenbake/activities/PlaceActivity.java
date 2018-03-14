@@ -55,7 +55,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     public FloatingActionButton bookmark;
     public FloatingActionButton location;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +127,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                 } else {
                     Log.e(TAG, "Place not found.");
                 }
-
             }
         });
 

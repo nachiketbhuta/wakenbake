@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/ui5"
+    android:background="#FFFFFF"
     tools:context=".activities.OtpActivity">
 
     <TextView
@@ -25,7 +25,7 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
-        android:backgroundTint="#000000"
+        android:backgroundTint="@color/red"
         android:layout_centerInParent="true"
         android:id="@+id/otpCardView"
         android:elevation="10dp">

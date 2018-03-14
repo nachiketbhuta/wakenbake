@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/ui5"
+    android:background="@color/red"
     tools:context=".activities.SplashScreenActivity">
 
     <io.supercharge.shimmerlayout.ShimmerLayout
@@ -17,6 +17,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         app:shimmer_animation_duration="2500"
+        app:shimmer_color="#000000"
         app:shimmer_auto_start="true">
 
         <TextView
