@@ -84,7 +84,6 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
                     @Override
                     public void onSuccess(Location location) {
                         //Got last known location. in Some rare situations this can be null.
-                        Log.d(TAG, "onSuccessBeforeIf: " + location.toString());
                         if (location != null) {
                             Log.d(TAG, "onSuccess: " + location.toString());
 
@@ -94,6 +93,7 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
                             startActivity(intent);
                             finish();
                         } else {
+
                             Log.d(TAG, "onSuccess: " + "in else");
                         }
                     }

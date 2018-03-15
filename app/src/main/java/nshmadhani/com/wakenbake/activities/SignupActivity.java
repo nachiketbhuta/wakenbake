@@ -110,31 +110,7 @@ public class SignupActivity extends AppCompatActivity implements ConnectivityRec
     }
 
     private void createAccount( String email, String password) throws Exception{
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Creating Account..\nThis might take a while...");
-        progressDialog.show();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(SignupActivity.this, OtpActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            progressDialog.dismiss();
-                            // If sign in fails, display a message to the user.
-                            Log.i(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     public void initialLayout () {

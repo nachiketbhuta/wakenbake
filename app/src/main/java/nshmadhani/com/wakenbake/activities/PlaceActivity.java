@@ -47,7 +47,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     public ViewFlipper imageFlipper;
     public TextView placeName;
     public ScaleRatingBar ratingBar;
-    public String phoneNumber;
+    public String phoneNumber = "";
     public TextView address;
     public int priceLevel;
     public TextView website;
@@ -122,7 +122,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                         website.setText("Website: No Website Yet");
                     else
                         website.setText("Website: " + myPlace.getWebsiteUri());
-                    phoneNumber = String.valueOf(myPlace.getPhoneNumber());
+                    phoneNumber += String.valueOf(myPlace.getPhoneNumber());
                     places.release();
                 } else {
                     Log.e(TAG, "Place not found.");

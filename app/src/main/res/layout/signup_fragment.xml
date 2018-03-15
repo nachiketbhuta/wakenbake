@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="@string/register"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Username Edit Text -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signupUsername_til"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginTop="25dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" >
+            <EditText
+                android:textSize="15sp"
+                android:hint="@string/Username"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:inputType="textPersonName"
+                android:background="@drawable/selector_bg_edit_2"
+                android:textCursorDrawable="@drawable/yellow_gradient_background"
+                android:paddingBottom="4dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Email Edit Text-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signupEmail_til"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginTop="25dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <EditText
+                android:textSize="15sp"
+                android:hint="Email"
+                android:textColor="@color/colorAccent"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/selector_bg_edit_2"
+                android:textCursorDrawable="@drawable/yellow_gradient_background"
+                android:paddingBottom="4dp"  />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--Password Edit Text-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signupPassword_til"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginTop="25dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <EditText
+                android:textSize="15sp"
+                android:hint="Password"
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:inputType="textPassword"
+                android:background="@drawable/selector_bg_edit_2"
+                android:textCursorDrawable="@drawable/yellow_gradient_background"
+                android:paddingBottom="4dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--Sign Up Button -->
+        <Button
+            android:layout_marginTop="45dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/signupButton"
+            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/button_shape_white_layout"
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Signup"
+            android:elevation="8dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="#2fa881">
+        </Button>
+    </LinearLayout>
+
+
+</LinearLayout>

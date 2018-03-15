@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.fragments.LoginFragment;
 import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
+import nshmadhani.com.wakenbake.fragments.SignUpFragment;
 import nshmadhani.com.wakenbake.interfaces.ConnectivityReceiver;
 
 public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver {
@@ -33,81 +39,39 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     public TextView mForgotPassword;
     public FirebaseAuth mAuth;
 
+    private ViewPager mViewPager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
-        try {
+        if(isNetworkAvailable())
+            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
 
-            initialLayout(); // Setting the layout of the login screen
-
-            //Checking if the user is connected to internet.
-            if (isNetworkAvailable()) {
-
-                //Clicking on Login Button
-                mLoginButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String email = mLoginEmailEditText.getText().toString(); // Getting the value of the email
-                        String password = mLoginPasswordEditText.getText().toString(); // Getting the value of the password
-
-                        mLoginEmailEditText.setEnabled(true);
-                        mLoginPasswordEditText.setEnabled(true);
-
-                        //Checking if both the fields are empty
-                        if (!email.equals("") && !password.equals("")) {
-                            try {
-                                signIn(email, password);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        //Checking if email is empty and password is not empty
-                        else if (email.equals("") && !password.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Enter correct email", Toast.LENGTH_LONG).show();
-                        }
-                        //Checking if the email is not empty and password is empty
-                        else if (!email.equals("") && password.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Enter correct password", Toast.LENGTH_LONG).show();
-                        }
-                        //Checking if the both the fields are filled
-                        else {
-                            Toast.makeText(getApplicationContext(), "Enter both username and password", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
-                //Clicking on the Signup Link
-                mForgotPassword.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // Redirecting to the Signup Activity
-                        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            } else {
-                mLoginEmailEditText.setEnabled(true);
-                mLoginPasswordEditText.setEnabled(true);
-
-                NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
-                connectionDialog.show(getFragmentManager(), "no_internet_dialog");
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        mViewPager = findViewById(R.id.view_pager);
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add("Login", LoginFragment.class)
+                .add("Signup", SignUpFragment.class)
+                .create());
+        mViewPager.setAdapter(adapter);
+        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+        viewPagerTab.setViewPager(mViewPager);
     }
-    public void initialLayout () throws Exception {
-        mLoginEmailEditText = findViewById(R.id.loginUsername);
-        mLoginPasswordEditText = findViewById(R.id.loginPassword);
-        mLoginButton = findViewById(R.id.loginButton);
-        mForgotPassword = findViewById(R.id.forgotPassword);
+
+    public FirebaseAuth getmAuth() {
+        return mAuth;
     }
+
+    public void setmAuth(FirebaseAuth mAuth) {
+        this.mAuth = mAuth;
+    }
+
 
     @Override
     public void onStart() {
@@ -123,34 +87,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }
     }
 
-    public void signIn (final String email, String password) throws Exception {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Verifying your credentials..");
-        progressDialog.show();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.i(TAG, "Successfully logged in!");
-                            Intent intent = new Intent(LoginActivity.this, LocationActivity.class);
-                            intent.putExtra("email", email);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            progressDialog.dismiss();
-                            // If sign in fails, display a message to the user.
-                            Log.i(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Please enter correct username and password",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
 
     @Override
     public boolean isNetworkAvailable() {
