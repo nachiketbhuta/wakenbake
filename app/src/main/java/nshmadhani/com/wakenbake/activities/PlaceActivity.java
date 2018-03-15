@@ -139,6 +139,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                 @Override
                 public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
                     // Get the list of photos.
+                    //Log.d(TAG, "Photo response" + );
                     PlacePhotoMetadataResponse photos = task.getResult();
                     // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
                     PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();

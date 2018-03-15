@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface RetrofitApiInterface {
 
-    String BASE_URL = "http://192.168.0.102:8085/Project/";
+    String BASE_URL = "http://192.168.43.29:80/Project/";
 
     @GET("search.php")
     Call<List<Places>> getPlacesFromFirebase(@Query("search") String name);
