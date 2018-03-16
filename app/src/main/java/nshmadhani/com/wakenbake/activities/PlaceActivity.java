@@ -86,6 +86,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 callPlace(phoneNumber);
+                Toast.makeText(PlaceActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,7 +101,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void callPlace(String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel: " + phoneNumber));
         if (intent.resolveActivity(getPackageManager()) != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
