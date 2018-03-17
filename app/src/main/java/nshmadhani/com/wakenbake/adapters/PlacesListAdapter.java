@@ -3,6 +3,7 @@ package nshmadhani.com.wakenbake.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
                 .load(places.getImageUrl())
                 .into(holder.mImage);
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PlaceActivity.class);
@@ -86,14 +87,14 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
 
         private TextView mName;
         private ImageView mImage;
-        private LinearLayout linearLayout;
+        private CardView cardView;
 
         private ViewHolder (View itemView) {
             super(itemView);
             Log.d(TAG, "ListViewHolder: "+itemView);
             mName = itemView.findViewById(R.id.placeName);
             mImage = itemView.findViewById(R.id.placeImage);
-            linearLayout = itemView.findViewById(R.id.placeLinearLayout);
+            cardView = itemView.findViewById(R.id.card_view);
         }
     }
 }
