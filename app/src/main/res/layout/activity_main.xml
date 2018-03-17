@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#000000"
-        android:layout_weight="25"
+        android:layout_weight="35"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/text_wnb"
@@ -42,7 +41,7 @@
             app:stl_indicatorInFront="false"
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorGravity="bottom"
-            app:stl_indicatorColor="#000000"
+            app:stl_indicatorColor="#ee6223"
             app:stl_indicatorThickness="4dp"
             app:stl_indicatorWidth="auto"
             app:stl_indicatorCornerRadius="2dp"
@@ -50,11 +49,11 @@
             app:stl_overlineThickness="0dp"
             app:stl_underlineColor="#4D000000"
             app:stl_underlineThickness="1dp"
-            app:stl_dividerColor="#4D000000"
+            app:stl_dividerColor="#c9c9c9"
             app:stl_dividerThickness="1dp"
-            app:stl_defaultTabBackground="?attr/selectableItemBackground"
+            android:background="#651c57"
             app:stl_defaultTabTextAllCaps="true"
-            app:stl_defaultTabTextColor="#FC000000"
+            app:stl_defaultTabTextColor="#ffffff"
             app:stl_defaultTabTextSize="12sp"
             app:stl_defaultTabTextHorizontalPadding="16dp"
             app:stl_defaultTabTextMinWidth="0dp"

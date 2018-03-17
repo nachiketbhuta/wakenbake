@@ -26,8 +26,6 @@
             android:id="@+id/placeNameTextView">
         </TextView>
 
-
-
         <com.willy.ratingbar.ScaleRatingBar
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/simpleRatingBar"

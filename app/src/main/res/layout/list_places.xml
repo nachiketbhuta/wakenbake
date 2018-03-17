@@ -3,38 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:background="#c9c9c9"
+    android:padding="4dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:elevation="3dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:backgroundTint="@color/colorAccent"
-        card_view:cardCornerRadius="4dp">
+        android:elevation="5dp"
+        android:backgroundTint="@color/colorAccent">
 
         <RelativeLayout
             android:id="@+id/placeLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/placeImage"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"
                 android:contentDescription="Image" />
 
@@ -45,7 +34,7 @@
                 android:layout_below="@id/placeImage"
                 android:layout_margin="5dp"
                 android:textSize="20sp"
-                android:textColor="#797676"
+                android:textColor="#651c57"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/time_stamp"
@@ -56,6 +45,7 @@
                 android:textSize="14sp"
                 android:layout_marginTop="220dp"
                 android:layout_marginBottom="12dp"
+                android:layout_marginRight="4dp"
                 android:textColor="#000000"
                 android:text="2 hours ago"/>
 
