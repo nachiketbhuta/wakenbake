@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import nshmadhani.com.wakenbake.R;
@@ -41,6 +43,9 @@ public class PlaceBookmarkAdapter extends RecyclerView.Adapter<PlaceBookmarkAdap
 
         holder.mName.setText(placeBookmark.getPlaceNAME());
 
+        Picasso.with(context)
+                .load(placeBookmark.getPlaceURL())
+                .into(holder.mImage);
     }
 
     @Override

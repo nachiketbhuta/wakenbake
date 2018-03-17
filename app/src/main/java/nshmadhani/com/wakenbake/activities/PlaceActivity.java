@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBufferResponse;
@@ -108,15 +106,15 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getStringExtra("placeId"),
-                        getIntent().getExtras().getString("placeName"));
-
-                PlaceBookmark.save(placeBookmark);
+                        getIntent().getExtras().getString("placeName"),
+                        getIntent().getStringExtra("placeURL"));
 
                 List<PlaceBookmark> placeBookmarks = PlaceBookmark.listAll(PlaceBookmark.class);
 
                 for (PlaceBookmark p : placeBookmarks) {
-                    String msg = String.format("%s, %s", p.getPlaceID(), p.getPlaceNAME());
-                    Toast.makeText(PlaceActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        String msg = String.format("%s, %s", p.getPlaceID(), p.getPlaceNAME());
+                        Toast.makeText(PlaceActivity.this, msg, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

@@ -37,6 +37,7 @@ public class BookmarkActivity extends AppCompatActivity {
         for (PlaceBookmark p : list) {
 
             p.setPlaceNAME(p.getPlaceNAME());
+            p.setPlaceURL(p.getPlaceURL());
 
         }
 

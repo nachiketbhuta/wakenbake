@@ -40,7 +40,7 @@
         <activity
             android:name=".activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.PlaceActivity"
             android:label="@string/title_activity_place"
