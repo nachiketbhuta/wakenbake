@@ -116,41 +116,13 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-
-        navHeaderName = findViewById(R.id.navHeaderNameTextView);
-        navHeaderEmail = findViewById(R.id.navHeaderEmailTextView);
-        navHeaderImage = findViewById(R.id.navHeaderImageView);
-
-        searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
+        searchBar = findViewById(R.id.searchBar);
         searchBar.setHint("Search...");
-        //searchBar.setSpeechMode(true);
-        //enable searchbar callbacks
         searchBar.setRoundedSearchBarEnabled(false);
         searchBar.setPlaceHolder("Search");
         searchBar.setOnSearchActionListener(this);
-        //restore last queries from disk
-//        if (lastSearches != null) {
-//            lastSearches = loadSearchSuggestionFromDisk();
-//        }
-        //searchBar.setLastSuggestions(lastSearches);
-        //Inflate menu and setup OnMenuItemClickListener
-        //searchBar.inflateMenu(R.menu.search);
-        //searchBar.getMenu().setOnMenuItemClickListener(this);
 
         Intent intent = getIntent();
-
-//        navHeaderEmail.setText(user.getEmail());
-//        navHeaderName.setText(user.getDisplayName());
-//        try {
-//            Picasso.with(this)
-//                    .load(user.getPhotoUrl())
-//                    .into(navHeaderImage);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -160,8 +132,6 @@ public class NavigationActivity extends AppCompatActivity
         mPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter = new PlacesListAdapter(mPlacesList, this);
         mPlacesRecyclerView.setAdapter(mListAdapter);
-//        mPlacesRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-//                DividerItemDecoration.VERTICAL));
 
         double latitude = intent.getDoubleExtra("latitude", 0.0);
         double longitude = intent.getDoubleExtra("longitude", 0.0);
@@ -172,8 +142,6 @@ public class NavigationActivity extends AppCompatActivity
         gettingPlacesFromFirebaseDatabase();
     }
 
-//    private List<String> loadSearchSuggestionFromDisk() {
-//    }
 
     private void gettingPlacesFromFirebaseDatabase() {
         //Getting places from Firebase
@@ -185,12 +153,12 @@ public class NavigationActivity extends AppCompatActivity
                 .build();
 
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-        Call<List<Places>> call = apiInterface.getPlacesFromFirebase("");
+        Call<PlacesHolder> call = apiInterface.getPlacesFromFirebase("");
         Log.d(TAG, "onCreate: Connection successful");
-        call.enqueue(new Callback<List<Places>>() {
+        call.enqueue(new Callback<PlacesHolder>() {
             @Override
-            public void onResponse(@NonNull Call<List<Places>> call, @NonNull Response<List<Places>> response) {
-                List<Places> placesList = response.body();
+            public void onResponse(@NonNull Call<PlacesHolder> call, @NonNull Response<PlacesHolder> response) {
+                List<Places> placesList = response.body().getmPlaces();
                 if (placesList != null) {
                     for(Places p : placesList) {
                         //int id = 1;
@@ -203,11 +171,6 @@ public class NavigationActivity extends AppCompatActivity
                         //places.setPlaceId(p.placeId);
                         String URL = "http://via.placeholder.com/350x150";
                         places.setImageUrl(URL);
-
-//                        if (p.getPlaceId() == null) {
-//                            p.setPlaceId(String.valueOf(id));
-//                        }
-//                        id += 1;
 
                         Log.d(TAG, "onResponse: " + p.getPlaceId());
                         Log.d(TAG, "onResult: "+p.getName());
@@ -225,7 +188,7 @@ public class NavigationActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Places>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PlacesHolder> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: ",t);
             }
         });
@@ -314,6 +277,9 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_bookmarks) {
+            intent = new Intent(getApplicationContext(), BookmarkActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             item.setChecked(false);
         } else if (id == R.id.nav_settings) {
             item.setChecked(false);
@@ -340,9 +306,6 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //save last queries to disk
-        //saveSearchSuggestionToDisk(searchBar.getLastSuggestions());
     }
 
     @Override
@@ -361,17 +324,20 @@ public class NavigationActivity extends AppCompatActivity
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                filter(charSequence.toString());
+                Toast.makeText(NavigationActivity.this, "before text changed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                filter(charSequence.toString());
+                Toast.makeText(NavigationActivity.this, "on text changed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 filter(editable.toString());
+                Toast.makeText(NavigationActivity.this, "after text changed", Toast.LENGTH_SHORT).show();
             }
         });
     }

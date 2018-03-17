@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -35,21 +36,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.orm.SugarContext;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import java.util.List;
+
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.models.PlaceBookmark;
 
 public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = PlaceActivity.class.getSimpleName();
-    //public SliderLayout sliderShow;
     private GeoDataClient mGeoDataClient;
     public ViewFlipper imageFlipper;
     public TextView placeName;
     public ScaleRatingBar ratingBar;
     public String phoneNumber = "";
     public TextView address;
-    public int priceLevel;
     public TextView website;
     public FloatingActionButton call;
     public FloatingActionButton bookmark;
@@ -69,6 +72,8 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         placeName = findViewById(R.id.placeNameTextView);
         address = findViewById(R.id.address);
         website = findViewById(R.id.website);
+
+        SugarContext.init(this);
 
         ratingBar.setClickable(false);
         placeName.setText(getIntent().getStringExtra("placeName"));
@@ -98,16 +103,42 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
+        bookmark = findViewById(R.id.bookmarkButton);
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getStringExtra("placeId"),
+                        getIntent().getExtras().getString("placeName"));
+
+                PlaceBookmark.save(placeBookmark);
+
+                List<PlaceBookmark> placeBookmarks = PlaceBookmark.listAll(PlaceBookmark.class);
+
+                for (PlaceBookmark p : placeBookmarks) {
+                    String msg = String.format("%s, %s", p.getPlaceID(), p.getPlaceNAME());
+                    Toast.makeText(PlaceActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void callPlace(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel: " + phoneNumber));
         if (intent.resolveActivity(getPackageManager()) != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                return;
+            if (Build.VERSION.SDK_INT >= 23 ) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
             }
-            startActivity(intent);
+            else {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
+            }
         }
     }
 

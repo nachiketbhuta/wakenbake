@@ -13,6 +13,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
+        android:name=".models.WakeNBake"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
@@ -39,12 +40,26 @@
         <activity
             android:name=".activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".activities.PlaceActivity"
             android:label="@string/title_activity_place"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="bookmark.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="nshmadhani.com.wakenbake" />
+
+        <activity android:name=".activities.BookmarkActivity"></activity>
     </application>
 
 </manifest>
