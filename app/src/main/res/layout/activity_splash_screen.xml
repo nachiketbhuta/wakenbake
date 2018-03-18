@@ -7,7 +7,12 @@
     android:orientation="vertical"
     tools:context=".activities.SplashScreenActivity">
 
-
+    <!-- <io.supercharge.shimmerlayout.ShimmerLayout
+        android:id="@+id/shimmer_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_animation_duration="2500"
+        app:shimmer_auto_start="true"> -->
     <ImageView
         android:id="@+id/splashScreenImage"
         android:layout_width="match_parent"

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
             android:orientation="vertical"
@@ -105,8 +103,7 @@
                 android:text="Signup"
                 android:elevation="8dp"
                 android:layout_marginBottom="3dp"
-                android:textColor="#2fa881">
+                android:textColor="#651c57">
             </Button>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>

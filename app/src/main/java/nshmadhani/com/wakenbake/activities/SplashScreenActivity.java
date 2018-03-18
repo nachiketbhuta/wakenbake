@@ -67,3 +67,4 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onResume();
     }
 }
+
