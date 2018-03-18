@@ -15,7 +15,6 @@
 
         <com.mancj.materialsearchbar.MaterialSearchBar
             style="@style/MaterialSearchBarLight"
-            app:mt_speechMode="false"
             app:mt_hint="Search"
             app:mt_hintColor="#a0a0a0"
             app:mt_placeholder="WAKENBAKE"

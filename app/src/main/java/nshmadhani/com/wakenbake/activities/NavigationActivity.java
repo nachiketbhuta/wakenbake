@@ -86,13 +86,10 @@ public class NavigationActivity extends AppCompatActivity
     protected GeoDataClient mGeoDataClient;
     public String apiKey = "AIzaSyBiREqfd8QWqyeTii3djqE0IhVmKCfoHjs";
     public FirebaseAuth auth;
-    public FirebaseUser user;
-    public TextView navHeaderName;
     public TextView navHeaderEmail;
-    public ImageView navHeaderImage;
-    private List<String> lastSearches;
     private MaterialSearchBar searchBar;
     public DrawerLayout drawer;
+    public ImageView navHeaderImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +110,13 @@ public class NavigationActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        auth = FirebaseAuth.getInstance();
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        navHeaderEmail = findViewById(R.id.navHeaderEmailTextView);
+        navHeaderImage = findViewById(R.id.navHeaderImageView);
 
         searchBar = findViewById(R.id.searchBar);
         searchBar.setHint("Search...");
@@ -169,7 +171,7 @@ public class NavigationActivity extends AppCompatActivity
                         places.setLongitude(p.longitude);
                         places.setRatings(p.ratings);
                         //places.setPlaceId(p.placeId);
-                        String URL = "http://via.placeholder.com/350x150";
+                        String URL = "";
                         places.setImageUrl(URL);
 
                         Log.d(TAG, "onResponse: " + p.getPlaceId());
@@ -220,7 +222,7 @@ public class NavigationActivity extends AppCompatActivity
                                 URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                         + place.photos[0].photoReference + "&key=" + apiKey;
                             } catch (Exception e) {
-                                URL = "http://via.placeholder.com/350x150";
+                                URL = "";
                             }
                             places.setImageUrl(URL);
                             Log.d(TAG, "onResult: "+places.getName() + places.getRatings());
@@ -252,6 +254,22 @@ public class NavigationActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null && user.getEmail() != null) {
+            Log.d(TAG, "onStart: " + user.getEmail());
+//            navHeaderEmail.setText(user.getEmail());
+//            Picasso.with(this)
+//                    .load(R.drawable.user_image)
+//                    .into(navHeaderImage);
+        }
+    }
+
 
     @Override
     protected void onPause() {
@@ -286,10 +304,10 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             item.setChecked(false);
 
-            auth.signOut();
-            intent = new Intent(NavigationActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+//            auth.signOut();
+//            intent = new Intent(NavigationActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//            finish();
 
         } else if (id == R.id.nav_share) {
             item.setChecked(false);

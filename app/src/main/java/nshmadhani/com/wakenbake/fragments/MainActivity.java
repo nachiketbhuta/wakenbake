@@ -9,6 +9,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.fragments.LoginFragment;
+import nshmadhani.com.wakenbake.fragments.SignUpFragment;
 
 public class MainActivity extends AppCompatActivity {
 

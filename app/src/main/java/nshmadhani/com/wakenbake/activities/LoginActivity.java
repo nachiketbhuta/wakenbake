@@ -41,8 +41,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     private ViewPager mViewPager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         mAuth = FirebaseAuth.getInstance(); // Creating a instance of Firebase object
 
         if(isNetworkAvailable())
-            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Internet Available", Toast.LENGTH_SHORT).show();
 
         mViewPager = findViewById(R.id.view_pager);
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(

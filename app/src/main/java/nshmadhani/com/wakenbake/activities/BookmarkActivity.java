@@ -44,4 +44,14 @@ public class BookmarkActivity extends AppCompatActivity {
         adapter = new PlaceBookmarkAdapter(list, this);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

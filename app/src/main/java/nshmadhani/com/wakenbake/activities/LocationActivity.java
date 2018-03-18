@@ -14,9 +14,12 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.util.AuthHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.skyfishjy.library.RippleBackground;
 
 import nshmadhani.com.wakenbake.R;
@@ -115,6 +118,12 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
 
         return networkAvailable;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+}
 
     @Override
     protected void onPause() {

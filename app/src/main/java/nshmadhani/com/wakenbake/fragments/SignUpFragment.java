@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.activities.LoginActivity;
 import nshmadhani.com.wakenbake.activities.OtpActivity;
-import nshmadhani.com.wakenbake.activities.SignupActivity;
 
 /**
  * Created by Nisha on 3/15/2018.

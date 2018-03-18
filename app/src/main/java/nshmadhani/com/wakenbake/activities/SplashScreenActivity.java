@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,7 +17,8 @@ import nshmadhani.com.wakenbake.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    long Delay = 2000; // duration of the Splash Screen
+    private ImageView imageView;
+    long Delay = 4000; // duration of the Splash Screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +28,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash_screen);
 
-        displaySplash(); // Displays the Splash Screen
+        imageView = findViewById(R.id.splashScreenImage);
 
-        //Shimmer effect (Facebook)
-        ShimmerLayout shimmerText = findViewById(R.id.shimmer_text);
-        shimmerText.startShimmerAnimation();
+        Picasso.with(this)
+                .load(R.drawable.splash_screen)
+                .into(imageView);
+
+        displaySplash(); // Displays the Splash Screen
     }
 
     private void displaySplash () {
@@ -42,7 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 // Start HomeScreenActivity.class
                 Intent intent = new Intent(SplashScreenActivity.this,
-                        SignupActivity.class);
+                        LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -26,7 +26,6 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.OtpActivity" />
         <activity android:name=".activities.LocationActivity" />
@@ -36,7 +35,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activities.ForgotPasswordActivity" />
         <activity
             android:name=".activities.NavigationActivity"
             android:label="@string/title_activity_navigation"

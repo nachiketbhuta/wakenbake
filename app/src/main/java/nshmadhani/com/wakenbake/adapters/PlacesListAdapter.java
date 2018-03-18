@@ -2,6 +2,7 @@ package nshmadhani.com.wakenbake.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.activities.PlaceActivity;
@@ -53,9 +56,16 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
 
         holder.mName.setText(places.getName());
 
-        Picasso.with(context)
-                .load(places.getImageUrl())
-                .into(holder.mImage);
+        if (Objects.equals(places.getImageUrl(), "")) {
+            Picasso.with(context)
+                    .load(R.drawable.no_image)
+                    .into(holder.mImage);
+        }
+        else {
+            Picasso.with(context)
+                    .load(places.getImageUrl())
+                    .into(holder.mImage);
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
