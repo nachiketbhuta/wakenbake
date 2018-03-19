@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#651c57"
+        android:background="@color/purple"
         android:layout_weight="30"
         android:orientation="vertical" />
     <LinearLayout
@@ -18,7 +18,7 @@
         android:layout_weight="70"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorAccent">
+        android:background="@color/white">
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/viewpagertab"
@@ -29,19 +29,19 @@
             app:stl_indicatorInFront="false"
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorGravity="bottom"
-            app:stl_indicatorColor="#fff"
+            app:stl_indicatorColor="@color/white"
             app:stl_indicatorThickness="4dp"
             app:stl_indicatorWidth="auto"
             app:stl_indicatorCornerRadius="2dp"
-            app:stl_overlineColor="#fff"
+            app:stl_overlineColor="@color/white"
             app:stl_overlineThickness="0dp"
-            app:stl_underlineColor="#fff"
+            app:stl_underlineColor="@color/white"
             app:stl_underlineThickness="1dp"
-            app:stl_dividerColor="#fff"
+            app:stl_dividerColor="@color/white"
             app:stl_dividerThickness="1dp"
-            android:background="#651c57"
+            android:background="@color/purple"
             app:stl_defaultTabTextAllCaps="true"
-            app:stl_defaultTabTextColor="#ffffff"
+            app:stl_defaultTabTextColor="white"
             app:stl_defaultTabTextSize="12sp"
             app:stl_defaultTabTextHorizontalPadding="16dp"
             app:stl_defaultTabTextMinWidth="0dp"

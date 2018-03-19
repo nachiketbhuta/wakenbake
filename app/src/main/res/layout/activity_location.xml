@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/content"
-        app:rb_color="#FFFFFF"
+        app:rb_color="@color/white"
         app:rb_radius="32dp"
         app:rb_rippleAmount="4"
         app:rb_duration="3000"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Getting Your Location...."
             android:textSize="24sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:layout_marginTop="510dp"
             android:layout_gravity="center"
             android:layout_marginStart="70dp"/>

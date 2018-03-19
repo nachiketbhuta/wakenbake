@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -15,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:textColor="#651c57"
+        android:textColor="@color/purple"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="35dp"
@@ -26,8 +25,8 @@
         android:id="@+id/username_til"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:textColorHint="#c9c9c9"
-        android:textColor="#000000"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
         android:layout_marginTop="25dp"
         android:paddingStart="50dp"
         android:paddingEnd="30dp">
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:hint="Username"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:paddingTop="5dp"
             android:inputType="textPersonName"
             android:paddingBottom="4dp"
@@ -51,7 +50,7 @@
         android:layout_marginTop="25dp"
         android:paddingEnd="30dp"
         android:paddingStart="50dp"
-        android:textColorHint="#c9c9c9">
+        android:textColorHint="@color/grey">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
             android:inputType="textPassword"
             android:paddingBottom="4dp"
             android:paddingTop="5dp"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textCursorDrawable="@drawable/yellow_gradient_background"/>
     </android.support.design.widget.TextInputLayout>
@@ -71,14 +70,25 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:text="Login"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         android:layout_marginTop="45dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="3dp"
-        android:backgroundTint="#651c57"
+        android:backgroundTint="@color/purple"
         android:background="@drawable/button_shape_white_layout"
         android:stateListAnimator="@drawable/state_list_animator_z">
     </Button>
+
+    <!-- Google Sign In Button-->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleButton"
+        android:elevation="10dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center" />
+
 </LinearLayout>
 
 </ScrollView>
