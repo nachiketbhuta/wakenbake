@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.models;
+package nshmadhani.com.wakenbake;
 
 import com.google.gson.annotations.SerializedName;
 

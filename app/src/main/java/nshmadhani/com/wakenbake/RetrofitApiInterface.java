@@ -1,9 +1,5 @@
-package nshmadhani.com.wakenbake.interfaces;
+package nshmadhani.com.wakenbake;
 
-import java.util.List;
-
-import nshmadhani.com.wakenbake.models.Places;
-import nshmadhani.com.wakenbake.models.PlacesHolder;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

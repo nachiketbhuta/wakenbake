@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="#651c57"
-    tools:context=".activities.LocationActivity">
+    android:background="@drawable/location_activity_bg"
+    tools:context=".LocationActivity">
 
 
     <com.skyfishjy.library.RippleBackground

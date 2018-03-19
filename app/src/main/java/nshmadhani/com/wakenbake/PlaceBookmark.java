@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.models;
+package nshmadhani.com.wakenbake;
 
 import com.orm.SugarRecord;
 

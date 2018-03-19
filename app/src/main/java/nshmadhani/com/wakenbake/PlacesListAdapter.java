@@ -1,8 +1,7 @@
-package nshmadhani.com.wakenbake.adapters;
+package nshmadhani.com.wakenbake;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,21 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.willy.ratingbar.ScaleRatingBar;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.activities.PlaceActivity;
-import nshmadhani.com.wakenbake.models.Places;
-
-import static nshmadhani.com.wakenbake.activities.LocationActivity.TAG;
+import static nshmadhani.com.wakenbake.LocationActivity.TAG;
 
 /**
  * Created by Nachiket on 03-Feb-18.

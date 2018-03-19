@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.models;
+package nshmadhani.com.wakenbake;
 
 import android.app.Application;
 import android.content.Context;

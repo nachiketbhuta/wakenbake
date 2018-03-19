@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.activities;
+package nshmadhani.com.wakenbake;
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,17 +14,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.ui.auth.util.AuthHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.skyfishjy.library.RippleBackground;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
-import nshmadhani.com.wakenbake.interfaces.ConnectivityReceiver;
 
 public class LocationActivity extends AppCompatActivity implements ConnectivityReceiver {
 

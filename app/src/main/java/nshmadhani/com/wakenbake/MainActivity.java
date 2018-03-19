@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.fragments;
+package nshmadhani.com.wakenbake;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +7,6 @@ import android.os.Bundle;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.fragments.LoginFragment;
-import nshmadhani.com.wakenbake.fragments.SignUpFragment;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.activities;
+package nshmadhani.com.wakenbake;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import io.supercharge.shimmerlayout.ShimmerLayout;
-import nshmadhani.com.wakenbake.R;
 
 
 public class SplashScreenActivity extends AppCompatActivity {

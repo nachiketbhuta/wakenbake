@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.fragments;
+package nshmadhani.com.wakenbake;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,10 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.activities.LoginActivity;
-import nshmadhani.com.wakenbake.activities.OtpActivity;
 
 /**
  * Created by Nisha on 3/15/2018.
@@ -48,7 +44,7 @@ public class SignUpFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.signup_fragment, container, false);
 
-        mUserNameTextInputLayout = rootView.findViewById(R.id.signupUsername_til);
+       // mUserNameTextInputLayout = rootView.findViewById(R.id.signupUsername_til);
         mPasswordTextInputLayout =  rootView.findViewById(R.id.signupPassword_til);
         mEmailTextInputLayout = rootView.findViewById(R.id.signupEmail_til);
         mSignUpButton = rootView.findViewById(R.id.signupButton);
@@ -65,7 +61,7 @@ public class SignUpFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mUserNameTextInputLayout.getEditText().setEnabled(!mUserNameTextInputLayout.getEditText().isEnabled());
+                //mUserNameTextInputLayout.getEditText().setEnabled(!mUserNameTextInputLayout.getEditText().isEnabled());
                 mPasswordTextInputLayout.getEditText().setEnabled(!mPasswordTextInputLayout.getEditText().isEnabled());
                 mEmailTextInputLayout.getEditText().setEnabled(!mEmailTextInputLayout.getEditText().isEnabled());
                 mSignUpButton.setEnabled(!mSignUpButton.isEnabled());
@@ -75,10 +71,10 @@ public class SignUpFragment extends Fragment {
     private void attemptSignup() {
         toggleInputs();
 
-        String username = mUserNameTextInputLayout.getEditText().getText().toString();
+        //String username = mUserNameTextInputLayout.getEditText().getText().toString();
         String password = mPasswordTextInputLayout.getEditText().getText().toString();
         String email = mEmailTextInputLayout.getEditText().getText().toString();
-        if (!username.equals("") && !password.equals("")) {
+        if ( !password.equals("")) {
             try {
                 Toast.makeText(mActivity, "All is Cool", Toast.LENGTH_SHORT).show();
                 signUp(email, password);
@@ -87,11 +83,11 @@ public class SignUpFragment extends Fragment {
             }
         }
         //Checking if username is empty and password is not empty
-        else if (username.equals("") && !password.equals("")) {
+        else if (!password.equals("")) {
             Toast.makeText(getActivity().getApplicationContext(), "Enter correct username", Toast.LENGTH_LONG).show();
         }
         //Checking if the username is not empty and password is empty
-        else if (!username.equals("") && password.equals("")) {
+        else if ( password.equals("")) {
             Toast.makeText(getActivity().getApplicationContext(), "Enter correct password", Toast.LENGTH_LONG).show();
         }
         //Checking if the both the fields are filled

@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.fragments;
+package nshmadhani.com.wakenbake;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

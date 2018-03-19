@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.activities;
+package nshmadhani.com.wakenbake;
 
 import android.Manifest;
 import android.content.Intent;
@@ -38,9 +38,6 @@ import com.orm.SugarContext;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.models.PlaceBookmark;
 
 public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 

@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.fragments;
+package nshmadhani.com.wakenbake;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,10 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.activities.LocationActivity;
-import nshmadhani.com.wakenbake.activities.LoginActivity;
 
 /**
  * Created by Nisha on 3/15/2018.

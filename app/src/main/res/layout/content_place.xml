@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.PlaceActivity"
+    tools:context=".PlaceActivity"
     tools:showIn="@layout/activity_place">
 
     <LinearLayout
@@ -159,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="5dp"
-            tools:context=".activities.PlaceActivity" />
+            tools:context=".PlaceActivity" />
 
     </LinearLayout>
 

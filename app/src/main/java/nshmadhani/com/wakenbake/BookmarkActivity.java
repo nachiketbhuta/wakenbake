@@ -1,20 +1,13 @@
-package nshmadhani.com.wakenbake.activities;
+package nshmadhani.com.wakenbake;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.orm.SugarContext;
 
 import java.util.List;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.adapters.PlaceBookmarkAdapter;
-import nshmadhani.com.wakenbake.adapters.PlacesListAdapter;
-import nshmadhani.com.wakenbake.models.PlaceBookmark;
-import nshmadhani.com.wakenbake.models.Places;
 
 public class BookmarkActivity extends AppCompatActivity {
 

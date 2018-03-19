@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.adapters;
+package nshmadhani.com.wakenbake;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.models.PlaceBookmark;
 
 /**
  * Created by Nachiket on 17-Mar-18.

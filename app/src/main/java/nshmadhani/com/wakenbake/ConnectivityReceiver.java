@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.interfaces;
+package nshmadhani.com.wakenbake;
 
 import static android.app.PendingIntent.getActivity;
 

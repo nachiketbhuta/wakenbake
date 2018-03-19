@@ -13,22 +13,22 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".models.WakeNBake"
+        android:name=".WakeNBake"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".activities.SplashScreenActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.OtpActivity" />
-        <activity android:name=".activities.LocationActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".OtpActivity" />
+        <activity android:name=".LocationActivity" />
 
         <!-- Google Maps -->
         <meta-data
@@ -36,11 +36,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.NavigationActivity"
+            android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activities.PlaceActivity"
+            android:name=".PlaceActivity"
             android:label="@string/title_activity_place"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -57,7 +57,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="nshmadhani.com.wakenbake" />
 
-        <activity android:name=".activities.BookmarkActivity"></activity>
+        <activity android:name=".BookmarkActivity"></activity>
     </application>
 
 </manifest>

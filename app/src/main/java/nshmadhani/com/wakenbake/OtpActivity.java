@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.activities;
+package nshmadhani.com.wakenbake;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,10 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-
-import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.fragments.NoInternetConnectionDialog;
-import nshmadhani.com.wakenbake.interfaces.ConnectivityReceiver;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 

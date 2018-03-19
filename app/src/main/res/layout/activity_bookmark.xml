@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#fff"
     android:layout_height="match_parent"
-    tools:context=".activities.BookmarkActivity"
+    tools:context=".BookmarkActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView

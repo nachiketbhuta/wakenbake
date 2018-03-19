@@ -22,7 +22,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Username Edit Text -->
+            <!-- Username Edit Text
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/signupUsername_til"
                 android:textColorHint="#000000"
@@ -44,11 +44,11 @@
                     android:textCursorDrawable="@drawable/yellow_gradient_background"
                     android:paddingBottom="4dp" />
             </android.support.design.widget.TextInputLayout>
-
+            -->
             <!-- Email Edit Text-->
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/signupEmail_til"
-                android:textColorHint="#000000"
+                android:textColorHint="#c9c9c9"
                 android:layout_marginTop="25dp"
                 android:paddingStart="50dp"
                 android:paddingEnd="30dp"
@@ -57,6 +57,7 @@
                 <EditText
                     android:textSize="15sp"
                     android:hint="Email"
+                    android:textColorHint="#c9c9c9"
                     android:textColor="#000000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,7 +71,7 @@
             <!--Password Edit Text-->
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/signupPassword_til"
-                android:textColorHint="#000000"
+                android:textColorHint="#c9c9c9"
                 android:layout_marginTop="25dp"
                 android:paddingStart="50dp"
                 android:paddingEnd="30dp"
@@ -95,7 +96,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/signupButton"
-                android:backgroundTint="#000000"
+                android:backgroundTint="#651c57"
                 android:background="@drawable/button_shape_white_layout"
                 android:stateListAnimator="@drawable/state_list_animator_z"
                 android:layout_width="150dp"
@@ -103,7 +104,7 @@
                 android:text="Signup"
                 android:elevation="8dp"
                 android:layout_marginBottom="3dp"
-                android:textColor="#651c57">
+                android:textColor="#fff">
             </Button>
         </LinearLayout>
     </ScrollView>
