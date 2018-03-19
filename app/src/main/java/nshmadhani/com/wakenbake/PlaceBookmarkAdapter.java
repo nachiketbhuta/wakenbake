@@ -30,7 +30,7 @@ public class PlaceBookmarkAdapter extends RecyclerView.Adapter<PlaceBookmarkAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(parent.getContext());
-        View view = li.inflate(R.layout.list_places,parent,false);
+        View view = li.inflate(R.layout.place_card,parent,false);
         return new MyViewHolder(view);
     }
 

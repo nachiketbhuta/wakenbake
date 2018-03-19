@@ -10,7 +10,6 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 public class MainActivity extends AppCompatActivity {
 
-
     ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

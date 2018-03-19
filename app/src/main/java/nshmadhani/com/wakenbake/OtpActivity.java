@@ -120,7 +120,7 @@ public class OtpActivity extends AppCompatActivity implements ConnectivityReceiv
            };
        }
        else {
-           NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+           ConnectivityDialog connectionDialog = new ConnectivityDialog();
            connectionDialog.show(getFragmentManager(), "no_internet_dialog");
        }
     }

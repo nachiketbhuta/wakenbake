@@ -7,21 +7,22 @@ import android.content.Context;
 import android.os.Bundle;
 
 /**
- * Created by Nachiket on 03-Feb-18.
+ * Created by Nachiket on 04-Feb-18.
  */
 
-public class ErrorDialogFragment extends DialogFragment {
+public class ConnectivityDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Context context = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                    .setTitle("Error!")
-                    .setMessage("An error occurred.")
-                    .setPositiveButton("OK", null);
+                .setTitle("No Internet Connection")
+                .setMessage("Please check your internet connection")
+                .setPositiveButton("OK", null);
 
         AlertDialog dialog = builder.create();
         return dialog;
     }
+
 }

@@ -4,24 +4,24 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+/**
+ * Created by Nachiket on 03-Feb-18.
+ */
 
-public class LogoutFragment extends DialogFragment {
+public class ErrorDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Context context = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle("Logout")
-                .setMessage("Are you sure want to logout ?");
+                    .setTitle("Error!")
+                    .setMessage("An error occurred.")
+                    .setPositiveButton("OK", null);
 
         AlertDialog dialog = builder.create();
         return dialog;
-
     }
 }

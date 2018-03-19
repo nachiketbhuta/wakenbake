@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/WakeNBake.iml" filepath="$PROJECT_DIR$/WakeNBake.iml" />
       <module fileurl="file://S:\1598005\Subjects\Project_Main\WakeNBake_new\WakeNBake.iml" filepath="S:\1598005\Subjects\Project_Main\WakeNBake_new\WakeNBake.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WakeNBake_new.iml" filepath="$PROJECT_DIR$/WakeNBake_new.iml" />
       <module fileurl="file://D:\Diploma\Project\WakeNBake\WakeNBake_new.iml" filepath="D:\Diploma\Project\WakeNBake\WakeNBake_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

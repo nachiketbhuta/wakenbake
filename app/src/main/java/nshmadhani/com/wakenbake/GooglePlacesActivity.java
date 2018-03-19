@@ -39,9 +39,9 @@ import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
-public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class GooglePlacesActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = PlaceActivity.class.getSimpleName();
+    private static final String TAG = GooglePlacesActivity.class.getSimpleName();
     private GeoDataClient mGeoDataClient;
     public ViewFlipper imageFlipper;
     public TextView placeName;
@@ -86,7 +86,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 callPlace(phoneNumber);
-                Toast.makeText(PlaceActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(GooglePlacesActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,7 +94,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PlaceActivity.this, "Slide to Bottom for location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GooglePlacesActivity.this, "Slide to Bottom for location", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,7 +110,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
                 for (PlaceBookmark p : placeBookmarks) {
                         String msg = String.format("%s, %s", p.getPlaceID(), p.getPlaceNAME());
-                        Toast.makeText(PlaceActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GooglePlacesActivity.this, msg, Toast.LENGTH_SHORT).show();
 
                 }
             }

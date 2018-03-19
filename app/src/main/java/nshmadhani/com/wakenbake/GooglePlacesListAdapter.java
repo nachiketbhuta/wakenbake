@@ -23,20 +23,20 @@ import static nshmadhani.com.wakenbake.LocationActivity.TAG;
  * Created by Nachiket on 03-Feb-18.
  */
 
-public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ViewHolder> {
+public class GooglePlacesListAdapter extends RecyclerView.Adapter<GooglePlacesListAdapter.ViewHolder> {
 
-    private List<Places> placesList;
+    private List<GooglePlaces> googlePlacesList;
     private Context context;
 
-    public PlacesListAdapter(List<Places> placesList, Context context) {
-        this.placesList = placesList;
+    public GooglePlacesListAdapter(List<GooglePlaces> googlePlacesList, Context context) {
+        this.googlePlacesList = googlePlacesList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(parent.getContext());
-        View view = li.inflate(R.layout.list_places,parent,false);
+        View view = li.inflate(R.layout.place_card,parent,false);
         return new ViewHolder(view);
     }
 
@@ -44,33 +44,31 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final Places places = placesList.get(position);
+        final GooglePlaces googlePlaces = googlePlacesList.get(position);
 
-        holder.mName.setText(places.getName());
+        holder.mName.setText(googlePlaces.getName());
 
-        if (Objects.equals(places.getImageUrl(), "")) {
+        if (Objects.equals(googlePlaces.getImageUrl(), "")) {
             Picasso.with(context)
                     .load(R.drawable.no_image)
                     .into(holder.mImage);
         }
         else {
             Picasso.with(context)
-                    .load(places.getImageUrl())
+                    .load(googlePlaces.getImageUrl())
                     .into(holder.mImage);
         }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, PlaceActivity.class);
+                Intent intent = new Intent(context, GooglePlacesActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("placeLatitude", places.getLatitude());
-                intent.putExtra("placeLongitude", places.getLongitude());
-                intent.putExtra("placeName", places.getName());
-                intent.putExtra("placeId", places.getPlaceId());
-                intent.putExtra("placeRatings", places.getRatings());
-                intent.putExtra("placeNumber", places.getPhoneNumber());
-                intent.putExtra("placeUrl", places.getImageUrl());
+                intent.putExtra("placeLatitude", googlePlaces.getLatitude());
+                intent.putExtra("placeLongitude", googlePlaces.getLongitude());
+                intent.putExtra("placeName", googlePlaces.getName());
+                intent.putExtra("placeId", googlePlaces.getPlaceId());
+                intent.putExtra("placeRatings", googlePlaces.getRatings());
                 context.startActivity(intent);
             }
         });
@@ -78,11 +76,11 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return placesList.size();
+        return googlePlacesList.size();
     }
 
-    public void updateList(List<Places> list){
-        placesList = list;
+    public void updateList(List<GooglePlaces> list){
+        googlePlacesList = list;
         notifyDataSetChanged();
     }
 

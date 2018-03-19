@@ -45,7 +45,7 @@ public class LocationActivity extends AppCompatActivity implements ConnectivityR
             makeUseOfNewLocation();
             Log.d(TAG, "onCreate:  in if ");
         } else {
-            NoInternetConnectionDialog connectionDialog = new NoInternetConnectionDialog();
+            ConnectivityDialog connectionDialog = new ConnectivityDialog();
             connectionDialog.show(getFragmentManager(), "no_internet_dialog");
         }
     }

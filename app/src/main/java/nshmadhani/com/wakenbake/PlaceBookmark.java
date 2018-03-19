@@ -2,10 +2,6 @@ package nshmadhani.com.wakenbake;
 
 import com.orm.SugarRecord;
 
-/**
- * Created by Nachiket on 17-Mar-18.
- */
-
 public class PlaceBookmark extends SugarRecord {
 
     private String placeID;
