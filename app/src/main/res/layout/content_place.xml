@@ -82,7 +82,7 @@
 
         <android.support.v7.widget.CardView
             android:elevation="10dp"
-            app:cardBackgroundColor="#651c57"
+            app:cardBackgroundColor="@string/mainAppThemeColor"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

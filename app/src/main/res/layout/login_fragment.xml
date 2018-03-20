@@ -14,11 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:textColor="@color/purple"
+        android:textColor="@string/mainAppThemeColor"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="35dp"
-        android:layout_marginStart="50dp"/>
+        android:layout_marginStart="40dp"/>
 
     <!--Username-->
     <android.support.design.widget.TextInputLayout
@@ -28,8 +28,8 @@
         android:textColorHint="@color/grey"
         android:textColor="@color/black"
         android:layout_marginTop="25dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="30dp">
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="25dp"
-        android:paddingEnd="30dp"
-        android:paddingStart="50dp"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
         android:textColorHint="@color/grey">
         <EditText
             android:layout_width="match_parent"
@@ -63,18 +63,21 @@
             android:textSize="15sp"
             android:textCursorDrawable="@drawable/yellow_gradient_background"/>
     </android.support.design.widget.TextInputLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="45dp"
+    android:gravity="center">
 
     <!--Login Button-->
     <Button
         android:id="@+id/login_bt"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="50dp"
         android:text="Login"
         android:textColor="@color/white"
-        android:layout_marginTop="45dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="3dp"
-        android:backgroundTint="@color/purple"
+        android:backgroundTint="@string/mainAppThemeColor"
         android:background="@drawable/button_shape_white_layout"
         android:stateListAnimator="@drawable/state_list_animator_z">
     </Button>
@@ -83,11 +86,13 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleButton"
         android:elevation="10dp"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center" />
+        android:layout_marginLeft="20dp"
+        android:layout_width="130dp"
+        android:layout_height="55dp" />
+
+</LinearLayout>
+
+
 
 </LinearLayout>
 

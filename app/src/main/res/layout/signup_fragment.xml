@@ -15,9 +15,9 @@
                 android:layout_marginTop="35dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="40dp"
                 android:text="@string/register"
-                android:textColor="@color/purple"
+                android:textColor="@string/mainAppThemeColor"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -49,8 +49,8 @@
                 android:id="@+id/signupEmail_til"
                 android:textColorHint="@color/grey"
                 android:layout_marginTop="25dp"
-                android:paddingStart="50dp"
-                android:paddingEnd="30dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <EditText
@@ -72,8 +72,8 @@
                 android:id="@+id/signupPassword_til"
                 android:textColorHint="@color/grey"
                 android:layout_marginTop="25dp"
-                android:paddingStart="50dp"
-                android:paddingEnd="30dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
@@ -95,7 +95,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/signupButton"
-                android:backgroundTint="@color/purple"
+                android:backgroundTint="@string/mainAppThemeColor"
                 android:background="@drawable/button_shape_white_layout"
                 android:stateListAnimator="@drawable/state_list_animator_z"
                 android:layout_width="150dp"

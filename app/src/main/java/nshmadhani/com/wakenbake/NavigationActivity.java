@@ -119,7 +119,7 @@ public class NavigationActivity extends AppCompatActivity
 
         Log.d(TAG, String.format("onCreate: %s", mAuth.getCurrentUser().getEmail()));
         if (user != null) {
-            Log.d(TAG, "onStart: " + user.getEmail() + user.getPhotoUrl().toString());
+//            Log.d(TAG, "onStart: " + user.getEmail() + user.getPhotoUrl().toString());
 //                String email = user.getEmail();
 //                mHeaderEmail.setText(email);
 //                Picasso.with(this)
