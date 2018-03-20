@@ -2,6 +2,7 @@ package nshmadhani.com.wakenbake;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TiffinPlaceFragment extends Fragment{
+public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
 
     public static final String TAG = TiffinPlaceFragment.class.getSimpleName();
     private FirebaseAuth mAuth;
@@ -34,13 +35,13 @@ public class TiffinPlaceFragment extends Fragment{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.tiffin_places_fragment, container, false);
 
         mTiffinPlacesList = new ArrayList<>();
-        mTiffinPlacesRecyclerView  = rootView.findViewById(R.id.googlePlacesFragment);
+        mTiffinPlacesRecyclerView  = rootView.findViewById(R.id.tiffinplacesRecyclerView);
         mTiffinPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mTiffinPlacesListAdapter = new TiffinPlacesListAdapter(mTiffinPlacesList, mActivity);
         mTiffinPlacesRecyclerView.setAdapter(mTiffinPlacesListAdapter);
@@ -51,8 +52,7 @@ public class TiffinPlaceFragment extends Fragment{
                 getTiffinPlacesFromFirebase();
             }
         });
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
     }
 
     @Override
@@ -72,11 +72,11 @@ public class TiffinPlaceFragment extends Fragment{
                 .build();
 
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-        Call<PlacesHolder> call = apiInterface.getTiffinPlaces("");
+        Call<TiffinPlacesHolder> call = apiInterface.getmTiffinPlaces("");
         Log.d(TAG, "onCreate: Connection successful");
-        call.enqueue(new Callback<PlacesHolder>() {
+        call.enqueue(new Callback<TiffinPlacesHolder>() {
             @Override
-            public void onResponse(Call<PlacesHolder> call, Response<PlacesHolder> response) {
+            public void onResponse(@NonNull Call<TiffinPlacesHolder> call, @NonNull Response<TiffinPlacesHolder> response) {
                 List<TiffinPlaces> mTiffinPlaces = response.body().getmTiffinPlaces();
                 if (mTiffinPlaces != null) {
                     for (TiffinPlaces t : mTiffinPlaces) {
@@ -90,7 +90,7 @@ public class TiffinPlaceFragment extends Fragment{
                         mTiffinPlacesList.add(t);
                     }
                 }
-                Log.d(TAG, "onResult: "+ mTiffinPlacesList.size());
+                Log.d(TAG, "onResult: tiffin"+ mTiffinPlacesList.size());
                 Log.d(TAG, "onResponse: "+response.body());
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
@@ -101,7 +101,7 @@ public class TiffinPlaceFragment extends Fragment{
             }
 
             @Override
-            public void onFailure(Call<PlacesHolder> call, Throwable t) {
+            public void onFailure(Call<TiffinPlacesHolder> call, Throwable t) {
                 Log.e(TAG, "onFailure: ", t );
             }
         });

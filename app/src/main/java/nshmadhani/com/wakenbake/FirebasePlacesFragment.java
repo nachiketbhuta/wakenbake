@@ -23,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FirebasePlacesFragment extends Fragment {
+public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
 
     private List<FirebasePlaces> mFirebasePlacesList;
     private NavigationActivity mActivity;
@@ -39,7 +39,7 @@ public class FirebasePlacesFragment extends Fragment {
                 .inflate(R.layout.firebase_places_fragment, container, false);
 
         mFirebasePlacesList = new ArrayList<>();
-        mFirebasePlacesRecyclerView  = rootView.findViewById(R.id.googlePlacesFragment);
+        mFirebasePlacesRecyclerView  = rootView.findViewById(R.id.firebasePlacesRecyclerView);
         mFirebasePlacesRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mFirebasePlacesListAdapter = new FirebasePlacesListAdapter(mFirebasePlacesList, mActivity);
         mFirebasePlacesRecyclerView.setAdapter(mFirebasePlacesListAdapter);
@@ -72,11 +72,11 @@ public class FirebasePlacesFragment extends Fragment {
                 .build();
 
         RetrofitApiInterface apiInterface = retrofit.create(RetrofitApiInterface.class);
-        Call<PlacesHolder> call = apiInterface.getPlacesFromFirebase("");
+        Call<FirebasePlacesHolder> call = apiInterface.getPlacesFromFirebase("");
         Log.d(TAG, "onCreate: Connection successful");
-        call.enqueue(new Callback<PlacesHolder>() {
+        call.enqueue(new Callback<FirebasePlacesHolder>() {
             @Override
-            public void onResponse(@NonNull Call<PlacesHolder> call, @NonNull Response<PlacesHolder> response) {
+            public void onResponse(@NonNull Call<FirebasePlacesHolder> call, @NonNull Response<FirebasePlacesHolder> response) {
                 List<FirebasePlaces> firebasePlacesList = response.body().getmPlaces();
                 if (firebasePlacesList != null) {
                     for(FirebasePlaces f : firebasePlacesList) {
@@ -107,7 +107,7 @@ public class FirebasePlacesFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<PlacesHolder> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<FirebasePlacesHolder> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: ",t);
             }
         });

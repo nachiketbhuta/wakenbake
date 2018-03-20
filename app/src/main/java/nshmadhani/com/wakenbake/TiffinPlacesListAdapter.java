@@ -35,9 +35,7 @@ public class TiffinPlacesListAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(ListViewHolder holder, int position) {
 
         TiffinPlaces mTiffinPlace = mTiffinPlacesList.get(position);
-
         holder.mTiffinName.setText(mTiffinPlace.getmTiffinName());
-
         Picasso.with(context)
                 .load(R.drawable.no_image)
                 .into(holder.mTiffinImage);

@@ -3,6 +3,7 @@ package nshmadhani.com.wakenbake;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -30,6 +32,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,25 +55,36 @@ public class NavigationActivity extends AppCompatActivity
     public FirebaseAuth mAuth;
     private MaterialSearchBar searchBar;
     public DrawerLayout drawer;
+    public ViewPager mNavigationViewPager;
+    public TextView mHeaderEmail;
+    public ImageView mHeaderImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
-
         initialLayout();
-
         mAuth = FirebaseAuth.getInstance();
-
         relatedToSearch();
 
-        Intent intent = getIntent();
-
+        mHeaderEmail = findViewById(R.id.navHeaderEmail);
+        mHeaderImage = findViewById(R.id.navHeaderImage);
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
 
-        Log.d(TAG, "onCreate: ");
+        mNavigationViewPager = findViewById(R.id.nav_view_pager);
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add("Night", FirebasePlacesFragment.class)
+                .add("Day", GooglePlacesFragment.class)
+                .add("Tiffin", TiffinPlaceFragment.class)
+                .create());
+
+        mNavigationViewPager.setAdapter(adapter);
+
+        SmartTabLayout viewPagerTab = findViewById(R.id.navviewpagertab);
+        viewPagerTab.setViewPager(mNavigationViewPager);
     }
 
     private void relatedToSearch() {
@@ -76,7 +93,6 @@ public class NavigationActivity extends AppCompatActivity
         searchBar.setRoundedSearchBarEnabled(false);
         searchBar.setPlaceHolder("Search");
         searchBar.setOnSearchActionListener(this);
-
     }
 
     private void initialLayout() {
@@ -93,6 +109,24 @@ public class NavigationActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        Log.d(TAG, String.format("onCreate: %s", mAuth.getCurrentUser().getEmail()));
+        if (user != null) {
+            Log.d(TAG, "onStart: " + user.getEmail() + user.getPhotoUrl().toString());
+//                String email = user.getEmail();
+//                mHeaderEmail.setText(email);
+//                Picasso.with(this)
+//                        .load(user.getPhotoUrl())
+//                        .into(mHeaderImage);
+        }
+        Log.d(TAG, "onStart: ");
     }
 
     public FirebaseAuth getmAuth() {
@@ -152,11 +186,14 @@ public class NavigationActivity extends AppCompatActivity
 
             item.setChecked(false);
 
-//            auth.signOut();
-//            intent = new Intent(NavigationActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-
+            if (mAuth != null) {
+                mAuth.signOut();
+                intent = new Intent(NavigationActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Please Log In!", Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.nav_share) {
             item.setChecked(false);
 
@@ -175,9 +212,7 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
     @Override
     public void onSearchStateChanged(boolean enabled) {

@@ -26,7 +26,7 @@ import java.util.List;
 
 import static nshmadhani.com.wakenbake.NavigationActivity.TAG;
 
-public class GooglePlacesFragment extends Fragment {
+public class GooglePlacesFragment extends android.support.v4.app.Fragment {
 
     private List<GooglePlaces> mGooglePlacesList;
     private RecyclerView mGooglePlacesRecyclerView;

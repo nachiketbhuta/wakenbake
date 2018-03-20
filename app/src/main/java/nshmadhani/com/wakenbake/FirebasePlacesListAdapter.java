@@ -40,13 +40,10 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         FirebasePlaces places = mFirebasePlacesList.get(position);
-
         holder.mPlaceName.setText(places.getmVendorName());
-
         Picasso.with(context)
                 .load(R.drawable.no_image)
                 .into(holder.mPlaceImage);
-
     }
 
     @Override

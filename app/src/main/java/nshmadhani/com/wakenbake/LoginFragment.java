@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class LoginFragment extends Fragment {
     private TextInputLayout mUserNameTextInputLayout;
     private TextInputLayout mPasswordTextInputLayout;
     private Button mLoginButton;
-    private GoogleSignInClient mGoogleSignInClient;
+    public GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private LoginActivity mActivity;
     public static final String TAG = LoginFragment.class.getSimpleName();
@@ -60,40 +61,7 @@ public class LoginFragment extends Fragment {
         mUserNameTextInputLayout = rootView.findViewById(R.id.username_til);
         mPasswordTextInputLayout = rootView.findViewById(R.id.password_til);
         mLoginButton = rootView.findViewById(R.id.login_bt);
-        mGoogleButton = rootView.findViewById(R.id.googleButton);
 
-        mGoogleButton.setSize(SignInButton.SIZE_WIDE);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: click");
-                attemptLogin();
-            }
-        });
-
-        mGoogleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: google button" );
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        signInWithGoogle();
-                    }
-                });
-            }
-        });
-        return rootView;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivity = (LoginActivity) getActivity();
-
-        if (mActivity != null) {
-            mAuth = mActivity.getmAuth();
-        }
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -109,6 +77,43 @@ public class LoginFragment extends Fragment {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        mGoogleButton = rootView.findViewById(R.id.googleButton);
+
+        mGoogleButton.setSize(SignInButton.SIZE_WIDE);
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: click");
+                attemptLogin();
+            }
+        });
+
+
+        mGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: google button" );
+                final Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivityForResult(signInIntent, RC_SIGN_IN);
+                    }
+                });
+            }
+        });
+        return rootView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivity = (LoginActivity) getActivity();
+
+        if (mActivity != null) {
+            mAuth = mActivity.getmAuth();
+        }
 
     }
 
@@ -152,8 +157,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void signInWithGoogle() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
@@ -161,7 +164,7 @@ public class LoginFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && resultCode == Activity.RESULT_OK) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -177,26 +180,31 @@ public class LoginFragment extends Fragment {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        if (account != null) {
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Intent intent = new Intent(mActivity, LocationActivity.class);
-                            startActivity(intent);
-                            mActivity.finish();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(mActivity, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+
+            AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+            mAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithCredential:success");
+                                Intent intent = new Intent(mActivity, LocationActivity.class);
+                                startActivity(intent);
+                                mActivity.finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                Toast.makeText(mActivity, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            Toast.makeText(mActivity, "No Google Sign IN", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
