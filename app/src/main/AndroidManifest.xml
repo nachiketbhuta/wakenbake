@@ -20,11 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".SplashScreenActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
 
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".OtpActivity" />
@@ -57,7 +53,14 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="nshmadhani.com.wakenbake" />
 
-        <activity android:name=".BookmarkActivity"></activity>
+        <activity android:name=".BookmarkActivity" />
+        <activity android:name=".ReviewActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
