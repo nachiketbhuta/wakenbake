@@ -44,7 +44,6 @@
             android:layout_marginStart="40dp"/>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/otpPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textColorHint="@color/grey"
@@ -53,6 +52,7 @@
             android:paddingStart="40dp"
             android:paddingEnd="40dp">
             <EditText
+                android:id="@+id/otpPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -134,6 +134,7 @@
 
 
 <!--  ignore -->
+<!--
 
     <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -172,7 +173,7 @@ tools:context=".OtpActivity">
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Phone Number Edit Text -->
+        &lt;!&ndash; Phone Number Edit Text &ndash;&gt;
         <android.support.design.widget.TextInputLayout
             android:textColorHint="#f0f7f4"
             android:layout_marginTop="20dp"
@@ -193,7 +194,7 @@ tools:context=".OtpActivity">
                 android:padding="2dp" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--OTP Title Layout -->
+        &lt;!&ndash;OTP Title Layout &ndash;&gt;
         <RelativeLayout
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
@@ -211,7 +212,7 @@ tools:context=".OtpActivity">
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <!--Pin View Layout -->
+        &lt;!&ndash;Pin View Layout &ndash;&gt;
         <LinearLayout
             android:layout_marginTop="10dp"
             android:paddingStart="20dp"
@@ -235,14 +236,14 @@ tools:context=".OtpActivity">
                 app:password="false"/>
         </LinearLayout>
 
-        <!--Confirm Button Layout -->
-        <!--<LinearLayout-->
-        <!--android:layout_marginTop="25dp"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_weight="100"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp">-->
+        &lt;!&ndash;Confirm Button Layout &ndash;&gt;
+        &lt;!&ndash;<LinearLayout&ndash;&gt;
+        &lt;!&ndash;android:layout_marginTop="25dp"&ndash;&gt;
+        &lt;!&ndash;android:gravity="center"&ndash;&gt;
+        &lt;!&ndash;android:orientation="horizontal"&ndash;&gt;
+        &lt;!&ndash;android:layout_weight="100"&ndash;&gt;
+        &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+        &lt;!&ndash;android:layout_height="50dp">&ndash;&gt;
 
         <LinearLayout
             android:layout_height="match_parent"
@@ -271,3 +272,4 @@ tools:context=".OtpActivity">
 
 
 
+-->
