@@ -28,7 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         imageView = findViewById(R.id.splashScreenImage);
 
         Picasso.with(this)
-                .load(R.drawable.logo_purple_bg)
+                .load(R.drawable.splash_screen)
                 .into(imageView);
 
         displaySplash(); // Displays the Splash Screen
