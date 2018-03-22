@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.activities.FirebasePlaceActivity;
@@ -43,9 +44,18 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
 
         final FirebasePlaces places = mFirebasePlacesList.get(position);
         holder.mPlaceName.setText(places.getmVendorName());
-        Picasso.with(context)
-                .load(R.drawable.no_image)
-                .into(holder.mPlaceImage);
+
+
+        if (Objects.equals(places.getmVendorUrl(), "")) {
+            Picasso.with(context)
+                    .load(R.drawable.no_image)
+                    .into(holder.mPlaceImage);
+        }
+        else {
+            Picasso.with(context)
+                    .load(places.getmVendorUrl())
+                    .into(holder.mPlaceImage);
+        }
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override

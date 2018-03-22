@@ -90,6 +90,7 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
                             Intent intent = new Intent(LocationActivity.this, NavigationActivity.class);
                             intent.putExtra("latitude", location.getLatitude());
                             intent.putExtra("longitude", location.getLongitude());
+                            intent.putExtra("email", getIntent().getStringExtra("email"));
                             startActivity(intent);
                             finish();
                         } else {

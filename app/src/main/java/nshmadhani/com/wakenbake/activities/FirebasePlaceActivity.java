@@ -3,6 +3,8 @@ package nshmadhani.com.wakenbake.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.models.PlaceBookmark;
 
@@ -37,7 +43,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public FloatingActionButton location;
     public ImageView mVendorImageView;
     public TextView name;
-    public TextView address;
+    public TextView mVendorAddress;
     public String number;
 
     @Override
@@ -53,14 +59,22 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 .into(mVendorImageView);
 
         name = findViewById(R.id.night_placeNameTextView);
-        address = findViewById(R.id.night_address);
+        mVendorAddress = findViewById(R.id.night_address);
         mVendorCallButton = findViewById(R.id.night_callButton);
         mVendorBookmarkButton = findViewById(R.id.night_bookmarkButton);
         location = findViewById(R.id.night_mapsButton);
 
+        name.setText(getIntent().getStringExtra("vendor_name"));
+        mVendorRatingBar.setRating((float) getIntent().getDoubleExtra("vendor_ratings" , 0));
+
+        double latitude = getIntent().getDoubleExtra("vendor_lat", 0);
+        double longitude = getIntent().getDoubleExtra("vendor_lng", 0);
+
+        getAddress(latitude, longitude);
+
         mVendorPhoneNumber = getIntent().getStringExtra("vendor_phone");
 
-        mVendorRatingBar.setRating((float) getIntent().getDoubleExtra("vendor_ratings", 0));
+        mVendorRatingBar.setRating( getIntent().getFloatExtra("vendor_ratings", 0f));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.night_map);
@@ -86,6 +100,35 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 Log.d(TAG, "onClick: Bookmarks " + placeBookmark.getPlaceID() + ", " + placeBookmark.getPlaceNAME());
             }
         });
+
+
+
+    }
+
+    private void getAddress(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+        try {
+        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+
+            Log.d("Address", "getAddress: "
+                    + "Address: " + address
+                    + "Known Name: " + knownName
+                    + "City: " + city
+                    + "State: " + state
+                    + "Country: " + country
+                    + "Postal Code : " + postalCode);
+
+            mVendorAddress.setText("Address: " + address);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

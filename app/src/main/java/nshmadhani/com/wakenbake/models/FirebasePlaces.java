@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FirebasePlaces extends Places{
+public class FirebasePlaces {
 
     @SerializedName("name")
     public String mVendorName;
@@ -33,15 +33,18 @@ public class FirebasePlaces extends Places{
     @SerializedName("longitude")
     public double mVendorLongitude;
 
-    public Uri getImageURL() {
-        return imageURL;
+
+    public String getmVendorUrl() {
+        return mVendorUrl;
     }
 
-    public void setImageURL(Uri imageURL) {
-        this.imageURL = imageURL;
+    public void setmVendorUrl(String mVendorUrl) {
+        this.mVendorUrl = mVendorUrl;
     }
 
-    public Uri imageURL;
+    public String mVendorUrl;
+
+
 
     public String getmVendorName() {
         return mVendorName;

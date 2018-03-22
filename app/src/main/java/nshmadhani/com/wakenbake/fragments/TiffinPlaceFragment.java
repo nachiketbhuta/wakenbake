@@ -93,7 +93,7 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
                         //tiffinPlaces.addToMasterList(t.getmTiffinName());
                         Log.d(TAG, "onResponse: " + tiffinPlaces.getmTiffinName());
                         mTiffinPlacesList.add(t);
-                        NavigationActivity.mMasterPlaceList.add(tiffinPlaces);
+                        //NavigationActivity.mMasterPlaceList.add(tiffinPlaces);
                     }
                 }
                 Log.d(TAG, "onResult: tiffin"+ mTiffinPlacesList.size());

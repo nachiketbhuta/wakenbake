@@ -72,7 +72,6 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
 
     }
 
-
     private void getPlacesFromGoogle(final double latitude, final double longitude) {
         GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
         NearbySearchRequest nearbySearchRequest = new NearbySearchRequest(geoApiContext);
@@ -106,7 +105,7 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
                         Log.d(TAG, "onResult: "+ googlePlaces.getName() + googlePlaces.getRatings());
 //                            Log.d(TAG, "onResult: Reference " + googlePlaces.getPhotoReference());
                         mGooglePlacesList.add(googlePlaces);
-                        NavigationActivity.mMasterPlaceList.add(googlePlaces);
+                        //NavigationActivity.mMasterPlaceList.add(googlePlaces);
                     }
                     Log.d(TAG, "onResult: "+ mGooglePlacesList.size());
                     mActivity.runOnUiThread(new Runnable() {

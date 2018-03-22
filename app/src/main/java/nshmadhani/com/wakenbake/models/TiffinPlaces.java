@@ -3,7 +3,7 @@ package nshmadhani.com.wakenbake.models;
 import com.google.gson.annotations.SerializedName;
 
 
-public class TiffinPlaces extends Places {
+public class TiffinPlaces  {
 
     @SerializedName("name")
     public String mTiffinName;

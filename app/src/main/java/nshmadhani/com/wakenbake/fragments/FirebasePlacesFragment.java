@@ -18,12 +18,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import nshmadhani.com.wakenbake.holders.FirebasePlacesHolder;
 import nshmadhani.com.wakenbake.adapters.FirebasePlacesListAdapter;
 import nshmadhani.com.wakenbake.activities.NavigationActivity;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
+import nshmadhani.com.wakenbake.models.APIClient;
 import nshmadhani.com.wakenbake.models.FirebasePlaces;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +43,7 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
     public static final String TAG = FirebasePlacesFragment.class.getSimpleName();
     public StorageReference storageReference;
     public FirebaseStorage firebaseStorage;
+    public IRetrofitDataApi iRetrofitDataApi;
 
     @Nullable
     @Override
@@ -71,20 +74,15 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         mActivity = (NavigationActivity) getActivity();
         mAuth = mActivity.getmAuth();
 
+        iRetrofitDataApi = APIClient.getClient().create(IRetrofitDataApi.class);
+
         firebaseStorage = mActivity.getmFirebaseStorage();
         storageReference = mActivity.getmStorageReference();
 
     }
 
     private void getPlacesFromFirebaseDatabase() {
-        //Getting places from Firebase
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IRetrofitDataApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final IRetrofitDataApi apiInterface = retrofit.create(IRetrofitDataApi.class);
-        Call<FirebasePlacesHolder> call = apiInterface.getPlacesFromFirebase("");
+        Call<FirebasePlacesHolder> call = iRetrofitDataApi.getPlacesFromFirebase("");
         Log.d(TAG, "onCreate: Connection successful");
         call.enqueue(new Callback<FirebasePlacesHolder>() {
             @Override
@@ -103,26 +101,33 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
                         mFirebasePlaces.setmVendorCloseTime(f.mVendorCloseTime);
                         mFirebasePlaces.setmVendorFoodItems(f.mVendorFoodItems);
 
-                        String imageFileName = f.mVendorName + ".jpg";
-
                         //Log.d(TAG, "onResponse: storage " + storageReference.child(imageFileName).toString());
-                        storageReference.child(imageFileName.replaceAll("'", "")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Log.d(TAG, "onSuccess: " + uri.toString());
-                                //mFirebasePlaces.setImageURL(uri);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "onFailure: " + e.toString());
-                            }
-                        });
+
+                        String imageFileName = f.mVendorName.toLowerCase();
+                        imageFileName = imageFileName.replaceAll("[^a-zA-Z]+", "");
+                        imageFileName = imageFileName + ".jpg";
+
+                        Log.d(TAG, "onResponse: final string token : " + imageFileName);
+                        try {
+                            storageReference.child(imageFileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Log.d(TAG, "onSuccess: Name: " + mFirebasePlaces.getmVendorName() + "URI: " + uri.toString());
+                                    mFirebasePlaces.setmVendorUrl(uri.toString());
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: " + e.toString());
+                                }
+                            });
+                        } catch (Exception e ) {
+                            mFirebasePlaces.setmVendorUrl("");
+                        }
 
                         Log.d(TAG, "onResponse: " + f.getmVendorId());
                         Log.d(TAG, "onResult: "+f.getmVendorName());
                         mFirebasePlacesList.add(f);
-                        NavigationActivity.mMasterPlaceList.add(f);
                     }
                 }
                 Log.d(TAG, "onResult: "+ mFirebasePlacesList.size());

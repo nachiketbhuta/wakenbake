@@ -41,7 +41,7 @@ public class TiffinPlacesActivity extends AppCompatActivity {
         tiffinImage= findViewById(R.id.tiffinPlaceImageView);
         tiffinName = findViewById(R.id.tiffin_placeNameTextView);
         tiffinFoodItems = findViewById(R.id.tiffin_foodType);
-        tiffinRatings = findViewById(R.id.night_simpleRatingBar);
+        tiffinRatings = findViewById(R.id.tiffin_simpleRatingBar);
         tiffinBookmark = findViewById(R.id.tiffin_bookmarkButton);
         tiffinCall = findViewById(R.id.tiffin_callButton);
 
@@ -58,12 +58,12 @@ public class TiffinPlacesActivity extends AppCompatActivity {
             }
         });
 
-        tiffinRatings.setRating((float) getIntent().getDoubleExtra("tiffin_ratings", 0));
+        tiffinRatings.setRating(getIntent().getFloatExtra("tiffin_ratings", 0));
 
         tiffinBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getExtras().getString("placeName"));
+                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getExtras().getString("tiffin_name"));
 
                 placeBookmark.save();
 

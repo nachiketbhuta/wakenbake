@@ -17,6 +17,12 @@ public class UserReview {
     @SerializedName("vendorname")
     private String mVendorName;
 
+    public UserReview(String mUsername, String mReview, String mVendorName) {
+        this.mUsername = mUsername;
+        this.mReview = mReview;
+        this.mVendorName = mVendorName;
+    }
+
     public String getmUsername() {
         return mUsername;
     }

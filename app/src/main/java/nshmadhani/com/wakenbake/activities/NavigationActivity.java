@@ -17,9 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +32,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,8 @@ public class NavigationActivity extends AppCompatActivity
     private MaterialSearchBar searchBar;
     public DrawerLayout drawer;
     public ViewPager mNavigationViewPager;
-    public TextView mHeaderEmail;
-    public ImageView mHeaderImage;
+    public TextView mNavHeaderEmail;
+    public ImageView mNavHeaderImage;
     public FirebaseStorage mFirebaseStorage;
     public StorageReference mStorageReference;
     public static StorageReference mPathReference;
@@ -73,8 +72,15 @@ public class NavigationActivity extends AppCompatActivity
 
         mStorageReference = mFirebaseStorage.getReference();
 
-        mHeaderEmail = findViewById(R.id.navHeaderEmail);
-        mHeaderImage = findViewById(R.id.navHeaderImage);
+        mNavHeaderEmail = findViewById(R.id.mNavHeaderEmail);
+        mNavHeaderImage = findViewById(R.id.mNavHeaderImage);
+
+//        Log.d(TAG, "onCreate: Email: " + getIntent().getStringExtra("email"));
+//        mNavHeaderEmail.setText(getIntent().getStringExtra("email"));
+//
+//        Picasso.with(this)
+//                .load(R.drawable.user_image)
+//                .into(mNavHeaderImage);
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -110,8 +116,10 @@ public class NavigationActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar(); // support.v7
         if (actionBar != null) {
             actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -120,21 +128,7 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        Log.d(TAG, String.format("onCreate: %s", mAuth.getCurrentUser().getEmail()));
-        if (user != null) {
-//            Log.d(TAG, "onStart: " + user.getEmail() + user.getPhotoUrl().toString());
-//                String email = user.getEmail();
-//                mHeaderEmail.setText(email);
-//                Picasso.with(this)
-//                        .load(user.getPhotoUrl())
-//                        .into(mHeaderImage);
-        }
-        Log.d(TAG, "onStart: ");
     }
-
     public FirebaseStorage getmFirebaseStorage() {
         return mFirebaseStorage;
     }
@@ -281,18 +275,18 @@ public class NavigationActivity extends AppCompatActivity
 
     void filter(String text) {
 
-        List<Places> temp = new ArrayList<>();
-
-        if (text != null && text.length() > 0) {
-            for (Places p : mMasterPlaceList) {
-                if (p.getName().toLowerCase().contains(text.toLowerCase())) {
-                    temp.add(p);
-                }
-            }
-
-        } else {
-            Toast.makeText(this, "Please enter query!", Toast.LENGTH_SHORT).show();
-        }
+//        List<Places> temp = new ArrayList<>();
+//
+//        if (text != null && text.length() > 0) {
+//            for (Places p : mMasterPlaceList) {
+//                if (p.getName().toLowerCase().contains(text.toLowerCase())) {
+//                    temp.add(p);
+//                }
+//            }
+//
+//        } else {
+//            Toast.makeText(this, "Please enter query!", Toast.LENGTH_SHORT).show();
+//        }
     }
 
 

@@ -49,7 +49,7 @@
             android:value="bookmark.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="2" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -58,7 +58,6 @@
             android:value="nshmadhani.com.wakenbake" />
 
         <activity android:name=".activities.BookmarkActivity" />
-        <activity android:name=".ReviewActivity" />
         <activity
             android:name=".activities.FirebasePlaceActivity"
             android:label="@string/title_activity_firebase_place"
