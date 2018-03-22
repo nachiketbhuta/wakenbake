@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="nshmadhani.com.wakenbake.FirebasePlaceActivity"
+    tools:context="nshmadhani.com.wakenbake.activities.FirebasePlaceActivity"
     tools:showIn="@layout/activity_firebase_place">
 
     <LinearLayout
@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Placee Name"
+            android:text="Place Name"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="22sp"
@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="5dp"
-            tools:context=".GooglePlacesActivity" />
+            tools:context=".activities.GooglePlacesActivity" />
 
     </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context=".LocationActivity">
+    tools:context=".activities.LocationActivity">
 
 
     <com.skyfishjy.library.RippleBackground
