@@ -71,7 +71,9 @@ public class TiffinPlacesActivity extends AppCompatActivity {
         tiffinBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getExtras().getString("tiffin_name"));
+                PlaceBookmark placeBookmark = new PlaceBookmark(
+                        getIntent().getExtras().getString("tiffin_name")
+                        );
 
                 placeBookmark.save();
 

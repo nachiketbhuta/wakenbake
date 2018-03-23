@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import nshmadhani.com.wakenbake.activities.FirebasePlaceActivity;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.activities.TiffinPlacesActivity;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.models.APIClient;
+import nshmadhani.com.wakenbake.models.TiffinReview;
 import nshmadhani.com.wakenbake.models.UserReview;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,9 +29,9 @@ public class ReviewFragment extends Fragment {
     private TextView mReviewHeading;
     private Button mSubmitButton;
     private EditText mReviewBody;
-    private FirebasePlaceActivity mActivity;
-    private String mUsername = "";
-    private String mVendorName = "";
+    private TiffinPlacesActivity mActivity;
+    private String mUsername = "abc@gmail.com";
+    private String mVendorName = "Damodar";
     public IRetrofitDataApi apiInterface;
     public static final String TAG = ReviewFragment.class.getSimpleName();
 
@@ -51,8 +53,6 @@ public class ReviewFragment extends Fragment {
                         saveReview(mUsername, mReviewBody.getText().toString(), mVendorName);
                     }
                 });
-
-
             }
         });
         return rootView;
@@ -62,38 +62,39 @@ public class ReviewFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mActivity = (FirebasePlaceActivity) getActivity();
+        mActivity = (TiffinPlacesActivity) getActivity();
         apiInterface = APIClient.getClient().create(IRetrofitDataApi.class);
     }
 
     private void saveReview(String mUsername, String s, String mVendorName) {
-        final UserReview userReview = new UserReview(mUsername, s, mVendorName);
-        Call<UserReview> userReviewCall = apiInterface.saveReview(userReview);
-        userReviewCall.enqueue(new Callback<UserReview>() {
+        final TiffinReview tiffinReview = new TiffinReview(mUsername, s, mVendorName);
+        Call<TiffinReview> tiffinReviewCall = apiInterface.saveTiffinReview(tiffinReview);
+        tiffinReviewCall.enqueue(new Callback<TiffinReview>() {
             @Override
-            public void onResponse(Call<UserReview> call, Response<UserReview> response) {
-                UserReview review = response.body();
+            public void onResponse(Call<TiffinReview> call, Response<TiffinReview> response) {
+                TiffinReview review = response.body();
+                Log.d(TAG, "onResponse: server review: " +response.body());
 
                 if (review != null) {
                     Log.d(TAG, "ReviewResponse: " + review);
-                    Log.d(TAG, "Username: " + review.getmUsername());
-                    Log.d(TAG, "Review: " + review.getmReview());
-                    Log.d(TAG, "Vendor: " + review.getmVendorName());
+                    Log.d(TAG, "Username: " + review.getmTiffinName());
+                    Log.d(TAG, "Review: " + review.getmTiffinReview());
+                    Log.d(TAG, "Vendor: " + review.getmTiffinProvider());
 
                     String responseCode = Integer.toString(response.code());
 
                     if (responseCode != null && responseCode.equals("404")) {
-                        Toast.makeText(mActivity, "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(mActivity, "Welcome " + review.getmUsername(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Welcome " + review.getmTiffinName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<UserReview> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                call.cancel();
+            public void onFailure(Call<TiffinReview> call, Throwable t) {
+                Log.d(TAG, "onFailure: ", t);
+                //call.cancel();
             }
         });
     }

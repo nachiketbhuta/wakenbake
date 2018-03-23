@@ -86,5 +86,13 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+        <fragment
+            android:id="@+id/reviewFragment"
+            android:layout_gravity="center|end"
+            android:layout_marginTop="200dp"
+            android:name="nshmadhani.com.wakenbake.fragments.ReviewFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

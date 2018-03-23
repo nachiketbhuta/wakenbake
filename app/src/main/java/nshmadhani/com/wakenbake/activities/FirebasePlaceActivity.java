@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +24,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,9 +38,10 @@ import java.util.Locale;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.models.APIClient;
+import nshmadhani.com.wakenbake.models.FirebasePlaces;
 import nshmadhani.com.wakenbake.models.PlaceBookmark;
-import nshmadhani.com.wakenbake.models.UserRatings;
-import nshmadhani.com.wakenbake.models.UserReview;
+import nshmadhani.com.wakenbake.models.RatingsResponse;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +59,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public TextView mVendorAddress;
     public String number;
     public IRetrofitDataApi apiInterface;
+    private IRetrofitDataApi iRetrofitDataApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorCallButton = findViewById(R.id.night_callButton);
         mVendorBookmarkButton = findViewById(R.id.night_bookmarkButton);
         location = findViewById(R.id.night_mapsButton);
+
+        iRetrofitDataApi = APIClient.getClient().create(IRetrofitDataApi.class);
 
         name.setText(getIntent().getStringExtra("vendor_name"));
         mVendorRatingBar.setRating(getIntent().getFloatExtra("vendor_ratings" , 0));
@@ -94,7 +102,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
-                sendRatings(name.getText().toString(), v);
+                float newRatings = sendRatings(name.getText().toString(), v);
+                mVendorRatingBar.setRating(newRatings);
             }
         });
 
@@ -120,35 +129,23 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         });
     }
 
-    private void sendRatings(String name, float v) {
-        Call<UserRatings> userRatingsCall = apiInterface.saveRatings(name, v);
-        userRatingsCall.enqueue(new Callback<UserRatings>() {
+    private float sendRatings(String name, float v) {
+        Call<Double> call = iRetrofitDataApi.saveRatings(name, v);
+        call.enqueue(new Callback<Double>() {
             @Override
-            public void onResponse(Call<UserRatings> call, Response<UserRatings> response) {
-                UserRatings ratings = response.body();
-
-                if (ratings != null) {
-                    Log.d(TAG, "RatingsResponse: " + ratings);
-                    Log.d(TAG, "vendor name: " + ratings.getName());
-
-                    String responseCode = Integer.toString(response.code());
-
-                    if (responseCode != null && responseCode.equals("404")) {
-                        mVendorRatingBar.setRating(ratings.getRatings());
-                        Toast.makeText(FirebasePlaceActivity.this, "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(FirebasePlaceActivity.this, "Welcome " + ratings.getName(), Toast.LENGTH_SHORT).show();
-                    }
-                }
+            public void onResponse(@NonNull Call<Double> call, @NonNull Response<Double> response) {
+                Log.d(TAG, "onResponse: server response : " + response.body());
+                //double newRatings = response.body().getRatings();
+                //Log.d(TAG, "onResponse: ratings: " + newRatings);
             }
 
             @Override
-            public void onFailure(Call<UserRatings> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                call.cancel();
+            public void onFailure(Call<Double> call, Throwable t) {
+                Log.d(TAG, "onFailure: " , t);
             }
         });
 
+        return 0;
     }
 
     private void getAddress(double latitude, double longitude) {

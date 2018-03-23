@@ -1,5 +1,8 @@
 package nshmadhani.com.wakenbake.models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,14 +12,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
 
-    public static final String BASE_URL = "http://45.77.180.218:5965/";
+    public static final String BASE_URL = "http://192.168.1.28:80/Project/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
         return retrofit;
