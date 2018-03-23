@@ -33,8 +33,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
             android:hint="Username"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:paddingTop="5dp"
             android:inputType="textPersonName"
@@ -90,10 +90,6 @@
         android:layout_width="130dp"
         android:layout_height="55dp" />
 
-</LinearLayout>
-
-
-
-</LinearLayout>
-
+       </LinearLayout>
+    </LinearLayout>
 </ScrollView>

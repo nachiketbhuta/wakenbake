@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="35dp"
+        android:id="@+id/reviewHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:layout_marginStart="40dp"
         android:text="Reviews"
-        android:id="@+id/reviewHeading"
         android:textColor="@string/mainAppThemeColor"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -22,15 +22,15 @@
         android:textColorHint="@color/grey"
         android:textColor="@color/black"
         android:layout_marginTop="25dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
     <EditText
         android:id="@+id/reviewEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
         android:hint="Enter Review"
+        android:textSize="15sp"
         android:textColor="@color/black"
         android:paddingTop="5dp"
         android:gravity="top|left"
@@ -42,14 +42,14 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:id="@+id/submitButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginTop="45dp"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/submitButton"
         android:backgroundTint="@string/mainAppThemeColor"
         android:background="@drawable/button_shape_white_layout"
         android:stateListAnimator="@drawable/state_list_animator_z"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
         android:text="Submit"
         android:elevation="8dp"
         android:layout_marginBottom="3dp"

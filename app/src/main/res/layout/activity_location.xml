@@ -11,10 +11,9 @@
 
 
     <com.skyfishjy.library.RippleBackground
-
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/content"
         app:rb_color="@color/white"
         app:rb_radius="32dp"
         app:rb_rippleAmount="4"
@@ -22,10 +21,10 @@
         app:rb_scale="6">
 
         <ImageView
+            android:id="@+id/locationIcon"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_centerInParent="true"
-            android:id="@+id/locationIcon"
             android:src="@drawable/location_pin_icon"/>
 
         <TextView
@@ -36,8 +35,8 @@
             android:textSize="24sp"
             android:textColor="@color/white"
             android:layout_marginTop="510dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="70dp"/>
+            android:layout_marginStart="70dp"
+            android:layout_gravity="center" />
 
     </com.skyfishjy.library.RippleBackground>
 
