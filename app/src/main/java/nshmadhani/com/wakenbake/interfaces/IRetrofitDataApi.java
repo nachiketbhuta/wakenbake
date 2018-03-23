@@ -28,7 +28,7 @@ public interface IRetrofitDataApi {
     Call<UserReview> saveReview(@Body UserReview userReview);
 
     @POST("dynamicratings.php")
-    Call<Double> saveRatings(
+    Call<RatingsResponse> saveRatings(
             @Query("vendors") String vendorName,
             @Query("ratings") float ratings);
 

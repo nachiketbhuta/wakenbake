@@ -99,11 +99,17 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 .findFragmentById(R.id.night_map);
         mapFragment.getMapAsync(this);
 
-        mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+        mVendorRatingBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
-                float newRatings = sendRatings(name.getText().toString(), v);
-                mVendorRatingBar.setRating(newRatings);
+            public void onClick(View view) {
+                mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+                    @Override
+                    public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
+                        mVendorRatingBar.setClickable(false);
+                        float newRatings = sendRatings(name.getText().toString(), v);
+                        mVendorRatingBar.setRating(newRatings);
+                    }
+                });
             }
         });
 
@@ -130,17 +136,17 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     }
 
     private float sendRatings(String name, float v) {
-        Call<Double> call = iRetrofitDataApi.saveRatings(name, v);
-        call.enqueue(new Callback<Double>() {
+        Call<RatingsResponse> call = iRetrofitDataApi.saveRatings(name, v);
+        call.enqueue(new Callback<RatingsResponse>() {
             @Override
-            public void onResponse(@NonNull Call<Double> call, @NonNull Response<Double> response) {
+            public void onResponse(@NonNull Call<RatingsResponse> call, @NonNull Response<RatingsResponse> response) {
                 Log.d(TAG, "onResponse: server response : " + response.body());
                 //double newRatings = response.body().getRatings();
                 //Log.d(TAG, "onResponse: ratings: " + newRatings);
             }
 
             @Override
-            public void onFailure(Call<Double> call, Throwable t) {
+            public void onFailure(Call<RatingsResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " , t);
             }
         });

@@ -65,7 +65,7 @@
         <activity
             android:name=".activities.TiffinPlacesActivity"
             android:label="@string/title_activity_tiffin_places"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>
