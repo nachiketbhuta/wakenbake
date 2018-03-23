@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.io.IOException;
@@ -31,7 +32,14 @@ import java.util.List;
 import java.util.Locale;
 
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
+import nshmadhani.com.wakenbake.models.APIClient;
 import nshmadhani.com.wakenbake.models.PlaceBookmark;
+import nshmadhani.com.wakenbake.models.UserRatings;
+import nshmadhani.com.wakenbake.models.UserReview;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FirebasePlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -45,6 +53,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public TextView name;
     public TextView mVendorAddress;
     public String number;
+    public IRetrofitDataApi apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +64,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorRatingBar = findViewById(R.id.night_simpleRatingBar);
 
         Picasso.with(this)
-                .load(R.drawable.no_image)
+                .load(getIntent().getStringExtra("vendor_url"))
                 .into(mVendorImageView);
 
         name = findViewById(R.id.night_placeNameTextView);
@@ -65,7 +74,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         location = findViewById(R.id.night_mapsButton);
 
         name.setText(getIntent().getStringExtra("vendor_name"));
-        mVendorRatingBar.setRating((float) getIntent().getDoubleExtra("vendor_ratings" , 0));
+        mVendorRatingBar.setRating(getIntent().getFloatExtra("vendor_ratings" , 0));
 
         double latitude = getIntent().getDoubleExtra("vendor_lat", 0);
         double longitude = getIntent().getDoubleExtra("vendor_lng", 0);
@@ -76,9 +85,18 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
 
         mVendorRatingBar.setRating( getIntent().getFloatExtra("vendor_ratings", 0f));
 
+        apiInterface =  APIClient.getClient().create(IRetrofitDataApi.class);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.night_map);
         mapFragment.getMapAsync(this);
+
+        mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+            @Override
+            public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
+                sendRatings(name.getText().toString(), v);
+            }
+        });
 
         mVendorCallButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +118,36 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 Log.d(TAG, "onClick: Bookmarks " + placeBookmark.getPlaceID() + ", " + placeBookmark.getPlaceNAME());
             }
         });
+    }
 
+    private void sendRatings(String name, float v) {
+        Call<UserRatings> userRatingsCall = apiInterface.saveRatings(name, v);
+        userRatingsCall.enqueue(new Callback<UserRatings>() {
+            @Override
+            public void onResponse(Call<UserRatings> call, Response<UserRatings> response) {
+                UserRatings ratings = response.body();
 
+                if (ratings != null) {
+                    Log.d(TAG, "RatingsResponse: " + ratings);
+                    Log.d(TAG, "vendor name: " + ratings.getName());
+
+                    String responseCode = Integer.toString(response.code());
+
+                    if (responseCode != null && responseCode.equals("404")) {
+                        mVendorRatingBar.setRating(ratings.getRatings());
+                        Toast.makeText(FirebasePlaceActivity.this, "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(FirebasePlaceActivity.this, "Welcome " + ratings.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserRatings> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                call.cancel();
+            }
+        });
 
     }
 

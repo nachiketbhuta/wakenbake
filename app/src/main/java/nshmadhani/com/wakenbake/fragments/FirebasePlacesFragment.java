@@ -41,8 +41,6 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
     private FirebaseAuth mAuth;
     private FirebasePlacesListAdapter mFirebasePlacesListAdapter;
     public static final String TAG = FirebasePlacesFragment.class.getSimpleName();
-    public StorageReference storageReference;
-    public FirebaseStorage firebaseStorage;
     public IRetrofitDataApi iRetrofitDataApi;
 
     @Nullable
@@ -75,10 +73,6 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         mAuth = mActivity.getmAuth();
 
         iRetrofitDataApi = APIClient.getClient().create(IRetrofitDataApi.class);
-
-        firebaseStorage = mActivity.getmFirebaseStorage();
-        storageReference = mActivity.getmStorageReference();
-
     }
 
     private void getPlacesFromFirebaseDatabase() {
@@ -101,32 +95,14 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
                         mFirebasePlaces.setmVendorCloseTime(f.mVendorCloseTime);
                         mFirebasePlaces.setmVendorFoodItems(f.mVendorFoodItems);
 
-                        //Log.d(TAG, "onResponse: storage " + storageReference.child(imageFileName).toString());
-
-                        String imageFileName = f.mVendorName.toLowerCase();
-                        imageFileName = imageFileName.replaceAll("[^a-zA-Z]+", "");
-                        imageFileName = imageFileName + ".jpg";
-
-                        Log.d(TAG, "onResponse: final string token : " + imageFileName);
-                        try {
-                            storageReference.child(imageFileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Log.d(TAG, "onSuccess: Name: " + mFirebasePlaces.getmVendorName() + "URI: " + uri.toString());
-                                    mFirebasePlaces.setmVendorUrl(uri.toString());
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: " + e.toString());
-                                }
-                            });
-                        } catch (Exception e ) {
+                        if (f.mVendorUrl == null) {
                             mFirebasePlaces.setmVendorUrl("");
+                        } else {
+                            mFirebasePlaces.setmVendorUrl(f.mVendorUrl);
                         }
-
                         Log.d(TAG, "onResponse: " + f.getmVendorId());
                         Log.d(TAG, "onResult: "+f.getmVendorName());
+                        Log.d(TAG, "onResponse: url : " + f.mVendorUrl);
                         mFirebasePlacesList.add(f);
                     }
                 }

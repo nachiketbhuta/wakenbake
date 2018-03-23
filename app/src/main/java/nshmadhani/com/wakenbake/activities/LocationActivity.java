@@ -1,9 +1,12 @@
 package nshmadhani.com.wakenbake.activities;
 
 import android.Manifest;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.skyfishjy.library.RippleBackground;
@@ -94,7 +98,6 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
                             startActivity(intent);
                             finish();
                         } else {
-
                             Log.d(TAG, "onSuccess: " + "in else");
                         }
                     }

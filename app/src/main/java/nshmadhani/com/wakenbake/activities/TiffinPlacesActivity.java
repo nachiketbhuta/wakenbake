@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import nshmadhani.com.wakenbake.R;
@@ -60,6 +61,13 @@ public class TiffinPlacesActivity extends AppCompatActivity {
 
         tiffinRatings.setRating(getIntent().getFloatExtra("tiffin_ratings", 0));
 
+        tiffinRatings.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+            @Override
+            public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
+                changeRatings(v);
+            }
+        });
+
         tiffinBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +80,10 @@ public class TiffinPlacesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void changeRatings(float v) {
+
     }
 
     private void call(String tiffin_number) {

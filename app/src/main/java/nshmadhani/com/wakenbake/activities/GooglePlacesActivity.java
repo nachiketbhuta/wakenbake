@@ -89,6 +89,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onClick(View view) {
                 callPlace(phoneNumber);
+                Log.d(TAG, "onClick: call: ");
                 Toast.makeText(GooglePlacesActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
             }
         });

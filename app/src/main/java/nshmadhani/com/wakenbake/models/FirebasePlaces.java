@@ -33,6 +33,8 @@ public class FirebasePlaces {
     @SerializedName("longitude")
     public double mVendorLongitude;
 
+    @SerializedName("base_url")
+    public String mVendorUrl;
 
     public String getmVendorUrl() {
         return mVendorUrl;
@@ -41,10 +43,6 @@ public class FirebasePlaces {
     public void setmVendorUrl(String mVendorUrl) {
         this.mVendorUrl = mVendorUrl;
     }
-
-    public String mVendorUrl;
-
-
 
     public String getmVendorName() {
         return mVendorName;

@@ -43,19 +43,19 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         final FirebasePlaces places = mFirebasePlacesList.get(position);
-        holder.mPlaceName.setText(places.getmVendorName());
-
+        holder.mVendorName.setText(places.getmVendorName());
 
         if (Objects.equals(places.getmVendorUrl(), "")) {
             Picasso.with(context)
                     .load(R.drawable.no_image)
-                    .into(holder.mPlaceImage);
+                    .into(holder.mVendorImage);
         }
         else {
             Picasso.with(context)
                     .load(places.getmVendorUrl())
-                    .into(holder.mPlaceImage);
+                    .into(holder.mVendorImage);
         }
+
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +68,7 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
                 intent.putExtra("vendor_lat", places.getmVendorLatitude());
                 intent.putExtra("vendor_lng", places.getmVendorLongitude());
                 intent.putExtra("vendor_food", places.getmVendorFoodItems());
+                intent.putExtra("vendor_url", places.getmVendorUrl());
                 context.startActivity(intent);
             }
         });
@@ -80,16 +81,16 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView mPlaceImage;
-        private TextView mPlaceName;
+        private ImageView mVendorImage;
+        private TextView mVendorName;
         private TextView mPlaceTime;
         private CardView mCardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            mPlaceImage = itemView.findViewById(R.id.placeImage);
-            mPlaceName = itemView.findViewById(R.id.placeName);
+            mVendorImage = itemView.findViewById(R.id.placeImage);
+            mVendorName = itemView.findViewById(R.id.placeName);
             mPlaceTime = itemView.findViewById(R.id.time_stamp);
             mCardView = itemView.findViewById(R.id.card_view);
         }
