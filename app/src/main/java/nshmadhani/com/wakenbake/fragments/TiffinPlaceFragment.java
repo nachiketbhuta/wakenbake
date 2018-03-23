@@ -22,6 +22,7 @@ import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.holders.TiffinPlacesHolder;
 import nshmadhani.com.wakenbake.adapters.TiffinPlacesListAdapter;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
+import nshmadhani.com.wakenbake.models.APIClient;
 import nshmadhani.com.wakenbake.models.TiffinPlaces;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +35,7 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
     public static final String TAG = TiffinPlaceFragment.class.getSimpleName();
     private FirebaseAuth mAuth;
     private NavigationActivity mActivity;
+    public IRetrofitDataApi apiInterface;
     private static List<TiffinPlaces> mTiffinPlacesList;
     private TiffinPlacesListAdapter mTiffinPlacesListAdapter;
     private RecyclerView mTiffinPlacesRecyclerView;
@@ -66,17 +68,11 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
 
         mActivity = (NavigationActivity) getActivity();
         mAuth = mActivity.getmAuth();
+
+        apiInterface =  APIClient.getClient().create(IRetrofitDataApi.class);
     }
 
     private void getTiffinPlacesFromFirebase() {
-        final Gson gson;
-        gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IRetrofitDataApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        IRetrofitDataApi apiInterface = retrofit.create(IRetrofitDataApi.class);
         Call<TiffinPlacesHolder> call = apiInterface.getmTiffinPlaces("");
         Log.d(TAG, "onCreate: Connection successful");
         call.enqueue(new Callback<TiffinPlacesHolder>() {

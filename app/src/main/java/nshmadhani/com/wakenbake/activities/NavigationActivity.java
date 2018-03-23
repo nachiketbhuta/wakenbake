@@ -75,8 +75,8 @@ public class NavigationActivity extends AppCompatActivity
         mNavHeaderEmail = findViewById(R.id.mNavHeaderEmail);
         mNavHeaderImage = findViewById(R.id.mNavHeaderImage);
 
-//        Log.d(TAG, "onCreate: Email: " + getIntent().getStringExtra("email"));
-//        mNavHeaderEmail.setText(getIntent().getStringExtra("email"));
+        Log.d(TAG, "onCreate: Email: " + getIntent().getStringExtra("email"));
+        mNavHeaderEmail.setText(getIntent().getStringExtra("email"));
 //
 //        Picasso.with(this)
 //                .load(R.drawable.user_image)
