@@ -25,10 +25,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -99,17 +101,13 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 .findFragmentById(R.id.night_map);
         mapFragment.getMapAsync(this);
 
-        mVendorRatingBar.setOnClickListener(new View.OnClickListener() {
+        mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
             @Override
-            public void onClick(View view) {
-                mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
-                    @Override
-                    public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
-                        mVendorRatingBar.setClickable(false);
-                        float newRatings = sendRatings(name.getText().toString(), v);
-                        mVendorRatingBar.setRating(newRatings);
-                    }
-                });
+            public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
+                mVendorRatingBar.setClickable(true);
+                String vendorName = name.getText().toString();
+                float mNewRatings = (float)sendRatings(vendorName, v);
+                mVendorRatingBar.setRating(mNewRatings);
             }
         });
 
@@ -135,23 +133,25 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         });
     }
 
-    private float sendRatings(String name, float v) {
-        Call<RatingsResponse> call = iRetrofitDataApi.saveRatings(name, v);
+    private double sendRatings(String name, float v) {
+        final RatingsResponse ratingsResponse = new RatingsResponse();
+        Call<RatingsResponse> call = apiInterface.saveRatings(name, v);
         call.enqueue(new Callback<RatingsResponse>() {
             @Override
-            public void onResponse(@NonNull Call<RatingsResponse> call, @NonNull Response<RatingsResponse> response) {
-                Log.d(TAG, "onResponse: server response : " + response.body());
-                //double newRatings = response.body().getRatings();
-                //Log.d(TAG, "onResponse: ratings: " + newRatings);
+            public void onResponse(Call<RatingsResponse> call, Response<RatingsResponse> response) {
+                JsonParser parser = new JsonParser();
+                JsonObject object = parser.parse(response.body().toString()).getAsJsonObject();
+                Log.d(TAG, "onResponse: json : " + object.toString());
+                ratingsResponse.setRatings(object.getAsDouble());
             }
 
             @Override
             public void onFailure(Call<RatingsResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " , t);
+
             }
         });
 
-        return 0;
+        return ratingsResponse.getRatings();
     }
 
     private void getAddress(double latitude, double longitude) {
