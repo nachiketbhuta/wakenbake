@@ -36,7 +36,7 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
     private FirebaseAuth mAuth;
     private NavigationActivity mActivity;
     public IRetrofitDataApi apiInterface;
-    private static List<TiffinPlaces> mTiffinPlacesList;
+    public static List<TiffinPlaces> mTiffinPlacesList;
     private TiffinPlacesListAdapter mTiffinPlacesListAdapter;
     private RecyclerView mTiffinPlacesRecyclerView;
 
@@ -62,14 +62,56 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
         return rootView;
     }
 
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void setAdapter() {
+        if(NavigationActivity.isSearched){
+            List<TiffinPlaces> temp= NavigationActivity.mMaster.getTiffin();
+            mTiffinPlacesListAdapter = new TiffinPlacesListAdapter(temp, mActivity);
+            mTiffinPlacesRecyclerView.setAdapter(mTiffinPlacesListAdapter);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        NavigationActivity.fragT = this;
         mActivity = (NavigationActivity) getActivity();
         mAuth = mActivity.getmAuth();
 
         apiInterface =  APIClient.getClient().create(IRetrofitDataApi.class);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        String tiffin = (savedInstanceState != null) ? savedInstanceState.getString("tiffin") : "null";
+        Log.i(TAG, " onViewStateRestored: " + tiffin);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.i(TAG, " onSaveInstanceState.");
+        outState.putString("tiffin", "TiffinPlaces");
     }
 
     private void getTiffinPlacesFromFirebase() {

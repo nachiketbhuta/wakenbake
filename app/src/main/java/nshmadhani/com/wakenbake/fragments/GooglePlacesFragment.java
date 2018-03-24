@@ -2,6 +2,7 @@ package nshmadhani.com.wakenbake.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,15 +27,19 @@ import java.util.List;
 import nshmadhani.com.wakenbake.adapters.GooglePlacesListAdapter;
 import nshmadhani.com.wakenbake.activities.NavigationActivity;
 import nshmadhani.com.wakenbake.R;
+import nshmadhani.com.wakenbake.adapters.TiffinPlacesListAdapter;
 import nshmadhani.com.wakenbake.models.GooglePlaces;
+import nshmadhani.com.wakenbake.models.TiffinPlaces;
+
 public class GooglePlacesFragment extends android.support.v4.app.Fragment {
 
-    private static  List<GooglePlaces> mGooglePlacesList;
+    public static  List<GooglePlaces> mGooglePlacesList;
     private RecyclerView mGooglePlacesRecyclerView;
     private GooglePlacesListAdapter mGooglePlacesListAdapter;
     public static String apiKey = "AIzaSyBiREqfd8QWqyeTii3djqE0IhVmKCfoHjs";
     private NavigationActivity mActivity;
     private FirebaseAuth mAuth;
+    private List<GooglePlaces> mMasterGooglePlaces;
     public static final String TAG = GooglePlacesFragment.class.getSimpleName();
 
     @Nullable
@@ -51,6 +56,8 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
 
         final Intent intent = mActivity.getIntent();
 
+        mMasterGooglePlaces = new ArrayList<>();
+
         final double latitude = intent.getDoubleExtra("latitude", 0.0);
         final double longitude = intent.getDoubleExtra("longitude", 0.0);
 
@@ -66,10 +73,55 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        NavigationActivity.fragG=this;
         mActivity = (NavigationActivity) getActivity();
         mAuth = mActivity.getmAuth();
 
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.i(TAG, " onSaveInstanceState.");
+        outState.putString("google", "GooglePlaces");
+    }
+
+    public void setAdapter(){
+        if(NavigationActivity.isSearched){
+            List<GooglePlaces> temp= NavigationActivity.mMaster.getDay();
+            mGooglePlacesListAdapter = new GooglePlacesListAdapter(temp, mActivity);
+            mGooglePlacesRecyclerView.setAdapter(mGooglePlacesListAdapter);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        String google = (savedInstanceState != null) ? savedInstanceState.getString("google") : "null";
+        Log.i(TAG, " onViewStateRestored: " + google);
     }
 
     private void getPlacesFromGoogle(final double latitude, final double longitude) {

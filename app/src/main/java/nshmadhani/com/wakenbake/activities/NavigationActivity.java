@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +26,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +40,17 @@ import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.fragments.FirebasePlacesFragment;
 import nshmadhani.com.wakenbake.fragments.GooglePlacesFragment;
 import nshmadhani.com.wakenbake.fragments.TiffinPlaceFragment;
-import nshmadhani.com.wakenbake.models.Places;
+import nshmadhani.com.wakenbake.models.FirebasePlaces;
+import nshmadhani.com.wakenbake.models.GooglePlaces;
+import nshmadhani.com.wakenbake.models.MasterData;
+import nshmadhani.com.wakenbake.models.TiffinPlaces;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener ,
         MaterialSearchBar.OnSearchActionListener, PopupMenu.OnMenuItemClickListener {
-
+    public static GooglePlacesFragment fragG;
+    public static FirebasePlacesFragment fragF;
+    public static TiffinPlaceFragment fragT;
     public static final String TAG = NavigationActivity.class.getSimpleName();
     protected GeoDataClient mGeoDataClient;
     public FirebaseAuth mAuth;
@@ -56,10 +60,9 @@ public class NavigationActivity extends AppCompatActivity
     public TextView mNavHeaderEmail;
     public ImageView mNavHeaderImage;
     public FirebaseStorage mFirebaseStorage;
-    public StorageReference mStorageReference;
-    public static StorageReference mPathReference;
-    public static List<Places> mMasterPlaceList;
-
+    public static MasterData mMaster;
+    public static boolean isSearched=false;
+    SmartTabLayout viewPagerTab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +70,6 @@ public class NavigationActivity extends AppCompatActivity
         initialLayout();
         mAuth = FirebaseAuth.getInstance();
         relatedToSearch();
-
-        mFirebaseStorage = FirebaseStorage.getInstance();
-
-        mStorageReference = mFirebaseStorage.getReference();
 
         mNavHeaderEmail = findViewById(R.id.mNavHeaderEmail);
         mNavHeaderImage = findViewById(R.id.mNavHeaderImage);
@@ -95,7 +94,7 @@ public class NavigationActivity extends AppCompatActivity
 
         mNavigationViewPager.setAdapter(adapter);
 
-        SmartTabLayout viewPagerTab = findViewById(R.id.navviewpagertab);
+        viewPagerTab = findViewById(R.id.navviewpagertab);
         viewPagerTab.setViewPager(mNavigationViewPager);
     }
 
@@ -131,18 +130,6 @@ public class NavigationActivity extends AppCompatActivity
     }
     public FirebaseStorage getmFirebaseStorage() {
         return mFirebaseStorage;
-    }
-
-    public void setmFirebaseStorage(FirebaseStorage mFirebaseStorage) {
-        this.mFirebaseStorage = mFirebaseStorage;
-    }
-
-    public StorageReference getmStorageReference() {
-        return mStorageReference;
-    }
-
-    public void setmStorageReference(StorageReference mStorageReference) {
-        this.mStorageReference = mStorageReference;
     }
 
     public FirebaseAuth getmAuth() {
@@ -233,28 +220,82 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     public void onSearchStateChanged(boolean enabled) {
         String s = enabled ? "enabled" : "disabled";
+        isSearched = false;
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add("Night", FirebasePlacesFragment.class)
+                .add("Day", GooglePlacesFragment.class)
+                .add("Tiffin", TiffinPlaceFragment.class)
+                .create());
+
+        mNavigationViewPager.setAdapter(adapter);
+
+        viewPagerTab = findViewById(R.id.navviewpagertab);
+        viewPagerTab.setViewPager(mNavigationViewPager);
+
         Toast.makeText(NavigationActivity.this, "Search " + s, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                filter(charSequence.toString());
-                Toast.makeText(NavigationActivity.this, "before text changed", Toast.LENGTH_SHORT).show();
+                isSearched = true;
+                filter(charSequence.toString(), mNavigationViewPager.getCurrentItem());
+                if (charSequence.toString().length() > 0) {
+                 //   Log.d(TAG, "onTextChanged: length : " + charSequence.length() );
+                    switch (mNavigationViewPager.getCurrentItem()) {
+                        case 0 : fragF.setAdapter();
+                            break;
+                        case 1 : fragG.setAdapter();
+                            break;
+                        case 2 : fragT.setAdapter();
+                            break;
+                    }
+                }
+                //Toast.makeText(NavigationActivity.this, "before text changed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                filter(charSequence.toString());
-                Toast.makeText(NavigationActivity.this, "on text changed", Toast.LENGTH_SHORT).show();
+                isSearched = true;
+                filter(charSequence.toString(), mNavigationViewPager.getCurrentItem());
+
+                if (charSequence.toString().length() > 0) {
+                  //  Log.d(TAG, "onTextChanged: length : " + charSequence.length());
+
+                    switch (mNavigationViewPager.getCurrentItem()) {
+                        case 0 : fragF.setAdapter();
+                            break;
+                        case 1 : fragG.setAdapter();
+                            break;
+                        case 2 : fragT.setAdapter();
+                            break;
+                    }
+                }
+                //Toast.makeText(NavigationActivity.this, "on text changed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
-                Toast.makeText(NavigationActivity.this, "after text changed", Toast.LENGTH_SHORT).show();
+                isSearched=true;
+
+                filter(editable.toString(),mNavigationViewPager.getCurrentItem());
+                if (editable.length() > 0) {
+                   // Log.d(TAG, "onTextChanged: length : " + editable.length() );
+                    switch (mNavigationViewPager.getCurrentItem()) {
+                        case 0 : fragF.setAdapter();
+                            break;
+                        case 1 : fragG.setAdapter();
+                            break;
+                        case 2 : fragT.setAdapter();
+                            break;
+                    }
+                }
+                //Toast.makeText(NavigationActivity.this, "after text changed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -273,21 +314,44 @@ public class NavigationActivity extends AppCompatActivity
         return false;
     }
 
-    void filter(String text) {
+    void filter(String text,int TYPE) {
 
-//        List<Places> temp = new ArrayList<>();
-//
-//        if (text != null && text.length() > 0) {
-//            for (Places p : mMasterPlaceList) {
-//                if (p.getName().toLowerCase().contains(text.toLowerCase())) {
-//                    temp.add(p);
-//                }
-//            }
-//
-//        } else {
-//            Toast.makeText(this, "Please enter query!", Toast.LENGTH_SHORT).show();
-//        }
+        List<FirebasePlaces> tempF=new ArrayList<>();
+        List<GooglePlaces> tempG=new ArrayList<>();
+        List<TiffinPlaces> tempT=new ArrayList<>();
+        mMaster=new MasterData();
+
+        if (text != null && text.length() > 0) {
+
+            switch(TYPE) {
+                case 0:
+                    for (FirebasePlaces f : FirebasePlacesFragment.mFirebasePlacesList) {
+                        if (f.getmVendorName().toLowerCase().contains(text.toLowerCase())) {
+                            tempF.add(f);
+                        }
+                    }
+                    mMaster.setNight(tempF);
+                    break;
+                case 1:
+                    for (GooglePlaces g : GooglePlacesFragment.mGooglePlacesList) {
+                        if (g.getName().toLowerCase().contains(text.toLowerCase())) {
+                            tempG.add(g);
+                        }
+                    }
+                    mMaster.setDay(tempG);
+                    break;
+                case 2:
+                    for (TiffinPlaces t : TiffinPlaceFragment.mTiffinPlacesList) {
+                        if (t.getmTiffinName().toLowerCase().contains(text.toLowerCase())) {
+                            tempT.add(t);
+                        }
+                    }
+                    mMaster.setTiffin(tempT);
+                    break;
+            }
+
+        } else {
+            Toast.makeText(this, "Please enter query!", Toast.LENGTH_SHORT).show();
+        }
     }
-
-
 }

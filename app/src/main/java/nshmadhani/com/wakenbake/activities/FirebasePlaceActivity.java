@@ -60,6 +60,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public TextView name;
     public TextView mVendorAddress;
     public String number;
+    public TextView mVendorTime;
     public IRetrofitDataApi apiInterface;
     private IRetrofitDataApi iRetrofitDataApi;
 
@@ -70,6 +71,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
 
         mVendorImageView = findViewById(R.id.firebasePlaceImageView);
         mVendorRatingBar = findViewById(R.id.night_simpleRatingBar);
+        mVendorTime = findViewById(R.id.night_time);
 
         Picasso.with(this)
                 .load(getIntent().getStringExtra("vendor_url"))
@@ -80,6 +82,9 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorCallButton = findViewById(R.id.night_callButton);
         mVendorBookmarkButton = findViewById(R.id.night_bookmarkButton);
         location = findViewById(R.id.night_mapsButton);
+        mVendorTime.setText(String.format("Time: %dAM TO %dAM",
+                getIntent().getIntExtra("vendor_open", 0),
+                getIntent().getIntExtra("vendor_close", 0)));
 
         iRetrofitDataApi = APIClient.getClient().create(IRetrofitDataApi.class);
 
@@ -94,6 +99,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorPhoneNumber = getIntent().getStringExtra("vendor_phone");
 
         mVendorRatingBar.setRating( getIntent().getFloatExtra("vendor_ratings", 0f));
+
+
 
         apiInterface =  APIClient.getClient().create(IRetrofitDataApi.class);
 

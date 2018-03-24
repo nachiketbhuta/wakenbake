@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import nshmadhani.com.wakenbake.adapters.GooglePlacesListAdapter;
+import nshmadhani.com.wakenbake.adapters.TiffinPlacesListAdapter;
 import nshmadhani.com.wakenbake.holders.FirebasePlacesHolder;
 import nshmadhani.com.wakenbake.adapters.FirebasePlacesListAdapter;
 import nshmadhani.com.wakenbake.activities.NavigationActivity;
@@ -27,6 +29,8 @@ import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.models.APIClient;
 import nshmadhani.com.wakenbake.models.FirebasePlaces;
+import nshmadhani.com.wakenbake.models.GooglePlaces;
+import nshmadhani.com.wakenbake.models.TiffinPlaces;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
 
-    private static List<FirebasePlaces> mFirebasePlacesList;
+    public static List<FirebasePlaces> mFirebasePlacesList;
     private NavigationActivity mActivity;
     private RecyclerView mFirebasePlacesRecyclerView;
     private FirebaseAuth mAuth;
@@ -66,9 +70,51 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        String firebase = (savedInstanceState != null) ? savedInstanceState.getString("firebase") : "null";
+        Log.i(TAG, " onViewStateRestored: " + firebase);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.i(TAG, " onSaveInstanceState.");
+        outState.putString("firebase", "FirebasePlaces");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    public void setAdapter(){
+        if(NavigationActivity.isSearched){
+            List<FirebasePlaces> temp= NavigationActivity.mMaster.getNight();
+            mFirebasePlacesListAdapter = new FirebasePlacesListAdapter(temp, mActivity);
+            mFirebasePlacesRecyclerView.setAdapter(mFirebasePlacesListAdapter);
+        }
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        NavigationActivity.fragF=this;
         mActivity = (NavigationActivity) getActivity();
         mAuth = mActivity.getmAuth();
 

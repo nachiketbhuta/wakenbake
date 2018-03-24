@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FirebasePlaces {
+public class FirebasePlaces{
 
     @SerializedName("name")
     public String mVendorName;

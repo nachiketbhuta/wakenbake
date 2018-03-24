@@ -23,6 +23,7 @@
             app:mt_searchBarColor="@string/mainAppThemeColor"
             app:mt_searchIconTint="@color/white"
             app:mt_maxSuggestionsCount="10"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/searchBar" />

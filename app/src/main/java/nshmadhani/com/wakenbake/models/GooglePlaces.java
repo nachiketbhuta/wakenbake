@@ -2,7 +2,7 @@ package nshmadhani.com.wakenbake.models;
 
 import com.google.android.gms.location.places.Place;
 
-public class GooglePlaces{
+public class GooglePlaces {
 
     public String name;
     public String number;

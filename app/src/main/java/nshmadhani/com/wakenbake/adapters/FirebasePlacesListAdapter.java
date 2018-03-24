@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -56,7 +58,6 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
                     .into(holder.mVendorImage);
         }
 
-
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +70,8 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
                 intent.putExtra("vendor_lng", places.getmVendorLongitude());
                 intent.putExtra("vendor_food", places.getmVendorFoodItems());
                 intent.putExtra("vendor_url", places.getmVendorUrl());
+                intent.putExtra("vendor_open", places.getmVendorOpenTime());
+                intent.putExtra("vendor_close", places.getmVendorCloseTime());
                 context.startActivity(intent);
             }
         });
@@ -83,15 +86,14 @@ public class FirebasePlacesListAdapter extends RecyclerView.Adapter
 
         private ImageView mVendorImage;
         private TextView mVendorName;
-        private TextView mPlaceTime;
         private CardView mCardView;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             mVendorImage = itemView.findViewById(R.id.placeImage);
             mVendorName = itemView.findViewById(R.id.placeName);
-            mPlaceTime = itemView.findViewById(R.id.time_stamp);
             mCardView = itemView.findViewById(R.id.card_view);
         }
     }
