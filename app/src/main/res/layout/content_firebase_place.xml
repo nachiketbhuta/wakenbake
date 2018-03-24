@@ -101,11 +101,11 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="30dp"
                         android:text="Address:"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <TextView
+                  <!--  <TextView
                         android:id="@+id/night_website"
 
                         android:layout_width="wrap_content"
@@ -127,15 +127,16 @@
                         android:text="Cuisine:"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold" /> -->
 
                     <TextView
                         android:id="@+id/night_time"
                         android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:text="Time:"
+                        android:text="Time - 12:00AM - 6:00AM"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
