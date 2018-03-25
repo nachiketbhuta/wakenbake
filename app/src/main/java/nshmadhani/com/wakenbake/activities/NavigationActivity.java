@@ -1,6 +1,7 @@
 package nshmadhani.com.wakenbake.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -59,7 +61,6 @@ public class NavigationActivity extends AppCompatActivity
     public ViewPager mNavigationViewPager;
     public TextView mNavHeaderEmail;
     public ImageView mNavHeaderImage;
-    public FirebaseStorage mFirebaseStorage;
     public static MasterData mMaster;
     public static boolean isSearched=false;
     SmartTabLayout viewPagerTab;
@@ -67,19 +68,29 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
-        initialLayout();
         mAuth = FirebaseAuth.getInstance();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBar actionBar = getSupportActionBar(); // support.v7
+        if (actionBar != null) {
+            actionBar.setTitle("");
+        }
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        mNavHeaderEmail = header.findViewById(R.id.mNavHeaderEmail);
+        mNavHeaderEmail.setText(mAuth.getCurrentUser().getEmail());
+
+        mNavHeaderImage = header.findViewById(R.id.mNavHeaderImage);
+
         relatedToSearch();
-
-        mNavHeaderEmail = findViewById(R.id.mNavHeaderEmail);
-        mNavHeaderImage = findViewById(R.id.mNavHeaderImage);
-
-  //      Log.d(TAG, "onCreate: Email: " + getIntent().getStringExtra("email"));
-//        mNavHeaderEmail.setText(getIntent().getStringExtra("email"));
-//
-//        Picasso.with(this)
-//                .load(R.drawable.user_image)
-//                .into(mNavHeaderImage);
 
         // Construct a GeoDataClient.
         mGeoDataClient = com.google.android.gms.location.places.Places.getGeoDataClient(this, null);
@@ -106,29 +117,9 @@ public class NavigationActivity extends AppCompatActivity
         searchBar.setOnSearchActionListener(this);
     }
 
-    private void initialLayout() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        ActionBar actionBar = getSupportActionBar(); // support.v7
-        if (actionBar != null) {
-            actionBar.setTitle("");
-        }
-        drawer.addDrawerListener(toggle);
-
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-    }
-    public FirebaseStorage getmFirebaseStorage() {
-        return mFirebaseStorage;
     }
 
     public FirebaseAuth getmAuth() {

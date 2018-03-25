@@ -24,6 +24,8 @@
             app:mt_searchIconTint="@color/white"
             app:mt_maxSuggestionsCount="10"
             app:mt_navIconEnabled="true"
+            app:mt_clearIconTint="@color/white"
+            app:mt_backIconTint="@color/white"
             app:mt_navIconTint="@color/white"
             app:mt_navIconUseTint="@color/white"
             android:layout_width="match_parent"

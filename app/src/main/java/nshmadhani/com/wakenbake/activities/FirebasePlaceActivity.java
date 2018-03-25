@@ -24,14 +24,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,10 +35,8 @@ import java.util.Locale;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.models.APIClient;
-import nshmadhani.com.wakenbake.models.FirebasePlaces;
 import nshmadhani.com.wakenbake.models.PlaceBookmark;
 import nshmadhani.com.wakenbake.models.RatingsResponse;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +55,9 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public String number;
     public TextView mVendorTime;
     public IRetrofitDataApi apiInterface;
-    private IRetrofitDataApi iRetrofitDataApi;
+    public double newRatings;
+    public float oldRatings;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +81,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 getIntent().getIntExtra("vendor_open", 0),
                 getIntent().getIntExtra("vendor_close", 0)));
 
-        iRetrofitDataApi = APIClient.getClient().create(IRetrofitDataApi.class);
+        apiInterface = APIClient.getClient().create(IRetrofitDataApi.class);
 
         name.setText(getIntent().getStringExtra("vendor_name"));
         mVendorRatingBar.setRating(getIntent().getFloatExtra("vendor_ratings" , 0));
@@ -99,8 +94,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorPhoneNumber = getIntent().getStringExtra("vendor_phone");
 
         mVendorRatingBar.setRating( getIntent().getFloatExtra("vendor_ratings", 0f));
-
-
+        Log.d(TAG, "onCreate: ratings: " + mVendorRatingBar.getRating());
 
         apiInterface =  APIClient.getClient().create(IRetrofitDataApi.class);
 
@@ -111,10 +105,13 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
-                mVendorRatingBar.setClickable(true);
+                mVendorRatingBar.setClickable(false);
+                oldRatings = mVendorRatingBar.getRating();
+               // Toast.makeText(FirebasePlaceActivity.this, "Old Ratings: " + String.valueOf(oldRatings), Toast.LENGTH_SHORT).show();
                 String vendorName = name.getText().toString();
-                float mNewRatings = (float)sendRatings(vendorName, v);
-                mVendorRatingBar.setRating(mNewRatings);
+                double mNewRatings = sendRatings(vendorName,v + oldRatings);
+                //Toast.makeText(FirebasePlaceActivity.this, "New ratings: " + String.valueOf(mNewRatings), Toast.LENGTH_SHORT).show();
+                mVendorRatingBar.setRating((float)(mNewRatings + oldRatings));
             }
         });
 
@@ -141,24 +138,22 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     }
 
     private double sendRatings(String name, float v) {
-        final RatingsResponse ratingsResponse = new RatingsResponse();
         Call<RatingsResponse> call = apiInterface.saveRatings(name, v);
         call.enqueue(new Callback<RatingsResponse>() {
             @Override
-            public void onResponse(Call<RatingsResponse> call, Response<RatingsResponse> response) {
-                JsonParser parser = new JsonParser();
-                JsonObject object = parser.parse(response.body().toString()).getAsJsonObject();
-                Log.d(TAG, "onResponse: json : " + object.toString());
-                ratingsResponse.setRatings(object.getAsDouble());
-            }
+            public void onResponse(@NonNull Call<RatingsResponse> call, @NonNull Response<RatingsResponse> response) {
+            List<Double> r = response.body().getRatings();
+                Log.d(TAG, "onResponse: ratings new : " + r.get(0));
+                newRatings = r.get(0);
+        }
 
             @Override
             public void onFailure(Call<RatingsResponse> call, Throwable t) {
-
+                Log.d(TAG, "onFailure: server: " + t.getLocalizedMessage());
             }
         });
 
-        return ratingsResponse.getRatings();
+        return newRatings;
     }
 
     private void getAddress(double latitude, double longitude) {

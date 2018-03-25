@@ -40,7 +40,7 @@
             app:srb_starPadding="10dp"
             app:srb_stepSize="0.5"
             app:srb_isIndicator="false"
-            app:srb_clickable="false"
+            app:srb_clickable="true"
             app:srb_scrollable="false"
             app:srb_clearRatingEnabled="true">
         </com.willy.ratingbar.ScaleRatingBar>

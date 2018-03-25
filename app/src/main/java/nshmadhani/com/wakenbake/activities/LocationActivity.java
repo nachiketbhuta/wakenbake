@@ -134,5 +134,6 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
     @Override
     protected void onResume() {
         super.onResume();
+        makeUseOfNewLocation();
     }
 }

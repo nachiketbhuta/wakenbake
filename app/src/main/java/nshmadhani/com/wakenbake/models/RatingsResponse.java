@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.models;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,13 +8,13 @@ public class RatingsResponse {
 
     @SerializedName("ratings")
     @Expose
-    private Double ratings;
+    private List<Double> ratings = null;
 
-    public Double getRatings() {
+    public List<Double> getRatings() {
         return ratings;
     }
 
-    public void setRatings(Double ratings) {
+    public void setRatings(List<Double> ratings) {
         this.ratings = ratings;
     }
 
