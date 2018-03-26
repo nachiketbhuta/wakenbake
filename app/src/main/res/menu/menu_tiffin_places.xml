@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="nshmadhani.com.wakenbake.activities.TiffinPlacesActivity">
+    tools:context="nshmadhani.com.wakenbake.Activities.TiffinPlacesActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

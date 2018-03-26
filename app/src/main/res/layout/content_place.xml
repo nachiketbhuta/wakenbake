@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.GooglePlacesActivity"
+    tools:context=".Activities.GooglePlacesActivity"
     tools:showIn="@layout/activity_place">
 
     <LinearLayout
@@ -152,7 +152,7 @@
         android:layout_gravity="center|end"
         android:layout_marginTop="200dp"
         android:layout_margin="5dp"
-        tools:context=".activities.GooglePlacesActivity"
+        tools:context=".Activities.GooglePlacesActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     </LinearLayout>

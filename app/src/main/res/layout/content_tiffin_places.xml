@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="nshmadhani.com.wakenbake.activities.TiffinPlacesActivity"
+    tools:context="nshmadhani.com.wakenbake.Activities.TiffinPlacesActivity"
     tools:showIn="@layout/activity_tiffin_places">
 
     <LinearLayout
@@ -89,6 +89,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:name="nshmadhani.com.wakenbake.fragments.ReviewFragment" />
+            android:name="nshmadhani.com.wakenbake.Fragments.ReviewFragment" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

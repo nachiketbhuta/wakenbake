@@ -7,7 +7,7 @@
     android:background="@string/mainAppThemeColor"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.NavigationActivity"
+    tools:context=".Activities.NavigationActivity"
     tools:showIn="@layout/app_bar">
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
