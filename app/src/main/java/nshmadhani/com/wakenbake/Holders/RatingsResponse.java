@@ -1,4 +1,4 @@
-package nshmadhani.com.wakenbake.Models;
+package nshmadhani.com.wakenbake.Holders;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

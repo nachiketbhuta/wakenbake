@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     
     <TextView
-        android:id="@+id/mListViewEmail"
+        android:id="@+id/mRecyclerViewEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="abc@gmail.com"
@@ -14,7 +14,7 @@
         android:textStyle="bold"/>
     
     <TextView
-        android:id="@+id/mListViewReview"
+        android:id="@+id/mRecyclerViewReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nice!"

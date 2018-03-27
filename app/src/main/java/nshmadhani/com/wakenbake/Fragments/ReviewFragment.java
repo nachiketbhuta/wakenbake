@@ -4,25 +4,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import nshmadhani.com.wakenbake.Models.UserReviewResponse;
+import nshmadhani.com.wakenbake.Adapters.ReviewFragmentListAdapter;
+import nshmadhani.com.wakenbake.Holders.ReviewResponse;
 import nshmadhani.com.wakenbake.R;
-import nshmadhani.com.wakenbake.Activities.TiffinPlacesActivity;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
-import nshmadhani.com.wakenbake.Models.TiffinReview;
+import nshmadhani.com.wakenbake.Models.Review;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,11 +35,13 @@ public class ReviewFragment extends Fragment {
     private Button mSubmitButton;
     private EditText mReviewBody;
     private String mUsername = "abc@gmail.com";
-    private String mVendorName = "Damodar";
+    private String mVendorName = "";
     public IRetrofitDataApi apiInterface;
-    public ListView mReviewsListView;
-    public ArrayAdapter<String> mReviewsListAdapter;
+    public RecyclerView mReviewsRecyclerView;
+    public ReviewFragmentListAdapter mReviewsListAdapter;
     public static final String TAG = ReviewFragment.class.getSimpleName();
+    private List<Review> mReviewList;
+
 
     @Nullable
     @Override
@@ -45,14 +49,16 @@ public class ReviewFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.review_fragment, container, false);
 
         mReviewHeading = rootView.findViewById(R.id.reviewHeading);
-        mReviewsListView = rootView.findViewById(R.id.mReviewFragmentListView);
         mReviewBody = rootView.findViewById(R.id.reviewEditText);
         mSubmitButton = rootView.findViewById(R.id.submitButton);
 
-//        mReviewsListAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_view_layout, msg);
-//        mReviewsListView.setAdapter(mReviewsListAdapter);
+        mReviewList = new ArrayList<>();
+        mReviewsRecyclerView  = rootView.findViewById(R.id.mReviewRecyclerView);
+        mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mReviewsListAdapter = new ReviewFragmentListAdapter(mReviewList, getActivity());
+        mReviewsRecyclerView.setAdapter(mReviewsListAdapter);
 
-
+        mVendorName = getArguments().getString("vendor_name");
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,54 +83,39 @@ public class ReviewFragment extends Fragment {
     }
 
     private void getReviews(String mVendorName) {
-        Call<UserReviewResponse> call = apiInterface.getReviews(mVendorName);
-        call.enqueue(new Callback<UserReviewResponse>() {
+
+        Call<ReviewResponse> call = apiInterface.getReviews(mVendorName);
+        call.enqueue(new Callback<ReviewResponse>() {
             @Override
-            public void onResponse(@NonNull Call<UserReviewResponse> call, @NonNull Response<UserReviewResponse> response) {
-                //String userReviewResponseList = response.body().getReview();
-                //String username = response.body().getUsername();
-                Log.d(TAG, "onResponse: getReviews error: " + response.errorBody());
-                Log.d(TAG, "onResponse: getReviews message: " + response.message());
-                Log.d(TAG, "onResponse: getReviews response: " + response.body());
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                List<Review> reviewResponseList = response.body().getmReviewData();
+                for (Review r : reviewResponseList) {
+                    Review review = new Review();
+                    review.setmUsernameReview(r.getmUsernameReview());
+                    review.setmReview(r.getmReview());
+
+                    mReviewList.add(r);
+                }
+
+                Log.d(TAG, "onResponse: list size: " + mReviewList.size());
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mReviewsListAdapter.notifyDataSetChanged();
+                    }
+                });
             }
 
             @Override
-            public void onFailure(Call<UserReviewResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: getReviews: " + t);
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
             }
         });
+
     }
 
     private void saveReview(String mUsername, String s, String mVendorName) {
-        final TiffinReview tiffinReview = new TiffinReview(mUsername, s, mVendorName);
-        Call<TiffinReview> tiffinReviewCall = apiInterface.saveTiffinUserReview(tiffinReview);
-        tiffinReviewCall.enqueue(new Callback<TiffinReview>() {
-            @Override
-            public void onResponse(Call<TiffinReview> call, Response<TiffinReview> response) {
-                TiffinReview review = response.body();
-                Log.d(TAG, "onResponse: server review: " +response.body());
-
-                if (review != null) {
-                    Log.d(TAG, "ReviewResponse: " + review);
-                    Log.d(TAG, "Username: " + review.getmTiffinName());
-                    Log.d(TAG, "Review: " + review.getmTiffinReview());
-                    Log.d(TAG, "Vendor: " + review.getmTiffinProvider());
-
-                    String responseCode = Integer.toString(response.code());
-
-                    if (responseCode != null && responseCode.equals("404")) {
-                        Toast.makeText(getActivity(), "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Welcome " + review.getmTiffinName(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TiffinReview> call, Throwable t) {
-                Log.d(TAG, "onFailure: ", t);
-                //call.cancel();
-            }
-        });
+        //Call<ResponseBody> saveCall = apiInterface.
     }
 }

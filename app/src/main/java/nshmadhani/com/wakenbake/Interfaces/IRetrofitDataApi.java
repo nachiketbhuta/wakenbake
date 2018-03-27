@@ -1,11 +1,10 @@
 package nshmadhani.com.wakenbake.Interfaces;
 
 import nshmadhani.com.wakenbake.Holders.FirebasePlacesHolder;
+import nshmadhani.com.wakenbake.Holders.ReviewResponse;
 import nshmadhani.com.wakenbake.Holders.TiffinPlacesHolder;
-import nshmadhani.com.wakenbake.Models.FirebaseReview;
-import nshmadhani.com.wakenbake.Models.RatingsResponse;
-import nshmadhani.com.wakenbake.Models.TiffinReview;
-import nshmadhani.com.wakenbake.Models.UserReviewResponse;
+import nshmadhani.com.wakenbake.Holders.RatingsResponse;
+import nshmadhani.com.wakenbake.Models.Review;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -35,13 +34,22 @@ public interface IRetrofitDataApi {
             @Field("ratings") float ratings);
 
     @POST("tiffinreview.php")
-    Call<TiffinReview> saveTiffinUserReview(@Body TiffinReview tiffinReview);
+    @FormUrlEncoded
+    Call<ReviewResponse> saveTiffinReviews(
+            @Field("review") String review,
+            @Field("usrname") String username,
+            @Field("vendorname") String vendorName);
 
     @POST("reviewpost.php")
-    Call<FirebaseReview> saveFirebaseUserReview(@Body FirebaseReview userReview);
+    @FormUrlEncoded
+    Call<ReviewResponse> saveFirebaseReviews (
+            @Field("review") String review,
+            @Field("usrname") String username,
+            @Field("vendorname") String vendorName);
+
 
     @POST("reviewretrieve.php")
     @FormUrlEncoded
-    Call<UserReviewResponse> getReviews(@Field("vendorname") String mVendorName);
+    Call<ReviewResponse> getReviews(@Field("vendorname") String mVendorName);
 
 }

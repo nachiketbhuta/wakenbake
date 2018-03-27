@@ -22,11 +22,12 @@ import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
+import nshmadhani.com.wakenbake.Fragments.ReviewFragment;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
-import nshmadhani.com.wakenbake.Models.RatingsResponse;
+import nshmadhani.com.wakenbake.Holders.RatingsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,6 +106,12 @@ public class TiffinPlacesActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("vendor_name", tiffinName.getText().toString());
+
+        ReviewFragment reviewFragment = new ReviewFragment();
+        reviewFragment.setArguments(bundle);
     }
 
     private double changeRatings(String name, float v) {

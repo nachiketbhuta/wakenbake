@@ -32,11 +32,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import nshmadhani.com.wakenbake.Fragments.ReviewFragment;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
-import nshmadhani.com.wakenbake.Models.RatingsResponse;
+import nshmadhani.com.wakenbake.Holders.RatingsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,6 +152,12 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                 Toast.makeText(FirebasePlaceActivity.this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("vendor_name", name.getText().toString());
+
+        ReviewFragment reviewFragment = new ReviewFragment();
+        reviewFragment.setArguments(bundle);
     }
 
     private double sendRatings(String name, float v) {
@@ -164,7 +171,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
             }
 
             @Override
-            public void onFailure(Call<RatingsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<RatingsResponse> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: server: " + t.getLocalizedMessage());
             }
         });

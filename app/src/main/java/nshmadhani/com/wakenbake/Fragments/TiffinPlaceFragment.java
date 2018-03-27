@@ -146,7 +146,5 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
                 Log.e(TAG, "onFailure: ", t );
             }
         });
-
-
     }
 }

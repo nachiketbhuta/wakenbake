@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements IConnectivityRec
             viewPagerTab.setViewPager(mViewPager); //setting the viewpager to the SmartTabLayout
 
         } else {
-            AlertDialog mDialog = new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                     .setTitle("No Internet Connection")
                     .setMessage("Please check your internet connection")
                     .setPositiveButton("Retry",
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements IConnectivityRec
                             new android.content.DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    System.exit(1);
+                                    finish();
                                 }
                             }).create();
         }

@@ -118,7 +118,7 @@ public class OtpActivity extends AppCompatActivity implements IConnectivityRecei
            };
        }
        else {
-           AlertDialog mDialog = new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                    .setTitle("No Internet Connection")
                    .setMessage("Please check your internet connection")
                    .setPositiveButton("Retry",
@@ -133,7 +133,7 @@ public class OtpActivity extends AppCompatActivity implements IConnectivityRecei
                            new android.content.DialogInterface.OnClickListener() {
                                @Override
                                public void onClick(DialogInterface dialog, int which) {
-                                   System.exit(1);
+                                    finish();
                                }
                            }).create();
        }

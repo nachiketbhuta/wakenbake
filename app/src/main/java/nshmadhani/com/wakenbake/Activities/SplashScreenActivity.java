@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity implements IConnecti
             initLayout(); // initiate the layout
         }
         else { //Displays a dialog box telling no internet connectivity
-            AlertDialog mDialog = new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                     .setTitle("No Internet Connection")
                     .setMessage("Please check your internet connection")
                     .setPositiveButton("Retry",
@@ -52,7 +52,7 @@ public class SplashScreenActivity extends AppCompatActivity implements IConnecti
                             new android.content.DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    System.exit(1);
+                                    finish();
                                 }
                             }).create();
         }

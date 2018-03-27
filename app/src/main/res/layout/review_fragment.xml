@@ -16,8 +16,8 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <ListView
-        android:id="@+id/mReviewFragmentListView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mReviewRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
