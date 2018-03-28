@@ -5,6 +5,7 @@ import nshmadhani.com.wakenbake.Holders.ReviewResponse;
 import nshmadhani.com.wakenbake.Holders.TiffinPlacesHolder;
 import nshmadhani.com.wakenbake.Holders.RatingsResponse;
 import nshmadhani.com.wakenbake.Models.Review;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -33,16 +34,9 @@ public interface IRetrofitDataApi {
             @Field("vendor") String tiffinName,
             @Field("ratings") float ratings);
 
-    @POST("tiffinreview.php")
-    @FormUrlEncoded
-    Call<ReviewResponse> saveTiffinReviews(
-            @Field("review") String review,
-            @Field("usrname") String username,
-            @Field("vendorname") String vendorName);
-
     @POST("reviewpost.php")
     @FormUrlEncoded
-    Call<ReviewResponse> saveFirebaseReviews (
+    Call<ResponseBody> saveReviews (
             @Field("review") String review,
             @Field("usrname") String username,
             @Field("vendorname") String vendorName);

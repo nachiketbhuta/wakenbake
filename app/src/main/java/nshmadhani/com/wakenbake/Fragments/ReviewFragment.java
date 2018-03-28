@@ -66,8 +66,8 @@ public class ReviewFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getReviews(mVendorName);
-                        //saveReview(mUsername, mReviewBody.getText().toString(), mVendorName);
+                        //getReviews(mVendorName);
+                        saveReview(mUsername, mReviewBody.getText().toString(), mVendorName);
                     }
                 });
             }
@@ -116,6 +116,22 @@ public class ReviewFragment extends Fragment {
     }
 
     private void saveReview(String mUsername, String s, String mVendorName) {
-        //Call<ResponseBody> saveCall = apiInterface.
+        Call<ResponseBody> saveCall = apiInterface.saveReviews(s, mUsername, mVendorName);
+        saveCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Review added!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Server Error!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
     }
 }

@@ -93,17 +93,9 @@ public class TiffinPlacesActivity extends AppCompatActivity {
                         getIntent().getExtras().getString("tiffin_name") ,
                         getIntent().getStringExtra("tiffin_url"));
 
-                List<PlaceBookmark> place = PlaceBookmark.findWithQuery(PlaceBookmark.class,
-                        "Select placeName from PlaceBookmark where placeId = ?", getIntent().getExtras().getString("tiffin_id"));
-                //Checking if the place is already added to the database
+                placeBookmark.save();
 
-                if (place.contains(placeBookmark.getPlaceNAME())) { //If added
-                    Toast.makeText(TiffinPlacesActivity.this, "Already added to Bookmarks", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Add to the database and save the place
-                    placeBookmark.save();
-                    Toast.makeText(TiffinPlacesActivity.this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(TiffinPlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
             }
         });
 

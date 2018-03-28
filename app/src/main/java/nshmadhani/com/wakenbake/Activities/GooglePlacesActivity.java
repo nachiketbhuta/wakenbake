@@ -112,19 +112,9 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
                         getIntent().getExtras().getString("placeName"),
                         getIntent().getStringExtra("placeURL")); //Creating a bookmark
 
-                List<PlaceBookmark> place =PlaceBookmark.findWithQuery(PlaceBookmark.class,
-                        "Select placeName from PlaceBookmark where placeId = ?", getIntent().getExtras().getString("placeId"));
-                //Checking if the place is already added to the database
+                placeBookmark.save();
 
-                if (place.contains(placeBookmark.getPlaceNAME())) { //If added
-                    Toast.makeText(GooglePlacesActivity.this, "Already added to Bookmarks", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Add to the database and save the place
-                    placeBookmark.save();
-                    Toast.makeText(GooglePlacesActivity.this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
-                }
-                Log.d(TAG, "onClick: Bookmarks " + placeBookmark.getPlaceID() + ", " + placeBookmark.getPlaceNAME());
-
+                Toast.makeText(GooglePlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
             }
         });
 

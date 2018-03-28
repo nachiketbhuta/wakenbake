@@ -137,19 +137,9 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                         getIntent().getExtras().getString("vendor_name"),
                         getIntent().getStringExtra("vendor_url"));
 
-                List<PlaceBookmark> place = PlaceBookmark.findWithQuery(PlaceBookmark.class,
-                        "Select placeName from PlaceBookmark where placeId = ?", getIntent().getExtras().getString("vendor_id"));
-                //Checking if the place is already added to the database
+                placeBookmark.save();
 
-                if (place.contains(placeBookmark.getPlaceNAME())) { //If added
-                    Toast.makeText(FirebasePlaceActivity.this, "Already added to Bookmarks", Toast.LENGTH_SHORT).show();
-                } else {
-                    //Add to the database and save the place
-                    placeBookmark.save();
-                    Toast.makeText(FirebasePlaceActivity.this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
-                }
-
-                Toast.makeText(FirebasePlaceActivity.this, "Added to Bookmarks", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FirebasePlaceActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
             }
         });
 

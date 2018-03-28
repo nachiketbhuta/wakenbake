@@ -46,10 +46,10 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="bookmark.db" />
+            android:value="PlaceBookmark.db" />
         <meta-data
             android:name="VERSION"
-            android:value="2" />
+            android:value="6" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
