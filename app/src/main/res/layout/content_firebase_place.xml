@@ -129,16 +129,16 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             <!--</android.support.v7.widget.CardView>-->
-        </FrameLayout>
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/review_fragment"
+                android:layout_gravity="center|end"
+                android:layout_marginTop="100dp"
+                android:layout_margin="5dp"
+                android:name="nshmadhani.com.wakenbake.Fragments.ReviewFragment" />
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/review_fragment"
-            android:layout_gravity="center|end"
-            android:layout_marginTop="100dp"
-            android:layout_margin="5dp"
-            android:name="nshmadhani.com.wakenbake.Fragments.ReviewFragment" />
+        </FrameLayout>
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"

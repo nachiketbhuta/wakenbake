@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import nshmadhani.com.wakenbake.Activities.FirebasePlaceActivity;
 import nshmadhani.com.wakenbake.Adapters.ReviewFragmentListAdapter;
 import nshmadhani.com.wakenbake.Holders.ReviewResponse;
 import nshmadhani.com.wakenbake.R;
@@ -52,13 +53,16 @@ public class ReviewFragment extends Fragment {
         mReviewBody = rootView.findViewById(R.id.reviewEditText);
         mSubmitButton = rootView.findViewById(R.id.submitButton);
 
+        FirebasePlaceActivity firebasePlaceActivity = (FirebasePlaceActivity) getActivity();
+        if (firebasePlaceActivity != null) {
+            mVendorName = firebasePlaceActivity.getVendorName();
+        }
+
         mReviewList = new ArrayList<>();
         mReviewsRecyclerView  = rootView.findViewById(R.id.mReviewRecyclerView);
         mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mReviewsListAdapter = new ReviewFragmentListAdapter(mReviewList, getActivity());
         mReviewsRecyclerView.setAdapter(mReviewsListAdapter);
-
-        mVendorName = getArguments().getString("vendor_name");
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override

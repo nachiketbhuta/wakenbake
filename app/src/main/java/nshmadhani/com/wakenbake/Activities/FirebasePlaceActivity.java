@@ -60,7 +60,6 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
     public double newRatings;
     public float oldRatings;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,11 +142,6 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
             }
         });
 
-        Bundle bundle = new Bundle();
-        bundle.putString("vendor_name", name.getText().toString());
-
-        ReviewFragment reviewFragment = new ReviewFragment();
-        reviewFragment.setArguments(bundle);
     }
 
     private double sendRatings(String name, float v) {
@@ -167,6 +161,10 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         });
 
         return newRatings; //Returning the new ratings
+    }
+
+    public String getVendorName () {
+        return name.getText().toString();
     }
 
     private void getAddress(double latitude, double longitude) {
