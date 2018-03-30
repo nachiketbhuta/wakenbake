@@ -82,13 +82,60 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
-        <fragment
-            android:id="@+id/reviewFragment"
-            android:layout_gravity="center|end"
-            android:layout_marginTop="200dp"
+        <TextView
+            android:id="@+id/reviewHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="40dp"
+            android:text="Reviews"
+            android:textColor="@string/mainAppThemeColor"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mReviewRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:name="nshmadhani.com.wakenbake.Fragments.ReviewFragment" />
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <EditText
+                android:id="@+id/reviewEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Review"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:paddingTop="5dp"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:paddingBottom="4dp"
+                android:background="@drawable/selector_bg_edit_2"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="45dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@string/mainAppThemeColor"
+            android:background="@drawable/button_shape_white_layout"
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:text="Submit"
+            android:elevation="8dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="@color/white">
+        </Button>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

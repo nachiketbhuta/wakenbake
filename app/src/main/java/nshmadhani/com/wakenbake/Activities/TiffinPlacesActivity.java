@@ -10,24 +10,33 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.willy.ratingbar.BaseRatingBar;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import nshmadhani.com.wakenbake.Fragments.ReviewFragment;
+import nshmadhani.com.wakenbake.Adapters.ReviewFragmentListAdapter;
+import nshmadhani.com.wakenbake.Holders.ReviewResponse;
+import nshmadhani.com.wakenbake.Models.Review;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
 import nshmadhani.com.wakenbake.Holders.RatingsResponse;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +53,12 @@ public class TiffinPlacesActivity extends AppCompatActivity {
     private float oldRatings;
     private IRetrofitDataApi apiInterface;
     private double newRatings;
+    private List<Review> mReviewList;
+    public RecyclerView mReviewsRecyclerView;
+    public ReviewFragmentListAdapter mReviewsListAdapter;
+    private TextView mReviewHeading;
+    private Button mSubmitButton;
+    private EditText mReviewBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +77,7 @@ public class TiffinPlacesActivity extends AppCompatActivity {
                 .into(tiffinImage);
 
         tiffinName.setText(getIntent().getStringExtra("tiffin_name")); //Setting the name
-        tiffinFoodItems.setText(getIntent().getStringExtra("tiffin_food")); //Setting the food items
+        tiffinFoodItems.setText("Food Items: " + getIntent().getStringExtra("tiffin_food")); //Setting the food items
         tiffinCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,11 +114,84 @@ public class TiffinPlacesActivity extends AppCompatActivity {
             }
         });
 
-        Bundle bundle = new Bundle();
-        bundle.putString("vendor_name", tiffinName.getText().toString());
+        mReviewHeading = findViewById(R.id.reviewHeading);
+        mReviewBody = findViewById(R.id.reviewEditText);
+        mSubmitButton = findViewById(R.id.submitButton);
 
-        ReviewFragment reviewFragment = new ReviewFragment();
-        reviewFragment.setArguments(bundle);
+        mReviewList = new ArrayList<>();
+        mReviewsRecyclerView  = findViewById(R.id.mReviewRecyclerView);
+        mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mReviewsListAdapter = new ReviewFragmentListAdapter(mReviewList,this);
+        mReviewsRecyclerView.setAdapter(mReviewsListAdapter);
+
+        getReviews(tiffinName.getText().toString());
+
+        final String mUsername = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TiffinPlacesActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveReview(mUsername, mReviewBody.getText().toString(), tiffinName.getText().toString());
+                    }
+                });
+            }
+        });
+    }
+
+    private void getReviews(String mVendorName) {
+
+        Call<ReviewResponse> call = apiInterface.getReviews(mVendorName);
+        call.enqueue(new Callback<ReviewResponse>() {
+            @Override
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                List<Review> reviewResponseList = response.body().getmReviewData();
+                for (Review r : reviewResponseList) {
+                    Review review = new Review();
+                    review.setmUsernameReview(r.getmUsernameReview());
+                    review.setmReview(r.getmReview());
+
+                    mReviewList.add(r);
+                }
+
+                Log.d(TAG, "onResponse: list size: " + mReviewList.size());
+
+                TiffinPlacesActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mReviewsListAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+
+    private void saveReview(String mUsername, String s, String mVendorName) {
+        Call<ResponseBody> saveCall = apiInterface.saveReviews(s, mUsername, mVendorName);
+        saveCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                if (response.isSuccessful()) {
+                    Toast.makeText(TiffinPlacesActivity.this, "Review added!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TiffinPlacesActivity.this, "Server Error!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
     }
 
     private double changeRatings(String name, float v) {

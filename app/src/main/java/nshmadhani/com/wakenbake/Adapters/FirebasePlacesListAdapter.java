@@ -2,7 +2,6 @@ package nshmadhani.com.wakenbake.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Objects;
 
-import nshmadhani.com.wakenbake.Fragments.ReviewFragment;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Activities.FirebasePlaceActivity;
 import nshmadhani.com.wakenbake.Models.FirebasePlaces;
