@@ -147,7 +147,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorBookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getStringExtra("vendor_id"),
+                PlaceBookmark placeBookmark = new PlaceBookmark(
                         getIntent().getExtras().getString("vendor_name"),
                         getIntent().getStringExtra("vendor_url"));
 

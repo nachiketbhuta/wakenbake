@@ -108,7 +108,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onClick(View view) {
                 //Adding to the database
-                PlaceBookmark placeBookmark = new PlaceBookmark(getIntent().getStringExtra("placeId"),
+                PlaceBookmark placeBookmark = new PlaceBookmark(
                         getIntent().getExtras().getString("placeName"),
                         getIntent().getStringExtra("placeURL")); //Creating a bookmark
 

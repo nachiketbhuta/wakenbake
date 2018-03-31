@@ -87,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:layout_marginStart="40dp"
             android:text="Reviews"
             android:textColor="@string/mainAppThemeColor"
             android:textSize="24sp"

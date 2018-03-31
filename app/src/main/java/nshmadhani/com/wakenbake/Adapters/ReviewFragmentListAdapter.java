@@ -39,9 +39,9 @@ public class ReviewFragmentListAdapter extends RecyclerView.Adapter<ReviewFragme
 
         Review review = mReviewList.get(position);
 
-        holder.mUsername.setText(review.getmUsernameReview());
+        holder.mUsername.setText("Username: " + review.getmUsernameReview());
 
-        holder.mReview.setText(review.getmReview());
+        holder.mReview.setText("Review: " + review.getmReview());
 
     }
 

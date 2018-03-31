@@ -48,6 +48,8 @@ public class PlaceBookmarkAdapter extends RecyclerView.Adapter<PlaceBookmarkAdap
                 .load(placeBookmark.getPlaceURL())
                 .into(holder.mImage);
 
+        //holder.context.getApplicationContext();
+
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +68,7 @@ public class PlaceBookmarkAdapter extends RecyclerView.Adapter<PlaceBookmarkAdap
         private TextView mName;
         private ImageView mImage;
         private CardView mCardView;
+        private Context context;
 
         public MyViewHolder(View itemView) {
             super(itemView);

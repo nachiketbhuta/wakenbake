@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,6 +95,7 @@ public class OtpActivity extends AppCompatActivity implements IConnectivityRecei
                @Override
                public void onVerificationFailed(FirebaseException e) {
                    progressDialog.dismiss();
+                   Log.d(TAG, "onVerificationFailed: " + e.getLocalizedMessage());
                    Toast.makeText(OtpActivity.this, "Error in Verification", Toast.LENGTH_SHORT).show();
 
                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
