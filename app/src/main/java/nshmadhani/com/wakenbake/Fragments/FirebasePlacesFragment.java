@@ -158,3 +158,4 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         });
     }
 }
+
