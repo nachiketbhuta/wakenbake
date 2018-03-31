@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -35,6 +37,7 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
     public static List<TiffinPlaces> mTiffinPlacesList;
     private TiffinPlacesListAdapter mTiffinPlacesListAdapter;
     private RecyclerView mTiffinPlacesRecyclerView;
+    public ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -49,9 +52,13 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
         mTiffinPlacesListAdapter = new TiffinPlacesListAdapter(mTiffinPlacesList, mActivity);
         mTiffinPlacesRecyclerView.setAdapter(mTiffinPlacesListAdapter);
 
+        progressDialog = new ProgressDialog(mActivity);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 getTiffinPlacesFromFirebase();
             }
         });
@@ -116,6 +123,7 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
         call.enqueue(new Callback<TiffinPlacesHolder>() {
             @Override
             public void onResponse(@NonNull Call<TiffinPlacesHolder> call, @NonNull Response<TiffinPlacesHolder> response) {
+                progressDialog.dismiss();
                 List<TiffinPlaces> mTiffinPlaces = response.body().getmTiffinPlaces();
                 if (mTiffinPlaces != null) {
                     for (TiffinPlaces t : mTiffinPlaces) {
@@ -143,7 +151,9 @@ public class TiffinPlaceFragment extends android.support.v4.app.Fragment{
 
             @Override
             public void onFailure(Call<TiffinPlacesHolder> call, Throwable t) {
+                progressDialog.dismiss();
                 Log.e(TAG, "onFailure: ", t );
+                Toast.makeText(mActivity, "Server Error!", Toast.LENGTH_SHORT).show();
             }
         });
     }

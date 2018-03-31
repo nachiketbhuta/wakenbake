@@ -14,8 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
+import nshmadhani.com.wakenbake.R;
 
 /**
  * Created by Nachiket on 17-Mar-18.

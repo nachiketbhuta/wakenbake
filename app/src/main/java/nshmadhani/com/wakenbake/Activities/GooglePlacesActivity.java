@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -35,13 +34,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.orm.SugarContext;
 import com.willy.ratingbar.ScaleRatingBar;
 
-import java.util.List;
-
-import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
+import nshmadhani.com.wakenbake.Models.WakeNBake;
+import nshmadhani.com.wakenbake.R;
 
 public class GooglePlacesActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -108,11 +105,20 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onClick(View view) {
                 //Adding to the database
-                PlaceBookmark placeBookmark = new PlaceBookmark(
-                        getIntent().getExtras().getString("placeName"),
-                        getIntent().getStringExtra("placeURL")); //Creating a bookmark
+                String id = getIntent().getStringExtra("placeId");
+                String name = getIntent().getStringExtra("placeName");
+                String url = getIntent().getStringExtra("placeUrl");
+                PlaceBookmark placeBookmark = new PlaceBookmark(id, name, url);
 
-                placeBookmark.save();
+                String foundPlace = WakeNBake.database.iDoa().checkInDatabase(id);
+
+                if (name.equalsIgnoreCase(foundPlace)) {
+                    Toast.makeText(GooglePlacesActivity.this, "Already added to bookmarks!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    WakeNBake.database.iDoa().addPlace(placeBookmark);
+                    Toast.makeText(GooglePlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
+                }
 
                 Toast.makeText(GooglePlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
             }

@@ -1,23 +1,37 @@
 package nshmadhani.com.wakenbake.Models;
 
-import android.content.Context;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-import com.orm.SugarRecord;
+@Entity(tableName = "place_bookmark")
+public class PlaceBookmark {
 
-public class PlaceBookmark extends SugarRecord {
-
-    private String placeNAME;
-    private String placeURL;
-
-    public PlaceBookmark () {}
-
-    public PlaceBookmark(String placeNAME, String placeURL) {
+    public PlaceBookmark(@NonNull String placeID, String placeNAME, String placeURL) {
+        this.placeID = placeID;
         this.placeNAME = placeNAME;
         this.placeURL = placeURL;
     }
 
-    public PlaceBookmark(String placeNAME) {
-        this.placeNAME = placeNAME;
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @NonNull
+    private String placeID;
+
+    @ColumnInfo(name = "name")
+    private String placeNAME;
+
+    @ColumnInfo(name = "image_url")
+    private String placeURL;
+
+    @NonNull
+    public String getPlaceID() {
+        return placeID;
+    }
+
+    public void setPlaceID(@NonNull String placeID) {
+        this.placeID = placeID;
     }
 
     public String getPlaceNAME() {

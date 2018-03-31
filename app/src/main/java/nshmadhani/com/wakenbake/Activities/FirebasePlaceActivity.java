@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,11 +41,12 @@ import java.util.Locale;
 
 import nshmadhani.com.wakenbake.Adapters.ReviewFragmentListAdapter;
 import nshmadhani.com.wakenbake.Holders.ReviewResponse;
+import nshmadhani.com.wakenbake.Models.PlaceBookmark;
 import nshmadhani.com.wakenbake.Models.Review;
+import nshmadhani.com.wakenbake.Models.WakeNBake;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
-import nshmadhani.com.wakenbake.Models.PlaceBookmark;
 import nshmadhani.com.wakenbake.Holders.RatingsResponse;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -147,13 +149,21 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         mVendorBookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceBookmark placeBookmark = new PlaceBookmark(
-                        getIntent().getExtras().getString("vendor_name"),
-                        getIntent().getStringExtra("vendor_url"));
 
-                placeBookmark.save();
+                String id = getIntent().getStringExtra("vendor_id");
+                String name = getIntent().getStringExtra("vendor_name");
+                String url = getIntent().getStringExtra("vendor_url");
+                PlaceBookmark placeBookmark = new PlaceBookmark(id, name, url);
 
-                Toast.makeText(FirebasePlaceActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
+                String foundPlace = WakeNBake.database.iDoa().checkInDatabase(id);
+
+                if (name.equalsIgnoreCase(foundPlace)) {
+                    Toast.makeText(FirebasePlaceActivity.this, "Already added to bookmarks!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    WakeNBake.database.iDoa().addPlace(placeBookmark);
+                    Toast.makeText(FirebasePlaceActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -246,7 +256,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         call.enqueue(new Callback<RatingsResponse>() {
             @Override
             public void onResponse(@NonNull Call<RatingsResponse> call, @NonNull Response<RatingsResponse> response) {
-            List<Double> r = response.body().getRatings(); //Getting response in form of JSON
+             List<Double> r = response.body().getRatings(); //Getting response in form of JSON
                 newRatings = r.get(0); //Getting the first element
             }
 

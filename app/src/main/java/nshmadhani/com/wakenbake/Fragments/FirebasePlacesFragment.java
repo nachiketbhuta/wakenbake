@@ -1,4 +1,5 @@
 package nshmadhani.com.wakenbake.Fragments;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -34,6 +36,7 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
     private FirebasePlacesListAdapter mFirebasePlacesListAdapter;
     public static final String TAG = FirebasePlacesFragment.class.getSimpleName();
     public IRetrofitDataApi iRetrofitDataApi;
+    public ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -47,9 +50,13 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         mFirebasePlacesListAdapter = new FirebasePlacesListAdapter(mFirebasePlacesList, mActivity);
         mFirebasePlacesRecyclerView.setAdapter(mFirebasePlacesListAdapter);
 
+        progressDialog = new ProgressDialog(mActivity);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 getPlacesFromFirebaseDatabase();
             }
         });
@@ -96,8 +103,6 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +121,7 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
         call.enqueue(new Callback<FirebasePlacesHolder>() {
             @Override
             public void onResponse(@NonNull Call<FirebasePlacesHolder> call, @NonNull Response<FirebasePlacesHolder> response) {
+                progressDialog.dismiss();
                 List<FirebasePlaces> firebasePlacesList = response.body().getmPlaces();
                 if (firebasePlacesList != null) {
                     for(FirebasePlaces f : firebasePlacesList) {
@@ -153,7 +159,9 @@ public class FirebasePlacesFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onFailure(@NonNull Call<FirebasePlacesHolder> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
                 Log.e(TAG, "onFailure: ",t);
+                Toast.makeText(mActivity, "Server Error!", Toast.LENGTH_SHORT).show();
             }
         });
     }

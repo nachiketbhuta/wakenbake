@@ -23,25 +23,17 @@ import nshmadhani.com.wakenbake.Activities.LoginActivity;
 import nshmadhani.com.wakenbake.Activities.OtpActivity;
 import nshmadhani.com.wakenbake.R;
 
-/**
- * Created by Nisha on 3/15/2018.
- */
 
 public class SignUpFragment extends Fragment {
-
 
     private TextInputLayout mUserNameTextInputLayout;
     private TextInputLayout mPasswordTextInputLayout;
     private TextInputLayout mEmailTextInputLayout;
     private Button mSignUpButton;
-
     private FirebaseAuth mAuth;
-
     private LoginActivity mActivity;
-
-
-
     public static final String TAG = SignUpFragment.class.getSimpleName();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

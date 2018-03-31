@@ -18,13 +18,13 @@ public class TiffinPlaces  {
     public float mTiffinRatings;
 
     @SerializedName("id")
-    public int mTiffinId;
+    public String mTiffinId;
 
-    public int getmTiffinId() {
+    public String getmTiffinId() {
         return mTiffinId;
     }
 
-    public void setmTiffinId(int mTiffinId) {
+    public void setmTiffinId(String mTiffinId) {
         this.mTiffinId = mTiffinId;
     }
 

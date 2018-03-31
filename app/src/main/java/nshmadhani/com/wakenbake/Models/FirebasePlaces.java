@@ -8,7 +8,7 @@ public class FirebasePlaces{
     public String mVendorName;
 
     @SerializedName("id")
-    public int mVendorId;
+    public String mVendorId;
 
     @SerializedName("open")
     public int mVendorOpenTime;
@@ -34,6 +34,14 @@ public class FirebasePlaces{
     @SerializedName("base_url")
     public String mVendorUrl;
 
+    public String getmVendorId() {
+        return mVendorId;
+    }
+
+    public void setmVendorId(String mVendorId) {
+        this.mVendorId = mVendorId;
+    }
+
     public String getmVendorUrl() {
         return mVendorUrl;
     }
@@ -48,14 +56,6 @@ public class FirebasePlaces{
 
     public void setmVendorName(String mVendorName) {
         this.mVendorName = mVendorName;
-    }
-
-    public int getmVendorId() {
-        return mVendorId;
-    }
-
-    public void setmVendorId(int mVendorId) {
-        this.mVendorId = mVendorId;
     }
 
     public int getmVendorOpenTime() {

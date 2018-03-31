@@ -44,19 +44,6 @@
             android:label="@string/title_activity_place"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
-        <meta-data
-            android:name="DATABASE"
-            android:value="bookmark.db" />
-        <meta-data
-            android:name="VERSION"
-            android:value="7" />
-        <meta-data
-            android:name="QUERY_LOG"
-            android:value="true" />
-        <meta-data
-            android:name="DOMAIN_PACKAGE_NAME"
-            android:value="nshmadhani.com.wakenbake" />
-
         <activity android:name=".Activities.BookmarkActivity" />
         <activity
             android:name=".Activities.FirebasePlaceActivity"

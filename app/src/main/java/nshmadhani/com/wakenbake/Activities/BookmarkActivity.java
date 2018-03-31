@@ -1,17 +1,16 @@
 package nshmadhani.com.wakenbake.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import com.orm.SugarContext;
 
 import java.util.List;
 
 import nshmadhani.com.wakenbake.Adapters.PlaceBookmarkAdapter;
-import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Models.PlaceBookmark;
+import nshmadhani.com.wakenbake.Models.WakeNBake;
+import nshmadhani.com.wakenbake.R;
 
 public class BookmarkActivity extends AppCompatActivity {
 
@@ -24,12 +23,10 @@ public class BookmarkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
 
-        SugarContext.init(this);
-
         recyclerView  = findViewById(R.id.bookmarkRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        list = PlaceBookmark.listAll(PlaceBookmark.class);
+        list = WakeNBake.database.iDoa().fetchAllPlaces();
 
         for (PlaceBookmark p : list) {
 

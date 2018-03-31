@@ -73,6 +73,7 @@ public class GooglePlacesListAdapter extends RecyclerView.Adapter<GooglePlacesLi
                 intent.putExtra("placeName", googlePlaces.getName());
                 intent.putExtra("placeId", googlePlaces.getPlaceId());
                 intent.putExtra("placeRatings", googlePlaces.getRatings());
+                intent.putExtra("placeUrl", googlePlaces.getImageUrl());
                 context.startActivity(intent);
             }
         });

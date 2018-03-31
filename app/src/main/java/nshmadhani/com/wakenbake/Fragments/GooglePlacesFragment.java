@@ -1,5 +1,6 @@
 package nshmadhani.com.wakenbake.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.maps.GeoApiContext;
@@ -39,6 +41,7 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
     private FirebaseAuth mAuth;
     private List<GooglePlaces> mMasterGooglePlaces;
     public static final String TAG = GooglePlacesFragment.class.getSimpleName();
+    public ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -52,6 +55,8 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
         mGooglePlacesListAdapter = new GooglePlacesListAdapter(mGooglePlacesList, mActivity);
         mGooglePlacesRecyclerView.setAdapter(mGooglePlacesListAdapter);
 
+        progressDialog = new ProgressDialog(mActivity);
+
         final Intent intent = mActivity.getIntent();
 
         mMasterGooglePlaces = new ArrayList<>();
@@ -63,6 +68,8 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
             @Override
             public void run() {
                 getPlacesFromGoogle(latitude, longitude);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
             }
         });
         return rootView;
@@ -134,6 +141,7 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
                 .setCallback(new PendingResult.Callback<PlacesSearchResponse>() {
                 @Override
                 public void onResult(PlacesSearchResponse result) {
+                    progressDialog.dismiss();
                     for (PlacesSearchResult place : result.results) {
                         GooglePlaces googlePlaces = new GooglePlaces();
                         googlePlaces.setName(place.name);
@@ -168,7 +176,9 @@ public class GooglePlacesFragment extends android.support.v4.app.Fragment {
                 }
                 @Override
                 public void onFailure(Throwable e) {
+                    progressDialog.dismiss();
                     Log.e(TAG , "onFailure: ", e);
+                    Toast.makeText(mActivity, "Server Error!", Toast.LENGTH_SHORT).show();
                 }
             });
     }

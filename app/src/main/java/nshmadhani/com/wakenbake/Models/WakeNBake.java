@@ -1,16 +1,19 @@
 package nshmadhani.com.wakenbake.Models;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.orm.SugarContext;
+import nshmadhani.com.wakenbake.Abstracts.AppDatabase;
 
 /**
  * Created by Nachiket on 17-Mar-18.
  */
 
 public class WakeNBake extends Application {
+
+    public static AppDatabase database;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -22,6 +25,9 @@ public class WakeNBake extends Application {
     public void onCreate() {
         super.onCreate();
 
-        SugarContext.init(this);
+        database = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "bookmarks")
+                .allowMainThreadQueries()
+                .build();
     }
 }

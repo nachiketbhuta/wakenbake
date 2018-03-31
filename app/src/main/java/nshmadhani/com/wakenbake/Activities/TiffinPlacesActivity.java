@@ -30,11 +30,12 @@ import java.util.List;
 
 import nshmadhani.com.wakenbake.Adapters.ReviewFragmentListAdapter;
 import nshmadhani.com.wakenbake.Holders.ReviewResponse;
+import nshmadhani.com.wakenbake.Models.PlaceBookmark;
 import nshmadhani.com.wakenbake.Models.Review;
+import nshmadhani.com.wakenbake.Models.WakeNBake;
 import nshmadhani.com.wakenbake.R;
 import nshmadhani.com.wakenbake.Interfaces.IRetrofitDataApi;
 import nshmadhani.com.wakenbake.Models.APIClient;
-import nshmadhani.com.wakenbake.Models.PlaceBookmark;
 import nshmadhani.com.wakenbake.Holders.RatingsResponse;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -77,7 +78,7 @@ public class TiffinPlacesActivity extends AppCompatActivity {
                 .into(tiffinImage);
 
         tiffinName.setText(getIntent().getStringExtra("tiffin_name")); //Setting the name
-        tiffinFoodItems.setText("Food Items: " + getIntent().getStringExtra("tiffin_food")); //Setting the food items
+        tiffinFoodItems.setText(String.format("Food Items: %s", getIntent().getStringExtra("tiffin_food"))); //Setting the food items
         tiffinCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,13 +105,20 @@ public class TiffinPlacesActivity extends AppCompatActivity {
         tiffinBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceBookmark placeBookmark = new PlaceBookmark(
-                        getIntent().getExtras().getString("tiffin_name") ,
-                        getIntent().getStringExtra("tiffin_url"));
+                String id = getIntent().getStringExtra("tiffin_id");
+                String name = getIntent().getStringExtra("tiffin_name");
+                String url = getIntent().getStringExtra("tiffin_url");
+                PlaceBookmark placeBookmark = new PlaceBookmark(id, name, url);
 
-                placeBookmark.save();
+                String foundPlace = WakeNBake.database.iDoa().checkInDatabase(id);
 
-                Toast.makeText(TiffinPlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
+                if (name.equalsIgnoreCase(foundPlace)) {
+                    Toast.makeText(TiffinPlacesActivity.this, "Already added to bookmarks!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    WakeNBake.database.iDoa().addPlace(placeBookmark);
+                    Toast.makeText(TiffinPlacesActivity.this, "Bookmark added!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
