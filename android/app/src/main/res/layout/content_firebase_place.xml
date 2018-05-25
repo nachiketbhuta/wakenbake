@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="nshmadhani.com.wakenbake.Activities.FirebasePlaceActivity"
+    tools:showIn="@layout/activity_firebase_place">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/night_placeNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="Place Name"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/night_simpleRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srb_numStars="5"
+            app:srb_minimumStars="0"
+            app:srb_starWidth="30dp"
+            app:srb_starHeight="30dp"
+            app:srb_starPadding="10dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="false"
+            app:srb_clearRatingEnabled="true">
+        </com.willy.ratingbar.ScaleRatingBar>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/night_callButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_dialog_phone" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/night_bookmarkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_action_bookmark" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/night_mapsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_action_maps" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/night_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="30dp"
+                        android:text="Address:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/night_foodType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="30dp"
+                        android:text="Cuisine:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/night_time"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:text="Time:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/reviewHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="40dp"
+            android:text="Reviews"
+            android:textColor="@string/mainAppThemeColor"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mReviewRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:layout_marginTop="25dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <EditText
+                android:id="@+id/reviewEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Review"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:paddingTop="5dp"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:paddingBottom="4dp"
+                android:background="@drawable/selector_bg_edit_2"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="45dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@string/mainAppThemeColor"
+            android:background="@drawable/button_shape_white_layout"
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:text="Submit"
+            android:elevation="8dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="@color/white">
+        </Button>
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/night_map"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center|end"
+            android:layout_marginTop="200dp"
+            android:layout_margin="10dp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            tools:context=".Activities.GooglePlacesActivity" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

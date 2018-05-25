@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "892006491041",
+    "firebase_url": "https://project-29316.firebaseio.com",
+    "project_id": "project-29316",
+    "storage_bucket": "project-29316.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892006491041:android:c2ce56a92c02e37c",
+        "android_client_info": {
+          "package_name": "nshmadhani.com.wakenbake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892006491041-uongomcu9sq9g8aagasqkce61aat2gqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdtqjAvSCOahazgIGeQ_VcCjK9kfYADeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,60 @@
+Name:Sangeeta
+Phone Number:9867902467/9322545749
+Food Items:full course meal(Gujarati),fast food
+Name:Sujith
+Phone Number: 02228018260
+Food Items:full course meal(Gujarati)
+Name:Vijay
+Phone Number:02228069869
+Food Items: Full course meal(Gujarati)
+Name:Pragna
+Phone Number:9324088602
+Food Items:full course meal(Gujarati),fast food
+Name: Kirti
+Phone Number:02228602853
+Food Items:full course meal(Gujarati,south indian)
+Name:sheetal
+Phone Number:9833123167/9769095356
+Food Items:full course meal(Gujarati)
+Name:usha naidu
+Phone Number:9324089977
+Food Items:full course meal(gujarati,maharashtrian)
+Name:gayatri
+Phone Number:9664067055
+Food Items:full course meal(gujarati),fast food
+Name:ashwin 
+Phone Number:9821157988
+Food Items:full course meal(gujarati)
+Name:kala
+Phone Number:9892606747
+Food Items:full course meal(gujarati)
+Name:mangilal
+Phone Number:9892093689
+Food Items:fast food
+Name:sonal
+Phone Number:9821873191
+Food Items:full course meal(gujarati)
+Name:sangeeta ben
+Phone Number:9938888766
+Food Items:full course meal(gujarati)
+Name:indu
+Phone Number:9920809018
+Food Items:full course meal(gujarati)
+Name:nimisha parekh
+Phone Number:9820254083
+Food Items:full course meal(gujarati)
+Name:pakwan
+Phone Number:8451066601
+Food Items:full course meal(punjabi)
+Name:mittal
+Phone Number:9699330582
+Food Items:gujarati meal
+Name:
+Phone Number:
+Food Items:
+Name:
+Phone Number:
+Food Items:
+Name:
+Phone Number:
+Food Items:
