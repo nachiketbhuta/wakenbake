@@ -38,12 +38,12 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        Log.d(TAG, "onCreate: ");
         rippleBackground = findViewById(R.id.content);
         locationImageView = findViewById(R.id.locationIcon);
         gettingLocationTextView = findViewById(R.id.gettingLocation);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         if (isNetworkAvailable()) { //Start Ripple Effect
             rippleBackground.startRippleAnimation();
             makeUseOfNewLocation();
@@ -82,8 +82,9 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
         }
     }
 
+    //Get the new location of the user
     private void makeUseOfNewLocation() {
-
+        //Permission checking
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {// If ACCESS_FINE_LOCATION is granted
@@ -118,6 +119,7 @@ public class LocationActivity extends AppCompatActivity implements IConnectivity
             
     }
 
+    //Check internet connectivity
     @Override
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);

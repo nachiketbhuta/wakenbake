@@ -126,6 +126,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
 
     }
 
+    //Call the place
     private void callPlace(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL); //Redirecting to the Dialer Application
         intent.setData(Uri.parse("tel: " + phoneNumber)); //Getting the phone number
@@ -145,6 +146,7 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+    //Get details of the place from placeId
     private void getDetailsOfPlaces(String placeId) {
         //Getting place details using its ID from Google Places API
         mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
@@ -168,8 +170,8 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
 
     }
 
+    //Get all the photos of the place from placeId
     private void getPhotosOfPlaces(String placeId) {
-
         //Getting more than one photo of a place using its ID
 
         final Task<PlacePhotoMetadataResponse> photoMetadataResponse = mGeoDataClient.getPlacePhotos(placeId);
@@ -202,6 +204,8 @@ public class GooglePlacesActivity extends AppCompatActivity implements OnMapRead
         });
     }
 
+
+    //Initialize Map
     @Override
     public void onMapReady(GoogleMap googleMap) {
 

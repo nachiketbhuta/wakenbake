@@ -14,25 +14,26 @@ import nshmadhani.com.wakenbake.R;
 
 public class BookmarkActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private PlaceBookmarkAdapter adapter;
-    private List<PlaceBookmark> list;
+    public RecyclerView recyclerView;
+    public PlaceBookmarkAdapter adapter;
+    public List<PlaceBookmark> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
 
+        //Initialize the Recycler View
         recyclerView  = findViewById(R.id.bookmarkRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //Get list of places from database
         list = WakeNBake.database.iDoa().fetchAllPlaces();
 
+        //Add the place in Recycler View
         for (PlaceBookmark p : list) {
-
             p.setPlaceNAME(p.getPlaceNAME());
             p.setPlaceURL(p.getPlaceURL());
-
         }
 
         adapter = new PlaceBookmarkAdapter(list, this);

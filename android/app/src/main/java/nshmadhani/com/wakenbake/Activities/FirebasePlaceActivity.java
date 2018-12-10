@@ -197,8 +197,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
 
     }
 
+    //Get Reviews from the API
     private void getReviews(String mVendorName) {
-
         Call<ReviewResponse> call = apiInterface.getReviews(mVendorName);
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
@@ -208,12 +208,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
                     Review review = new Review();
                     review.setmUsernameReview(r.getmUsernameReview());
                     review.setmReview(r.getmReview());
-
                     mReviewList.add(r);
                 }
-
-                Log.d(TAG, "onResponse: list size: " + mReviewList.size());
-
                 FirebasePlaceActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -230,12 +226,12 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
 
     }
 
+    //Post review to the API
     private void saveReview(String mUsername, String s, String mVendorName) {
         Call<ResponseBody> saveCall = apiInterface.saveReviews(s, mUsername, mVendorName);
         saveCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse: " + response.body());
                 if (response.isSuccessful()) {
                     Toast.makeText(FirebasePlaceActivity.this, "Review added!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -250,8 +246,8 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         });
     }
 
+    //Send ratings to Firebase
     private double sendRatings(String name, float v) {
-        //Sending the ratings to the firebase real-time database
         Call<RatingsResponse> call = apiInterface.saveRatings(name, v); //Creating a request call to the firebase
         call.enqueue(new Callback<RatingsResponse>() {
             @Override
@@ -273,6 +269,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         return name.getText().toString();
     }
 
+    //Get address from latitude and longitude from Geocoder API
     private void getAddress(double latitude, double longitude) {
         //Getting address of the location
         Geocoder geocoder = new Geocoder(this, Locale.ENGLISH); //Creating a geocoder object
@@ -290,6 +287,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
 
     }
 
+    //Call the place
     private void callPhone(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL); //Redirecting to the Dialer Application
         intent.setData(Uri.parse("tel: " + phoneNumber)); //Getting the phone number
@@ -310,6 +308,7 @@ public class FirebasePlaceActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
+    //Display Map in the activity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
